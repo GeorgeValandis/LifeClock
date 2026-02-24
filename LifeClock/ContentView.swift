@@ -217,6 +217,8 @@ struct ContentView: View {
     @State private var showOnboarding = false
     @State private var animateBackground = false
     @State private var iconErrorMessage: String?
+    @State private var unitSwapPulse = false
+    @Namespace private var unitChipSelectionAnimation
 
     private var selectedUnit: LifeUnit {
         LifeUnit(rawValue: selectedUnitRaw) ?? .days
@@ -232,6 +234,13 @@ struct ContentView: View {
 
     private var birthDate: Date {
         Date(timeIntervalSince1970: birthDateTimestamp)
+    }
+
+    private var unitSwapTransition: AnyTransition {
+        .asymmetric(
+            insertion: .opacity.combined(with: .offset(x: 12)),
+            removal: .opacity.combined(with: .offset(x: -12))
+        )
     }
 
     var body: some View {
@@ -321,16 +330,27 @@ struct ContentView: View {
                                 .tracking(1.8)
                                 .foregroundStyle(.white.opacity(0.74))
 
-                            Text(formattedValue(unitValue, unit: selectedUnit))
-                                .font(.system(size: 58, weight: .black, design: selectedTypography.heroDesign))
-                                .minimumScaleFactor(0.5)
-                                .lineLimit(1)
-                                .monospacedDigit()
-                                .foregroundStyle(.white)
+                            ZStack(alignment: .leading) {
+                                Text(formattedValue(unitValue, unit: selectedUnit))
+                                    .font(.system(size: 58, weight: .black, design: selectedTypography.heroDesign))
+                                    .minimumScaleFactor(0.5)
+                                    .lineLimit(1)
+                                    .monospacedDigit()
+                                    .foregroundStyle(.white)
+                                    .contentTransition(.numericText())
+                                    .id("life-clock-value-\(selectedUnitRaw)")
+                                    .transition(unitSwapTransition)
+                            }
+                            .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
 
-                            Text(selectedUnit.title)
-                                .font(.system(size: 18, weight: .semibold, design: selectedTypography.bodyDesign))
-                                .foregroundStyle(.white.opacity(0.88))
+                            ZStack(alignment: .leading) {
+                                Text(selectedUnit.title)
+                                    .font(.system(size: 18, weight: .semibold, design: selectedTypography.bodyDesign))
+                                    .foregroundStyle(.white.opacity(0.88))
+                                    .id("life-clock-unit-\(selectedUnitRaw)")
+                                    .transition(unitSwapTransition)
+                            }
+                            .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
                         }
 
                         Spacer()
@@ -361,8 +381,12 @@ struct ContentView: View {
                     RoundedRectangle(cornerRadius: 34, style: .continuous)
                         .stroke(.white.opacity(0.18), lineWidth: 1)
                 }
+                .scaleEffect(unitSwapPulse ? 0.985 : 1)
+                .opacity(unitSwapPulse ? 0.95 : 1)
+                .animation(.spring(response: 0.35, dampingFraction: 0.8), value: unitSwapPulse)
 
                 unitPicker
+                milestoneGraphCard(progress: progress)
 
                 HStack(spacing: 14) {
                     statCard(
@@ -409,7 +433,6 @@ struct ContentView: View {
 
     private func timeLeftHero(remaining: TimeInterval) -> some View {
         let selectedLeftValue = selectedUnit.convert(from: remaining)
-        let yearsLeftValue = remaining / LifeUnit.years.seconds
 
         return VStack(alignment: .leading, spacing: 10) {
             Text("TIME LEFT (EST.)")
@@ -418,19 +441,44 @@ struct ContentView: View {
                 .foregroundStyle(.white.opacity(0.75))
 
             HStack(alignment: .firstTextBaseline) {
-                Text(formattedValue(selectedLeftValue, unit: selectedUnit))
-                    .font(.system(size: 44, weight: .black, design: selectedTypography.heroDesign))
-                    .monospacedDigit()
+                ZStack(alignment: .leading) {
+                    Text(formattedValue(selectedLeftValue, unit: selectedUnit))
+                        .font(.system(size: 44, weight: .black, design: selectedTypography.heroDesign))
+                        .monospacedDigit()
+                        .contentTransition(.numericText())
+                        .id("time-left-value-\(selectedUnitRaw)")
+                        .transition(unitSwapTransition)
+                }
+                .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
 
-                Text(selectedUnit.title)
-                    .font(.system(size: 18, weight: .semibold, design: selectedTypography.bodyDesign))
-                    .foregroundStyle(.white.opacity(0.86))
+                ZStack(alignment: .leading) {
+                    Text(selectedUnit.title)
+                        .font(.system(size: 18, weight: .semibold, design: selectedTypography.bodyDesign))
+                        .foregroundStyle(.white.opacity(0.86))
+                        .id("time-left-unit-\(selectedUnitRaw)")
+                        .transition(unitSwapTransition)
+                }
+                .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
             }
             .foregroundStyle(.white)
 
-            Text("≈ \(Int(yearsLeftValue.rounded()).formatted(.number.grouping(.automatic))) Years left")
-                .font(.system(size: 14, weight: .medium, design: selectedTypography.bodyDesign))
-                .foregroundStyle(.white.opacity(0.75))
+            ZStack(alignment: .leading) {
+                Text("≈ \(formattedValue(selectedLeftValue, unit: selectedUnit)) \(selectedUnit.title) left")
+                    .font(.system(size: 14, weight: .medium, design: selectedTypography.bodyDesign))
+                    .foregroundStyle(.white.opacity(0.75))
+                    .id("time-left-subtitle-\(selectedUnitRaw)")
+                    .transition(unitSwapTransition)
+            }
+            .animation(.easeInOut(duration: 0.35), value: selectedUnitRaw)
+
+            ZStack {
+                timeLeftSparkline(remainingValue: selectedLeftValue, unit: selectedUnit)
+                    .id("time-left-sparkline-\(selectedUnitRaw)")
+                    .transition(unitSwapTransition)
+            }
+            .frame(height: 56)
+            .padding(.top, 2)
+            .animation(.spring(response: 0.45, dampingFraction: 0.86), value: selectedUnitRaw)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(18)
@@ -439,6 +487,145 @@ struct ContentView: View {
             RoundedRectangle(cornerRadius: 26, style: .continuous)
                 .stroke(.white.opacity(0.18), lineWidth: 1)
         }
+        .scaleEffect(unitSwapPulse ? 0.985 : 1)
+        .opacity(unitSwapPulse ? 0.95 : 1)
+        .animation(.spring(response: 0.35, dampingFraction: 0.8), value: unitSwapPulse)
+    }
+
+    private func timeLeftSparkline(remainingValue: Double, unit: LifeUnit) -> some View {
+        GeometryReader { proxy in
+            let exponent = graphCurveExponent(for: unit)
+            let points = (0..<9).map { index -> CGPoint in
+                let t = Double(index) / 8.0
+                let value = max(0.02, 1.0 - pow(t, exponent))
+                return CGPoint(
+                    x: proxy.size.width * CGFloat(t),
+                    y: proxy.size.height * CGFloat(1 - value)
+                )
+            }
+
+            ZStack {
+                Path { path in
+                    guard let first = points.first else { return }
+                    path.move(to: CGPoint(x: first.x, y: proxy.size.height))
+                    path.addLine(to: first)
+                    for point in points.dropFirst() {
+                        path.addLine(to: point)
+                    }
+                    path.addLine(to: CGPoint(x: proxy.size.width, y: proxy.size.height))
+                    path.closeSubpath()
+                }
+                .fill(
+                    LinearGradient(
+                        colors: [selectedTheme.topGlow.opacity(0.35), Color.clear],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                )
+
+                Path { path in
+                    guard let first = points.first else { return }
+                    path.move(to: first)
+                    for point in points.dropFirst() {
+                        path.addLine(to: point)
+                    }
+                }
+                .stroke(
+                    LinearGradient(colors: [selectedTheme.topGlow, selectedTheme.bottomGlow], startPoint: .leading, endPoint: .trailing),
+                    style: StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round)
+                )
+
+                if let last = points.last {
+                    Circle()
+                        .fill(selectedTheme.bottomGlow)
+                        .frame(width: 8, height: 8)
+                        .position(last)
+                }
+            }
+            .overlay(alignment: .topLeading) {
+                Text("Now")
+                    .font(.system(size: 10, weight: .semibold, design: selectedTypography.bodyDesign))
+                    .foregroundStyle(.white.opacity(0.62))
+                    .offset(y: -2)
+            }
+            .overlay(alignment: .topTrailing) {
+                Text("End")
+                    .font(.system(size: 10, weight: .semibold, design: selectedTypography.bodyDesign))
+                    .foregroundStyle(.white.opacity(0.62))
+                    .offset(y: -2)
+            }
+            .overlay {
+                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                    .stroke(.white.opacity(0.12), lineWidth: 1)
+            }
+            .animation(.easeInOut(duration: 0.45), value: unit.rawValue)
+        }
+        .accessibilityLabel("Remaining life trend")
+        .accessibilityValue("\(Int(remainingValue.rounded())) \(unit.title) left")
+    }
+
+    private func graphCurveExponent(for unit: LifeUnit) -> Double {
+        switch unit {
+        case .years: 1.2
+        case .months: 1.1
+        case .weeks: 1.0
+        case .days: 0.92
+        case .hours: 0.84
+        case .minutes: 0.78
+        case .seconds: 0.72
+        }
+    }
+
+    private func milestoneGraphCard(progress: Double) -> some View {
+        let milestones = [0.25, 0.5, 0.75, 1.0]
+
+        return VStack(alignment: .leading, spacing: 12) {
+            Text("LIFETIME MILESTONES")
+                .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
+                .tracking(1.5)
+                .foregroundStyle(.white.opacity(0.76))
+
+            HStack(spacing: 12) {
+                ForEach(milestones, id: \.self) { milestone in
+                    let fillProgress = min(progress / milestone, 1)
+
+                    VStack(spacing: 8) {
+                        Text("\(Int(milestone * 100))%")
+                            .font(.system(size: 11, weight: .semibold, design: selectedTypography.bodyDesign))
+                            .foregroundStyle(.white.opacity(0.78))
+
+                        ZStack(alignment: .bottom) {
+                            Capsule()
+                                .fill(.white.opacity(0.16))
+                                .frame(width: 18, height: 62)
+
+                            Capsule()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [selectedTheme.topGlow, selectedTheme.bottomGlow],
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    )
+                                )
+                                .frame(width: 18, height: 62 * fillProgress)
+                        }
+
+                        Text(progress >= milestone ? "Reached" : "Upcoming")
+                            .font(.system(size: 10, weight: .medium, design: selectedTypography.bodyDesign))
+                            .foregroundStyle(progress >= milestone ? .white : .white.opacity(0.58))
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.8)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
+        }
+        .padding(16)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(.white.opacity(0.16), lineWidth: 1)
+        }
     }
 
     private var unitPicker: some View {
@@ -446,8 +633,17 @@ struct ContentView: View {
             HStack(spacing: 10) {
                 ForEach(LifeUnit.allCases) { unit in
                     Button {
-                        selectedUnitRaw = unit.rawValue
+                        guard selectedUnitRaw != unit.rawValue else { return }
+                        withAnimation(.spring(response: 0.45, dampingFraction: 0.84)) {
+                            selectedUnitRaw = unit.rawValue
+                            unitSwapPulse = true
+                        }
                         performSelectionHaptic()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.24) {
+                            withAnimation(.easeOut(duration: 0.28)) {
+                                unitSwapPulse = false
+                            }
+                        }
                     } label: {
                         VStack(spacing: 4) {
                             Text(unit.shortTitle)
@@ -459,8 +655,16 @@ struct ContentView: View {
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
                         .background {
-                            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                .fill(unit == selectedUnit ? selectedTheme.selectedChipBackground : Color.white.opacity(0.14))
+                            ZStack {
+                                if unit == selectedUnit {
+                                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                        .fill(selectedTheme.selectedChipBackground)
+                                        .matchedGeometryEffect(id: "unit-chip-selection", in: unitChipSelectionAnimation)
+                                } else {
+                                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                        .fill(Color.white.opacity(0.14))
+                                }
+                            }
                         }
                         .overlay {
                             RoundedRectangle(cornerRadius: 18, style: .continuous)
@@ -471,6 +675,7 @@ struct ContentView: View {
                 }
             }
             .padding(4)
+            .animation(.spring(response: 0.42, dampingFraction: 0.82), value: selectedUnitRaw)
         }
     }
 
