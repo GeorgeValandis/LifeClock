@@ -1,0 +1,304 @@
+{
+  "source": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Icon Update Failed",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 275
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 283
+        }
+      },
+      {
+        "comment": "",
+        "key": "LIFE CLOCK",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 328
+        }
+      },
+      {
+        "comment": "",
+        "key": "Since %@",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 365
+        }
+      },
+      {
+        "comment": "",
+        "key": "Your Time",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 414
+        }
+      },
+      {
+        "comment": "",
+        "key": "Every second counts.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 418
+        }
+      },
+      {
+        "comment": "",
+        "key": "TIME LEFT (EST.)",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 438
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %@ %@ left",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 466
+        }
+      },
+      {
+        "comment": "",
+        "key": "Remaining life trend",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 563
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld %@ left",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 564
+        }
+      },
+      {
+        "comment": "",
+        "key": "Now",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 546
+        }
+      },
+      {
+        "comment": "",
+        "key": "End",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 552
+        }
+      },
+      {
+        "comment": "",
+        "key": "LIFETIME MILESTONES",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 583
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 593
+        }
+      },
+      {
+        "comment": "",
+        "key": "Reached",
+        "location": {
+          "startingColumn": 54,
+          "startingLine": 613
+        }
+      },
+      {
+        "comment": "",
+        "key": "Upcoming",
+        "location": {
+          "startingColumn": 66,
+          "startingLine": 613
+        }
+      },
+      {
+        "comment": "",
+        "key": "Birth date",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 694
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 698
+        }
+      },
+      {
+        "comment": "",
+        "key": "Life expectancy",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 716
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld years",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 719
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tip: Add alternate icon assets named AppIconPulse and AppIconHorizon to fully enable icon switching.",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 767
+        }
+      },
+      {
+        "comment": "",
+        "key": "Haptics",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 777
+        }
+      },
+      {
+        "comment": "",
+        "key": "Run onboarding again",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 792
+        }
+      },
+      {
+        "comment": "",
+        "key": "Legal & Policies",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 808
+        }
+      },
+      {
+        "comment": "",
+        "key": "Done",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 831
+        }
+      },
+      {
+        "comment": "",
+        "key": "Last updated: February 24, 2026",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 877
+        }
+      },
+      {
+        "comment": "",
+        "key": "Policy Links",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 865
+        }
+      },
+      {
+        "comment": "",
+        "key": "Privacy Policy",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 869
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terms & Conditions",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 870
+        }
+      },
+      {
+        "comment": "",
+        "key": "Support",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 871
+        }
+      },
+      {
+        "comment": "",
+        "key": "Welcome to LifeClock",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 1100
+        }
+      },
+      {
+        "comment": "",
+        "key": "Set up your profile in less than a minute.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 1104
+        }
+      },
+      {
+        "comment": "",
+        "key": "Birth date",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 1110
+        }
+      },
+      {
+        "comment": "",
+        "key": "Expected lifespan",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 1121
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld years",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 1124
+        }
+      },
+      {
+        "comment": "",
+        "key": "Default unit",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 1134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Start LifeClock",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 1160
+        }
+      }
+    ]
+  },
+  "version": 1
+}
