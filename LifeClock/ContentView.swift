@@ -320,7 +320,6 @@ struct ContentView: View {
         return ScrollView {
             VStack(spacing: 22) {
                 header
-                timeLeftHero(remaining: remaining)
 
                 VStack(alignment: .leading, spacing: 18) {
                     HStack(alignment: .top) {
@@ -385,6 +384,7 @@ struct ContentView: View {
                 .opacity(unitSwapPulse ? 0.95 : 1)
                 .animation(.spring(response: 0.35, dampingFraction: 0.8), value: unitSwapPulse)
 
+                timeLeftHero(remaining: remaining)
                 unitPicker
                 milestoneGraphCard(progress: progress)
 
