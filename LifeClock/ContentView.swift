@@ -626,11 +626,12 @@ struct ContentView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: rows, spacing: 5) {
                     ForEach(0..<cellCount, id: \.self) { index in
-                        let level = gridHeatLevel(index: index, elapsedCells: elapsedCells, cellCount: cellCount)
+                        let isPast = index < elapsedCells
                         let isCurrent = index == elapsedCells && elapsedCells < cellCount
+                        let futureIntensity = gridFutureIntensity(index: index, elapsedCells: elapsedCells, cellCount: cellCount)
 
                         RoundedRectangle(cornerRadius: 3, style: .continuous)
-                            .fill(gridHeatColor(level: level))
+                            .fill(gridHeatColor(isPast: isPast, isCurrent: isCurrent, futureIntensity: futureIntensity))
                             .frame(width: 12, height: 12)
                             .overlay {
                                 if isCurrent {
@@ -661,24 +662,20 @@ struct ContentView: View {
         }
     }
 
-    private func gridHeatLevel(index: Int, elapsedCells: Int, cellCount: Int) -> Int {
-        if index < elapsedCells { return 0 }
+    private func gridFutureIntensity(index: Int, elapsedCells: Int, cellCount: Int) -> Double {
         let futureRange = max(1, cellCount - elapsedCells)
-        let distance = Double(index - elapsedCells) / Double(futureRange)
-        if distance < 0.12 { return 4 }
-        if distance < 0.35 { return 3 }
-        if distance < 0.65 { return 2 }
-        return 1
+        let distance = Double(max(0, index - elapsedCells)) / Double(futureRange)
+        return max(0, 1 - distance)
     }
 
-    private func gridHeatColor(level: Int) -> Color {
-        switch level {
-        case 4: selectedTheme.bottomGlow.opacity(0.96)
-        case 3: selectedTheme.topGlow.opacity(0.84)
-        case 2: selectedTheme.topGlow.opacity(0.6)
-        case 1: selectedTheme.topGlow.opacity(0.34)
-        default: Color.white.opacity(0.1)
+    private func gridHeatColor(isPast: Bool, isCurrent: Bool, futureIntensity: Double) -> Color {
+        if isCurrent {
+            return selectedTheme.topGlow.opacity(0.95)
         }
+        if isPast {
+            return selectedTheme.bottomGlow.opacity(0.92)
+        }
+        return selectedTheme.topGlow.opacity(0.18 + (0.36 * futureIntensity))
     }
 
     private func milestoneGraphCard(progress: Double) -> some View {
