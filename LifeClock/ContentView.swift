@@ -218,6 +218,7 @@ struct ContentView: View {
     @State private var animateBackground = false
     @State private var iconErrorMessage: String?
     @State private var unitSwapPulse = false
+    @State private var showLifeGrid = false
     @Namespace private var unitChipSelectionAnimation
 
     private var selectedUnit: LifeUnit {
@@ -320,86 +321,90 @@ struct ContentView: View {
         return ScrollView {
             VStack(spacing: 22) {
                 header
+                if showLifeGrid {
+                    lifeGridCard(elapsed: elapsed, remaining: remaining)
+                    unitPicker
+                } else {
+                    VStack(alignment: .leading, spacing: 18) {
+                        HStack(alignment: .top) {
+                            VStack(alignment: .leading, spacing: 7) {
+                                Text("LIFE CLOCK")
+                                    .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
+                                    .tracking(1.8)
+                                    .foregroundStyle(.white.opacity(0.74))
 
-                VStack(alignment: .leading, spacing: 18) {
-                    HStack(alignment: .top) {
-                        VStack(alignment: .leading, spacing: 7) {
-                            Text("LIFE CLOCK")
-                                .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
-                                .tracking(1.8)
-                                .foregroundStyle(.white.opacity(0.74))
+                                ZStack(alignment: .leading) {
+                                    Text(formattedValue(unitValue, unit: selectedUnit))
+                                        .font(.system(size: 58, weight: .black, design: selectedTypography.heroDesign))
+                                        .minimumScaleFactor(0.5)
+                                        .lineLimit(1)
+                                        .monospacedDigit()
+                                        .foregroundStyle(.white)
+                                        .contentTransition(.numericText())
+                                        .id("life-clock-value-\(selectedUnitRaw)")
+                                        .transition(unitSwapTransition)
+                                }
+                                .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
 
-                            ZStack(alignment: .leading) {
-                                Text(formattedValue(unitValue, unit: selectedUnit))
-                                    .font(.system(size: 58, weight: .black, design: selectedTypography.heroDesign))
-                                    .minimumScaleFactor(0.5)
-                                    .lineLimit(1)
-                                    .monospacedDigit()
-                                    .foregroundStyle(.white)
-                                    .contentTransition(.numericText())
-                                    .id("life-clock-value-\(selectedUnitRaw)")
-                                    .transition(unitSwapTransition)
+                                ZStack(alignment: .leading) {
+                                    Text(selectedUnit.title)
+                                        .font(.system(size: 18, weight: .semibold, design: selectedTypography.bodyDesign))
+                                        .foregroundStyle(.white.opacity(0.88))
+                                        .id("life-clock-unit-\(selectedUnitRaw)")
+                                        .transition(unitSwapTransition)
+                                }
+                                .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
                             }
-                            .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
 
-                            ZStack(alignment: .leading) {
-                                Text(selectedUnit.title)
-                                    .font(.system(size: 18, weight: .semibold, design: selectedTypography.bodyDesign))
-                                    .foregroundStyle(.white.opacity(0.88))
-                                    .id("life-clock-unit-\(selectedUnitRaw)")
-                                    .transition(unitSwapTransition)
-                            }
-                            .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
+                            Spacer()
+
+                            LifeProgressRing(progress: progress, colors: selectedTheme.ringColors)
                         }
 
-                        Spacer()
+                        Divider().overlay(.white.opacity(0.25))
 
-                        LifeProgressRing(progress: progress, colors: selectedTheme.ringColors)
-                    }
+                        HStack {
+                            Label {
+                                Text("Since \(birthDate.formatted(date: .abbreviated, time: .omitted))")
+                            } icon: {
+                                Image(systemName: "calendar")
+                            }
 
-                    Divider().overlay(.white.opacity(0.25))
+                            Spacer()
 
-                    HStack {
-                        Label {
-                            Text("Since \(birthDate.formatted(date: .abbreviated, time: .omitted))")
-                        } icon: {
-                            Image(systemName: "calendar")
+                            Text(progress.formatted(.percent.precision(.fractionLength(0))))
+                                .font(.system(size: 16, weight: .bold, design: selectedTypography.bodyDesign))
                         }
-
-                        Spacer()
-
-                        Text(progress.formatted(.percent.precision(.fractionLength(0))))
-                            .font(.system(size: 16, weight: .bold, design: selectedTypography.bodyDesign))
+                        .font(.system(size: 14, weight: .medium, design: selectedTypography.bodyDesign))
+                        .foregroundStyle(.white.opacity(0.86))
                     }
-                    .font(.system(size: 14, weight: .medium, design: selectedTypography.bodyDesign))
-                    .foregroundStyle(.white.opacity(0.86))
-                }
-                .padding(22)
-                .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 34, style: .continuous))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 34, style: .continuous)
-                        .stroke(.white.opacity(0.18), lineWidth: 1)
-                }
-                .scaleEffect(unitSwapPulse ? 0.985 : 1)
-                .opacity(unitSwapPulse ? 0.95 : 1)
-                .animation(.spring(response: 0.35, dampingFraction: 0.8), value: unitSwapPulse)
+                    .padding(22)
+                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 34, style: .continuous))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 34, style: .continuous)
+                            .stroke(.white.opacity(0.18), lineWidth: 1)
+                    }
+                    .scaleEffect(unitSwapPulse ? 0.985 : 1)
+                    .opacity(unitSwapPulse ? 0.95 : 1)
+                    .animation(.spring(response: 0.35, dampingFraction: 0.8), value: unitSwapPulse)
 
-                timeLeftHero(remaining: remaining)
-                unitPicker
-                milestoneGraphCard(progress: progress)
+                    timeLeftHero(remaining: remaining)
+                    unitPicker
+                    milestoneGraphCard(progress: progress)
 
-                HStack(spacing: 14) {
-                    statCard(
-                        title: "Days lived",
-                        value: Int(elapsed / LifeUnit.days.seconds).formatted(.number.grouping(.automatic)),
-                        icon: "sun.max"
-                    )
+                    HStack(spacing: 14) {
+                        statCard(
+                            title: "Days lived",
+                            value: Int(elapsed / LifeUnit.days.seconds).formatted(.number.grouping(.automatic)),
+                            icon: "sun.max"
+                        )
 
-                    statCard(
-                        title: "Years left (est.)",
-                        value: Int((remaining / LifeUnit.years.seconds).rounded()).formatted(.number.grouping(.automatic)),
-                        icon: "hourglass.bottomhalf.filled"
-                    )
+                        statCard(
+                            title: "Years left (est.)",
+                            value: Int((remaining / LifeUnit.years.seconds).rounded()).formatted(.number.grouping(.automatic)),
+                            icon: "hourglass.bottomhalf.filled"
+                        )
+                    }
                 }
             }
             .padding(.horizontal, 20)
@@ -423,6 +428,12 @@ struct ContentView: View {
             Spacer()
 
             HStack(spacing: 10) {
+                circleButton(systemName: showLifeGrid ? "chart.bar.doc.horizontal.fill" : "square.grid.3x3.fill") {
+                    withAnimation(.spring(response: 0.42, dampingFraction: 0.86)) {
+                        showLifeGrid.toggle()
+                    }
+                }
+
                 circleButton(systemName: "slider.horizontal.3") {
                     showSettings = true
                 }
@@ -573,6 +584,100 @@ struct ContentView: View {
         case .hours: 0.84
         case .minutes: 0.78
         case .seconds: 0.72
+        }
+    }
+
+    private func lifeGridCard(elapsed: TimeInterval, remaining: TimeInterval) -> some View {
+        let totalUnits = max((lifeExpectancyYears * LifeUnit.years.seconds) / selectedUnit.seconds, 1)
+        let elapsedUnits = min(max(elapsed / selectedUnit.seconds, 0), totalUnits)
+        let remainingUnits = max(0, totalUnits - elapsedUnits)
+        let cellCount = 364
+        let elapsedCells = min(cellCount, Int((elapsedUnits / totalUnits * Double(cellCount)).rounded(.down)))
+        let unitsPerCell = max(1, Int((totalUnits / Double(cellCount)).rounded(.up)))
+        let rows = Array(repeating: GridItem(.fixed(12), spacing: 5), count: 7)
+
+        return VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("LIFE GRID")
+                        .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
+                        .tracking(1.5)
+                        .foregroundStyle(.white.opacity(0.76))
+
+                    HStack(alignment: .firstTextBaseline, spacing: 8) {
+                        Text(formattedValue(remainingUnits, unit: selectedUnit))
+                            .font(.system(size: 44, weight: .black, design: selectedTypography.heroDesign))
+                            .monospacedDigit()
+                            .foregroundStyle(.white)
+                            .contentTransition(.numericText())
+
+                        Text("\(selectedUnit.title) left")
+                            .font(.system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign))
+                            .foregroundStyle(.white.opacity(0.86))
+                    }
+                }
+                Spacer()
+            }
+
+            Text("Each cell ≈ \(unitsPerCell.formatted(.number.grouping(.never))) \(selectedUnit.title.lowercased())")
+                .font(.system(size: 12, weight: .medium, design: selectedTypography.bodyDesign))
+                .foregroundStyle(.white.opacity(0.7))
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHGrid(rows: rows, spacing: 5) {
+                    ForEach(0..<cellCount, id: \.self) { index in
+                        let level = gridHeatLevel(index: index, elapsedCells: elapsedCells, cellCount: cellCount)
+                        let isCurrent = index == elapsedCells && elapsedCells < cellCount
+
+                        RoundedRectangle(cornerRadius: 3, style: .continuous)
+                            .fill(gridHeatColor(level: level))
+                            .frame(width: 12, height: 12)
+                            .overlay {
+                                if isCurrent {
+                                    RoundedRectangle(cornerRadius: 3, style: .continuous)
+                                        .stroke(.white.opacity(0.95), lineWidth: 1)
+                                }
+                            }
+                    }
+                }
+                .padding(2)
+            }
+
+            HStack(spacing: 14) {
+                Label("Past", systemImage: "square.fill")
+                    .foregroundStyle(.white.opacity(0.6))
+                Label("Current", systemImage: "location.fill")
+                    .foregroundStyle(.white.opacity(0.9))
+                Label("Future", systemImage: "sparkles")
+                    .foregroundStyle(selectedTheme.topGlow.opacity(0.95))
+            }
+            .font(.system(size: 11, weight: .medium, design: selectedTypography.bodyDesign))
+        }
+        .padding(18)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .stroke(.white.opacity(0.16), lineWidth: 1)
+        }
+    }
+
+    private func gridHeatLevel(index: Int, elapsedCells: Int, cellCount: Int) -> Int {
+        if index < elapsedCells { return 0 }
+        let futureRange = max(1, cellCount - elapsedCells)
+        let distance = Double(index - elapsedCells) / Double(futureRange)
+        if distance < 0.12 { return 4 }
+        if distance < 0.35 { return 3 }
+        if distance < 0.65 { return 2 }
+        return 1
+    }
+
+    private func gridHeatColor(level: Int) -> Color {
+        switch level {
+        case 4: selectedTheme.bottomGlow.opacity(0.96)
+        case 3: selectedTheme.topGlow.opacity(0.84)
+        case 2: selectedTheme.topGlow.opacity(0.6)
+        case 1: selectedTheme.topGlow.opacity(0.34)
+        default: Color.white.opacity(0.1)
         }
     }
 
