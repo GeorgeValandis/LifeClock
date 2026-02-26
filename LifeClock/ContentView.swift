@@ -591,10 +591,12 @@ struct ContentView: View {
         let totalUnits = max((lifeExpectancyYears * LifeUnit.years.seconds) / selectedUnit.seconds, 1)
         let elapsedUnits = min(max(elapsed / selectedUnit.seconds, 0), totalUnits)
         let remainingUnits = max(0, totalUnits - elapsedUnits)
-        let cellCount = 364
+        let rows = 14
+        let columns = 26
+        let cellCount = rows * columns
         let elapsedCells = min(cellCount, Int((elapsedUnits / totalUnits * Double(cellCount)).rounded(.down)))
         let unitsPerCell = max(1, Int((totalUnits / Double(cellCount)).rounded(.up)))
-        let rows = Array(repeating: GridItem(.fixed(12), spacing: 5), count: 7)
+        let gridColumns = Array(repeating: GridItem(.flexible(minimum: 8, maximum: 12), spacing: 3), count: columns)
 
         return VStack(alignment: .leading, spacing: 14) {
             HStack {
@@ -623,25 +625,25 @@ struct ContentView: View {
                 .font(.system(size: 12, weight: .medium, design: selectedTypography.bodyDesign))
                 .foregroundStyle(.white.opacity(0.7))
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: rows, spacing: 5) {
-                    ForEach(0..<cellCount, id: \.self) { index in
-                        let isPast = index < elapsedCells
-                        let isCurrent = index == elapsedCells && elapsedCells < cellCount
-                        let futureIntensity = gridFutureIntensity(index: index, elapsedCells: elapsedCells, cellCount: cellCount)
+            LazyVGrid(columns: gridColumns, spacing: 3) {
+                ForEach(0..<cellCount, id: \.self) { displayIndex in
+                    let row = displayIndex / columns
+                    let column = displayIndex % columns
+                    let progressIndex = (column * rows) + row
+                    let isPast = progressIndex < elapsedCells
+                    let isCurrent = progressIndex == elapsedCells && elapsedCells < cellCount
+                    let futureIntensity = gridFutureIntensity(index: progressIndex, elapsedCells: elapsedCells, cellCount: cellCount)
 
-                        RoundedRectangle(cornerRadius: 3, style: .continuous)
-                            .fill(gridHeatColor(isPast: isPast, isCurrent: isCurrent, futureIntensity: futureIntensity))
-                            .frame(width: 12, height: 12)
-                            .overlay {
-                                if isCurrent {
-                                    RoundedRectangle(cornerRadius: 3, style: .continuous)
-                                        .stroke(.white.opacity(0.95), lineWidth: 1)
-                                }
+                    RoundedRectangle(cornerRadius: 3, style: .continuous)
+                        .fill(gridHeatColor(isPast: isPast, isCurrent: isCurrent, futureIntensity: futureIntensity))
+                        .aspectRatio(1, contentMode: .fit)
+                        .overlay {
+                            if isCurrent {
+                                RoundedRectangle(cornerRadius: 3, style: .continuous)
+                                    .stroke(.white.opacity(0.95), lineWidth: 1)
                             }
-                    }
+                        }
                 }
-                .padding(2)
             }
 
             HStack(spacing: 14) {
