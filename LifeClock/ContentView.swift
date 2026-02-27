@@ -591,12 +591,13 @@ struct ContentView: View {
         let totalUnits = max((lifeExpectancyYears * LifeUnit.years.seconds) / selectedUnit.seconds, 1)
         let elapsedUnits = min(max(elapsed / selectedUnit.seconds, 0), totalUnits)
         let remainingUnits = max(0, totalUnits - elapsedUnits)
-        let rows = 14
-        let columns = 26
+        let dimensions = gridDimensions(for: selectedUnit)
+        let rows = dimensions.rows
+        let columns = dimensions.columns
         let cellCount = rows * columns
         let elapsedCells = min(cellCount, Int((elapsedUnits / totalUnits * Double(cellCount)).rounded(.down)))
         let unitsPerCell = max(1, Int((totalUnits / Double(cellCount)).rounded(.up)))
-        let gridColumns = Array(repeating: GridItem(.flexible(minimum: 8, maximum: 12), spacing: 3), count: columns)
+        let gridColumns = Array(repeating: GridItem(.flexible(minimum: 2, maximum: 12), spacing: 3), count: columns)
 
         return VStack(alignment: .leading, spacing: 14) {
             HStack {
@@ -668,6 +669,18 @@ struct ContentView: View {
         let futureRange = max(1, cellCount - elapsedCells)
         let distance = Double(max(0, index - elapsedCells)) / Double(futureRange)
         return max(0, 1 - distance)
+    }
+
+    private func gridDimensions(for unit: LifeUnit) -> (rows: Int, columns: Int) {
+        switch unit {
+        case .years: (12, 12)
+        case .months: (12, 16)
+        case .weeks: (12, 20)
+        case .days: (12, 24)
+        case .hours: (12, 28)
+        case .minutes: (12, 32)
+        case .seconds: (12, 36)
+        }
     }
 
     private func gridHeatColor(isPast: Bool, isCurrent: Bool, futureIntensity: Double) -> Color {

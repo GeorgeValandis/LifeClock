@@ -103,7 +103,7 @@
         "key": "Each cell ≈ %@ %@",
         "location": {
           "startingColumn": 18,
-          "startingLine": 624
+          "startingLine": 625
         }
       },
       {
@@ -111,7 +111,7 @@
         "key": "LIFE GRID",
         "location": {
           "startingColumn": 26,
-          "startingLine": 604
+          "startingLine": 605
         }
       },
       {
@@ -119,7 +119,7 @@
         "key": "%@ left",
         "location": {
           "startingColumn": 30,
-          "startingLine": 616
+          "startingLine": 617
         }
       },
       {
@@ -127,7 +127,7 @@
         "key": "Past",
         "location": {
           "startingColumn": 23,
-          "startingLine": 650
+          "startingLine": 651
         }
       },
       {
@@ -135,7 +135,7 @@
         "key": "Current",
         "location": {
           "startingColumn": 23,
-          "startingLine": 652
+          "startingLine": 653
         }
       },
       {
@@ -143,7 +143,7 @@
         "key": "Future",
         "location": {
           "startingColumn": 23,
-          "startingLine": 654
+          "startingLine": 655
         }
       },
       {
@@ -151,7 +151,7 @@
         "key": "LIFETIME MILESTONES",
         "location": {
           "startingColumn": 18,
-          "startingLine": 687
+          "startingLine": 700
         }
       },
       {
@@ -159,7 +159,7 @@
         "key": "%lld%%",
         "location": {
           "startingColumn": 30,
-          "startingLine": 697
+          "startingLine": 710
         }
       },
       {
@@ -167,7 +167,7 @@
         "key": "Reached",
         "location": {
           "startingColumn": 54,
-          "startingLine": 717
+          "startingLine": 730
         }
       },
       {
@@ -175,7 +175,7 @@
         "key": "Upcoming",
         "location": {
           "startingColumn": 66,
-          "startingLine": 717
+          "startingLine": 730
         }
       },
       {
@@ -183,7 +183,7 @@
         "key": "Birth date",
         "location": {
           "startingColumn": 38,
-          "startingLine": 798
+          "startingLine": 811
         }
       },
       {
@@ -191,7 +191,7 @@
         "key": "",
         "location": {
           "startingColumn": 37,
-          "startingLine": 802
+          "startingLine": 815
         }
       },
       {
@@ -199,7 +199,7 @@
         "key": "Life expectancy",
         "location": {
           "startingColumn": 42,
-          "startingLine": 820
+          "startingLine": 833
         }
       },
       {
@@ -207,7 +207,7 @@
         "key": "%lld years",
         "location": {
           "startingColumn": 42,
-          "startingLine": 823
+          "startingLine": 836
         }
       },
       {
@@ -215,7 +215,7 @@
         "key": "Tip: Add alternate icon assets named AppIconPulse and AppIconHorizon to fully enable icon switching.",
         "location": {
           "startingColumn": 34,
-          "startingLine": 871
+          "startingLine": 884
         }
       },
       {
@@ -223,7 +223,7 @@
         "key": "Haptics",
         "location": {
           "startingColumn": 34,
-          "startingLine": 881
+          "startingLine": 894
         }
       },
       {
@@ -231,7 +231,7 @@
         "key": "Run onboarding again",
         "location": {
           "startingColumn": 42,
-          "startingLine": 896
+          "startingLine": 909
         }
       },
       {
@@ -239,7 +239,7 @@
         "key": "Legal & Policies",
         "location": {
           "startingColumn": 42,
-          "startingLine": 912
+          "startingLine": 925
         }
       },
       {
@@ -247,7 +247,7 @@
         "key": "Done",
         "location": {
           "startingColumn": 28,
-          "startingLine": 935
+          "startingLine": 948
         }
       },
       {
@@ -255,7 +255,7 @@
         "key": "Last updated: February 24, 2026",
         "location": {
           "startingColumn": 26,
-          "startingLine": 981
+          "startingLine": 994
         }
       },
       {
@@ -263,7 +263,7 @@
         "key": "Policy Links",
         "location": {
           "startingColumn": 30,
-          "startingLine": 969
+          "startingLine": 982
         }
       },
       {
@@ -271,7 +271,7 @@
         "key": "Privacy Policy",
         "location": {
           "startingColumn": 30,
-          "startingLine": 973
+          "startingLine": 986
         }
       },
       {
@@ -279,7 +279,7 @@
         "key": "Terms & Conditions",
         "location": {
           "startingColumn": 30,
-          "startingLine": 974
+          "startingLine": 987
         }
       },
       {
@@ -287,7 +287,7 @@
         "key": "Support",
         "location": {
           "startingColumn": 30,
-          "startingLine": 975
+          "startingLine": 988
         }
       },
       {
@@ -295,7 +295,7 @@
         "key": "Welcome to LifeClock",
         "location": {
           "startingColumn": 26,
-          "startingLine": 1204
+          "startingLine": 1217
         }
       },
       {
@@ -303,7 +303,7 @@
         "key": "Set up your profile in less than a minute.",
         "location": {
           "startingColumn": 26,
-          "startingLine": 1208
+          "startingLine": 1221
         }
       },
       {
@@ -311,7 +311,7 @@
         "key": "Birth date",
         "location": {
           "startingColumn": 29,
-          "startingLine": 1214
+          "startingLine": 1227
         }
       },
       {
@@ -319,7 +319,7 @@
         "key": "Expected lifespan",
         "location": {
           "startingColumn": 38,
-          "startingLine": 1225
+          "startingLine": 1238
         }
       },
       {
@@ -327,7 +327,7 @@
         "key": "%lld years",
         "location": {
           "startingColumn": 38,
-          "startingLine": 1228
+          "startingLine": 1241
         }
       },
       {
@@ -335,7 +335,7 @@
         "key": "Default unit",
         "location": {
           "startingColumn": 34,
-          "startingLine": 1238
+          "startingLine": 1251
         }
       },
       {
@@ -343,7 +343,7 @@
         "key": "Start LifeClock",
         "location": {
           "startingColumn": 30,
-          "startingLine": 1264
+          "startingLine": 1277
         }
       }
     ]
