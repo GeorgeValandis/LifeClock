@@ -606,10 +606,19 @@ struct ContentView: View {
         let cellCount = rows * columns
         let unitsPerCell = 1
         let totalWholeUnits = max(1, Int(totalUnits.rounded(.down)))
-        let halfWindow = cellCount / 2
         let maxStart = max(0, totalWholeUnits - cellCount)
-        let windowStart = min(max(0, elapsedUnits - halfWindow), maxStart)
-        let currentIndexInWindow = min(max(0, elapsedUnits - windowStart), cellCount - 1)
+        let currentIndexInWindow: Int
+        let windowStart: Int
+        if totalWholeUnits <= cellCount {
+            windowStart = 0
+            currentIndexInWindow = min(max(0, elapsedUnits), cellCount - 1)
+        } else {
+            // Move the current marker forward cell by cell, then advance to the next window chunk.
+            let movingIndex = max(0, elapsedUnits % cellCount)
+            currentIndexInWindow = min(movingIndex, cellCount - 1)
+            let alignedWindowStart = elapsedUnits - currentIndexInWindow
+            windowStart = min(max(0, alignedWindowStart), maxStart)
+        }
         let gridColumns = Array(repeating: GridItem(.flexible(minimum: 1, maximum: 12), spacing: 2), count: columns)
 
         return VStack(alignment: .leading, spacing: 14) {
