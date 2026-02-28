@@ -237,6 +237,14 @@ struct ContentView: View {
         Date(timeIntervalSince1970: birthDateTimestamp)
     }
 
+    private var timelineRefreshInterval: TimeInterval {
+        if showLifeGrid {
+            // Grid cursor should advance exactly when one selected unit completes.
+            return max(1, min(selectedUnit.seconds, 3600))
+        }
+        return 1
+    }
+
     private var unitSwapTransition: AnyTransition {
         .asymmetric(
             insertion: .opacity.combined(with: .offset(x: 12)),
@@ -249,7 +257,7 @@ struct ContentView: View {
             ZStack {
                 background
 
-                TimelineView(.periodic(from: .now, by: 1)) { context in
+                TimelineView(.periodic(from: .now, by: timelineRefreshInterval)) { context in
                     mainContent(now: context.date)
                 }
             }
@@ -390,7 +398,7 @@ struct ContentView: View {
 
                     timeLeftHero(remaining: remaining)
                     unitPicker
-                    milestoneGraphCard(progress: progress)
+                    nextMilestoneCard(now: now, elapsed: elapsed)
 
                     HStack(spacing: 14) {
                         statCard(
@@ -589,15 +597,20 @@ struct ContentView: View {
 
     private func lifeGridCard(elapsed: TimeInterval, remaining: TimeInterval) -> some View {
         let totalUnits = max((lifeExpectancyYears * LifeUnit.years.seconds) / selectedUnit.seconds, 1)
-        let elapsedUnits = min(max(elapsed / selectedUnit.seconds, 0), totalUnits)
-        let remainingUnits = max(0, totalUnits - elapsedUnits)
+        let elapsedUnitsRaw = min(max(elapsed / selectedUnit.seconds, 0), totalUnits)
+        let elapsedUnits = Int(elapsedUnitsRaw.rounded(.down))
+        let remainingUnits = max(0, Int((totalUnits - Double(elapsedUnits)).rounded()))
         let dimensions = gridDimensions(for: selectedUnit)
         let rows = dimensions.rows
         let columns = dimensions.columns
         let cellCount = rows * columns
-        let elapsedCells = min(cellCount, Int((elapsedUnits / totalUnits * Double(cellCount)).rounded(.down)))
-        let unitsPerCell = max(1, Int((totalUnits / Double(cellCount)).rounded(.up)))
-        let gridColumns = Array(repeating: GridItem(.flexible(minimum: 2, maximum: 12), spacing: 3), count: columns)
+        let unitsPerCell = 1
+        let totalWholeUnits = max(1, Int(totalUnits.rounded(.down)))
+        let halfWindow = cellCount / 2
+        let maxStart = max(0, totalWholeUnits - cellCount)
+        let windowStart = min(max(0, elapsedUnits - halfWindow), maxStart)
+        let currentIndexInWindow = min(max(0, elapsedUnits - windowStart), cellCount - 1)
+        let gridColumns = Array(repeating: GridItem(.flexible(minimum: 1, maximum: 12), spacing: 2), count: columns)
 
         return VStack(alignment: .leading, spacing: 14) {
             HStack {
@@ -608,11 +621,13 @@ struct ContentView: View {
                         .foregroundStyle(.white.opacity(0.76))
 
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
-                        Text(formattedValue(remainingUnits, unit: selectedUnit))
+                        Text(remainingUnits.formatted(.number.grouping(.never)))
                             .font(.system(size: 44, weight: .black, design: selectedTypography.heroDesign))
                             .monospacedDigit()
                             .foregroundStyle(.white)
                             .contentTransition(.numericText())
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.42)
 
                         Text("\(selectedUnit.title) left")
                             .font(.system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign))
@@ -622,7 +637,7 @@ struct ContentView: View {
                 Spacer()
             }
 
-            Text("Each cell ≈ \(unitsPerCell.formatted(.number.grouping(.never))) \(selectedUnit.title.lowercased())")
+            Text("Each cell = 1 \(selectedUnit.title.lowercased().dropLast()) • rolling window")
                 .font(.system(size: 12, weight: .medium, design: selectedTypography.bodyDesign))
                 .foregroundStyle(.white.opacity(0.7))
 
@@ -631,9 +646,10 @@ struct ContentView: View {
                     let row = displayIndex / columns
                     let column = displayIndex % columns
                     let progressIndex = (column * rows) + row
-                    let isPast = progressIndex < elapsedCells
-                    let isCurrent = progressIndex == elapsedCells && elapsedCells < cellCount
-                    let futureIntensity = gridFutureIntensity(index: progressIndex, elapsedCells: elapsedCells, cellCount: cellCount)
+                    let absoluteUnitIndex = windowStart + progressIndex
+                    let isPast = absoluteUnitIndex < elapsedUnits
+                    let isCurrent = progressIndex == currentIndexInWindow
+                    let futureIntensity = gridFutureIntensity(index: progressIndex, elapsedCells: currentIndexInWindow, cellCount: cellCount)
 
                     RoundedRectangle(cornerRadius: 3, style: .continuous)
                         .fill(gridHeatColor(isPast: isPast, isCurrent: isCurrent, futureIntensity: futureIntensity))
@@ -673,13 +689,13 @@ struct ContentView: View {
 
     private func gridDimensions(for unit: LifeUnit) -> (rows: Int, columns: Int) {
         switch unit {
-        case .years: (12, 12)
-        case .months: (12, 16)
-        case .weeks: (12, 20)
-        case .days: (12, 24)
-        case .hours: (12, 28)
-        case .minutes: (12, 32)
-        case .seconds: (12, 36)
+        case .years: (10, 10)       // 100
+        case .months: (18, 30)      // 540
+        case .weeks: (20, 40)       // 800
+        case .days: (24, 40)        // 960
+        case .hours: (26, 42)       // 1092
+        case .minutes: (28, 44)     // 1232
+        case .seconds: (30, 46)     // 1380
         }
     }
 
@@ -693,49 +709,58 @@ struct ContentView: View {
         return selectedTheme.topGlow.opacity(0.18 + (0.36 * futureIntensity))
     }
 
-    private func milestoneGraphCard(progress: Double) -> some View {
+    private func nextMilestoneCard(now: Date, elapsed: TimeInterval) -> some View {
+        let fullLife = max(lifeExpectancyYears * LifeUnit.years.seconds, 1)
+        let progress = min(max(elapsed / fullLife, 0), 1)
         let milestones = [0.25, 0.5, 0.75, 1.0]
+        let nextMilestone = milestones.first(where: { $0 > progress }) ?? 1.0
+        let previousMilestone = milestones.last(where: { $0 < nextMilestone }) ?? 0.0
+        let segmentProgress = min(max((progress - previousMilestone) / max(nextMilestone - previousMilestone, 0.0001), 0), 1)
+
+        let milestoneDate = birthDate.addingTimeInterval(fullLife * nextMilestone)
+        let remainingToMilestone = max(0, milestoneDate.timeIntervalSince(now))
+        let years = Int(remainingToMilestone / LifeUnit.years.seconds)
+        let months = Int((remainingToMilestone.truncatingRemainder(dividingBy: LifeUnit.years.seconds)) / LifeUnit.months.seconds)
 
         return VStack(alignment: .leading, spacing: 12) {
-            Text("LIFETIME MILESTONES")
+            Text("NEXT MILESTONE")
                 .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
                 .tracking(1.5)
                 .foregroundStyle(.white.opacity(0.76))
 
-            HStack(spacing: 12) {
-                ForEach(milestones, id: \.self) { milestone in
-                    let fillProgress = min(progress / milestone, 1)
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text("\(Int(nextMilestone * 100))%")
+                    .font(.system(size: 36, weight: .black, design: selectedTypography.heroDesign))
+                    .foregroundStyle(.white)
+                Text("of lifetime")
+                    .font(.system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign))
+                    .foregroundStyle(.white.opacity(0.86))
+            }
 
-                    VStack(spacing: 8) {
-                        Text("\(Int(milestone * 100))%")
-                            .font(.system(size: 11, weight: .semibold, design: selectedTypography.bodyDesign))
-                            .foregroundStyle(.white.opacity(0.78))
+            Text("≈ \(years)y \(months)m left")
+                .font(.system(size: 16, weight: .semibold, design: selectedTypography.bodyDesign))
+                .foregroundStyle(.white.opacity(0.9))
 
-                        ZStack(alignment: .bottom) {
-                            Capsule()
-                                .fill(.white.opacity(0.16))
-                                .frame(width: 18, height: 62)
+            Text("Expected around \(milestoneDate.formatted(date: .abbreviated, time: .omitted))")
+                .font(.system(size: 13, weight: .medium, design: selectedTypography.bodyDesign))
+                .foregroundStyle(.white.opacity(0.72))
 
-                            Capsule()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [selectedTheme.topGlow, selectedTheme.bottomGlow],
-                                        startPoint: .top,
-                                        endPoint: .bottom
-                                    )
-                                )
-                                .frame(width: 18, height: 62 * fillProgress)
-                        }
-
-                        Text(progress >= milestone ? "Reached" : "Upcoming")
-                            .font(.system(size: 10, weight: .medium, design: selectedTypography.bodyDesign))
-                            .foregroundStyle(progress >= milestone ? .white : .white.opacity(0.58))
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.8)
-                    }
-                    .frame(maxWidth: .infinity)
+            GeometryReader { proxy in
+                ZStack(alignment: .leading) {
+                    Capsule()
+                        .fill(.white.opacity(0.14))
+                    Capsule()
+                        .fill(
+                            LinearGradient(
+                                colors: [selectedTheme.topGlow, selectedTheme.bottomGlow],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
+                        .frame(width: max(8, proxy.size.width * segmentProgress))
                 }
             }
+            .frame(height: 12)
         }
         .padding(16)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
@@ -1107,7 +1132,7 @@ struct ContentView: View {
     }
 
     private func formattedValue(_ value: Double, unit: LifeUnit) -> String {
-        Int(value.rounded()).formatted(.number.grouping(.automatic))
+        Int(value.rounded()).formatted(.number.grouping(.never))
     }
 
     private func lifeProgress(elapsed: TimeInterval) -> Double {
@@ -1191,6 +1216,7 @@ private struct OnboardingView: View {
     @Binding var lifeExpectancyYears: Double
 
     let completeAction: () -> Void
+    @State private var showBirthDatePicker = false
 
     private var birthDateBinding: Binding<Date> {
         Binding(
@@ -1223,13 +1249,20 @@ private struct OnboardingView: View {
                         .foregroundStyle(.white.opacity(0.82))
 
                     card {
-                        DatePicker(
-                            "Birth date",
-                            selection: birthDateBinding,
-                            in: ...Date(),
-                            displayedComponents: .date
-                        )
-                        .tint(.teal)
+                        Button {
+                            showBirthDatePicker = true
+                        } label: {
+                            HStack {
+                                Text("Birth date")
+                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+                                    .foregroundStyle(.white)
+                                Spacer()
+                                Text(birthDateBinding.wrappedValue.formatted(date: .abbreviated, time: .omitted))
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                    .foregroundStyle(.teal)
+                            }
+                        }
+                        .buttonStyle(.plain)
                     }
 
                     card {
@@ -1286,6 +1319,54 @@ private struct OnboardingView: View {
                 }
                 .padding(24)
             }
+        }
+        .sheet(isPresented: $showBirthDatePicker) {
+            ZStack {
+                LinearGradient(
+                    colors: [
+                        Color(red: 0.06, green: 0.10, blue: 0.17),
+                        Color(red: 0.08, green: 0.13, blue: 0.21)
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .ignoresSafeArea()
+
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("Birth date")
+                        .font(.system(size: 24, weight: .black, design: .rounded))
+                        .foregroundStyle(.white)
+
+                    DatePicker(
+                        "",
+                        selection: birthDateBinding,
+                        in: ...Date(),
+                        displayedComponents: .date
+                    )
+                    .datePickerStyle(.graphical)
+                    .labelsHidden()
+                    .tint(.teal)
+                    .colorScheme(.dark)
+
+                    HStack {
+                        Spacer()
+                        Button("Done") {
+                            showBirthDatePicker = false
+                        }
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .foregroundStyle(.black)
+                        .padding(.horizontal, 18)
+                        .padding(.vertical, 10)
+                        .background(
+                            RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                .fill(Color(red: 0.85, green: 0.99, blue: 0.95))
+                        )
+                    }
+                }
+                .padding(24)
+            }
+            .presentationDetents([.medium])
+            .presentationDragIndicator(.visible)
         }
     }
 

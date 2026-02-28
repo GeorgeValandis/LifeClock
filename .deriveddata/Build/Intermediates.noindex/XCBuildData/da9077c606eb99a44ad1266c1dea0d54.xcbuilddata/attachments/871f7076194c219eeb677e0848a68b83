@@ -1,0 +1,49 @@
+{
+  "" : {
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClock-primary.dia",
+    "emit-module-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClock-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClock-primary-emit-module.dia",
+    "pch" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClock-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClock-primary.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/ContentView.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/Item.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/Item.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/Item.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/Item.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/Item.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/Item.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/Item.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/Item.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/Item~partial.swiftmodule"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/LifeClockApp.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp~partial.swiftmodule"
+  }
+}

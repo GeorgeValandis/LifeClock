@@ -1,0 +1,871 @@
+[
+  {
+    "typeName": "LifeClockWidgetExtension.WidgetLifeUnit",
+    "mangledTypeName": "24LifeClockWidgetExtension0cA4UnitO",
+    "kind": "enum",
+    "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+    "line": 5,
+    "conformances": [
+      "Swift.Equatable",
+      "Swift.Hashable",
+      "Swift.RawRepresentable",
+      "Swift.CaseIterable",
+      "AppIntents.AppEnum",
+      "AppIntents.AppValue",
+      "AppIntents.StaticDisplayRepresentable",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents.TypeDisplayRepresentable",
+      "AppIntents._IntentValue",
+      "Swift.Sendable",
+      "AppIntents.CaseDisplayRepresentable",
+      "Swift.SendableMetatype",
+      "Foundation.CustomLocalizedStringResourceConvertible",
+      "Swift.BitwiseCopyable"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "Swift.Equatable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Hashable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.RawRepresentable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.CaseIterable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppEnum",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppValue",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.StaticDisplayRepresentable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.TypeDisplayRepresentable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._IntentValue",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.CaseDisplayRepresentable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "Foundation.CustomLocalizedStringResourceConvertible",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.BitwiseCopyable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "RawValue",
+        "substitutedTypeName": "Swift.String",
+        "substitutedMangledTypeName": "SS"
+      },
+      {
+        "typeAliasName": "AllCases",
+        "substitutedTypeName": "Swift.Array<LifeClockWidgetExtension.WidgetLifeUnit>",
+        "substitutedMangledTypeName": "Say24LifeClockWidgetExtension0cA4UnitOG"
+      },
+      {
+        "typeAliasName": "ValueType",
+        "substitutedTypeName": "LifeClockWidgetExtension.WidgetLifeUnit",
+        "substitutedMangledTypeName": "24LifeClockWidgetExtension0cA4UnitO"
+      },
+      {
+        "typeAliasName": "UnwrappedType",
+        "substitutedTypeName": "LifeClockWidgetExtension.WidgetLifeUnit",
+        "substitutedMangledTypeName": "24LifeClockWidgetExtension0cA4UnitO"
+      },
+      {
+        "typeAliasName": "Specification",
+        "substitutedTypeName": "some AppIntents.ResolverSpecification",
+        "substitutedMangledTypeName": "10AppIntents0A4EnumPAAE28defaultResolverSpecificationQrvpZQOy24LifeClockWidgetExtension0iG4UnitO_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ResolverSpecification"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      }
+    ],
+    "properties": [
+      {
+        "label": "typeDisplayRepresentation",
+        "type": "AppIntents.TypeDisplayRepresentation",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 14,
+        "valueKind": "RawLiteral",
+        "value": "Unit"
+      },
+      {
+        "label": "caseDisplayRepresentations",
+        "type": "Swift.Dictionary<LifeClockWidgetExtension.WidgetLifeUnit, AppIntents.DisplayRepresentation>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 16,
+        "valueKind": "Dictionary",
+        "value": [
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "years"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Years"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "months"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Months"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "weeks"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Weeks"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "days"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Days"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "hours"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Hours"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "minutes"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Minutes"
+            }
+          },
+          {
+            "key": {
+              "valueKind": "Enum",
+              "value": {
+                "name": "seconds"
+              }
+            },
+            "value": {
+              "valueKind": "RawLiteral",
+              "value": "Seconds"
+            }
+          }
+        ]
+      },
+      {
+        "label": "seconds",
+        "type": "Swift.Double",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 26,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "shortLabel",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 38,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "allCases",
+        "type": "Swift.Array<LifeClockWidgetExtension.WidgetLifeUnit>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "true",
+        "valueKind": "Array",
+        "value": [
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "years"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "months"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "weeks"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "days"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "hours"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "minutes"
+            }
+          },
+          {
+            "valueKind": "Enum",
+            "value": {
+              "name": "seconds"
+            }
+          }
+        ]
+      },
+      {
+        "label": "rawValue",
+        "type": "Swift.String",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "valueKind": "Runtime"
+      }
+    ],
+    "cases": [
+      {
+        "name": "years",
+        "rawValue": "years"
+      },
+      {
+        "name": "months",
+        "rawValue": "months"
+      },
+      {
+        "name": "weeks",
+        "rawValue": "weeks"
+      },
+      {
+        "name": "days",
+        "rawValue": "days"
+      },
+      {
+        "name": "hours",
+        "rawValue": "hours"
+      },
+      {
+        "name": "minutes",
+        "rawValue": "minutes"
+      },
+      {
+        "name": "seconds",
+        "rawValue": "seconds"
+      }
+    ]
+  },
+  {
+    "typeName": "LifeClockWidgetExtension.LifeGridConfigurationIntent",
+    "mangledTypeName": "24LifeClockWidgetExtension0A23GridConfigurationIntentV",
+    "kind": "struct",
+    "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+    "line": 51,
+    "conformances": [
+      "AppIntents.WidgetConfigurationIntent",
+      "AppIntents.AppIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.WidgetConfigurationIntent",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "LifeClockWidgetExtension"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "NeverResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "Swift.Never",
+        "substitutedMangledTypeName": "s5NeverO"
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "10AppIntents0A6IntentPAAE16parameterSummaryQrvpZQOy24LifeClockWidgetExtension0f17GridConfigurationC0V_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      }
+    ],
+    "properties": [
+      {
+        "label": "_unit",
+        "type": "AppIntents.IntentParameter<LifeClockWidgetExtension.WidgetLifeUnit>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 56,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<LifeClockWidgetExtension.WidgetLifeUnit>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Unit"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<LifeClockWidgetExtension.WidgetLifeUnit>",
+              "valueKind": "Enum",
+              "value": {
+                "name": "years"
+              }
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<LifeClockWidgetExtension.WidgetLifeUnit>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "_birthDate",
+        "type": "AppIntents.IntentParameter<Foundation.Date>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 59,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Foundation.Date>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Birth Date"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Foundation.Date>",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.Date",
+                "arguments": [
+                  {
+                    "label": "timeIntervalSince1970",
+                    "type": "Swift.Double",
+                    "valueKind": "RawLiteral",
+                    "value": "592444800"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "kind",
+              "type": "AppIntents.IntentParameter<Foundation.Date>.DateKind",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "_lifeExpectancyYears",
+        "type": "AppIntents.IntentParameter<Swift.Double>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "false",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 62,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Double>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Life Expectancy (Years)"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Swift.Double>",
+              "valueKind": "RawLiteral",
+              "value": "90"
+            },
+            {
+              "label": "controlStyle",
+              "type": "AppIntents.IntentParameter<Swift.Double>.DoubleControlStyle",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "inclusiveRange",
+              "type": "Swift.Optional<(lowerBound: Swift.Double, upperBound: Swift.Double)>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 52,
+        "valueKind": "RawLiteral",
+        "value": "Life Grid"
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 53,
+        "valueKind": "RawLiteral",
+        "value": "Show remaining life as a grid in your chosen unit."
+      },
+      {
+        "label": "unit",
+        "type": "LifeClockWidgetExtension.WidgetLifeUnit",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 56,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<LifeClockWidgetExtension.WidgetLifeUnit>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Unit"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<LifeClockWidgetExtension.WidgetLifeUnit>",
+              "valueKind": "Enum",
+              "value": {
+                "name": "years"
+              }
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestDisambiguationDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "supportedValues",
+              "type": "Swift.Array<LifeClockWidgetExtension.WidgetLifeUnit>",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+            "line": 55,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "RawLiteral",
+                "value": "Unit"
+              },
+              {
+                "label": "default",
+                "type": "Swift.Optional<LifeClockWidgetExtension.WidgetLifeUnit>",
+                "valueKind": "Enum",
+                "value": {
+                  "name": "years"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$unit",
+        "type": "AppIntents.IntentParameter<LifeClockWidgetExtension.WidgetLifeUnit>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 56,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "birthDate",
+        "type": "Foundation.Date",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 59,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Foundation.Date>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Birth Date"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Foundation.Date>",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.Date",
+                "arguments": [
+                  {
+                    "label": "timeIntervalSince1970",
+                    "type": "Swift.Double",
+                    "valueKind": "RawLiteral",
+                    "value": "592444800"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "kind",
+              "type": "AppIntents.IntentParameter<Foundation.Date>.DateKind",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+            "line": 58,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "RawLiteral",
+                "value": "Birth Date"
+              },
+              {
+                "label": "default",
+                "type": "Swift.Optional<Foundation.Date>",
+                "valueKind": "InitCall",
+                "value": {
+                  "type": "Foundation.Date",
+                  "arguments": [
+                    {
+                      "label": "timeIntervalSince1970",
+                      "type": "Swift.Double",
+                      "valueKind": "RawLiteral",
+                      "value": "592444800"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$birthDate",
+        "type": "AppIntents.IntentParameter<Foundation.Date>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 59,
+        "valueKind": "Runtime"
+      },
+      {
+        "label": "lifeExpectancyYears",
+        "type": "Swift.Double",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 62,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentParameter<Swift.Double>",
+          "arguments": [
+            {
+              "label": "title",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "RawLiteral",
+              "value": "Life Expectancy (Years)"
+            },
+            {
+              "label": "description",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "default",
+              "type": "Swift.Optional<Swift.Double>",
+              "valueKind": "RawLiteral",
+              "value": "90"
+            },
+            {
+              "label": "controlStyle",
+              "type": "AppIntents.IntentParameter<Swift.Double>.DoubleControlStyle",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "inclusiveRange",
+              "type": "Swift.Optional<(lowerBound: Swift.Double, upperBound: Swift.Double)>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "requestValueDialog",
+              "type": "Swift.Optional<AppIntents.IntentDialog>",
+              "valueKind": "RawLiteral",
+              "value": "nil"
+            },
+            {
+              "label": "inputConnectionBehavior",
+              "type": "AppIntents.InputConnectionBehavior",
+              "valueKind": "Runtime"
+            }
+          ]
+        },
+        "propertyWrappers": [
+          {
+            "type": "AppIntents.IntentParameter",
+            "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+            "line": 61,
+            "arguments": [
+              {
+                "label": "title",
+                "type": "Foundation.LocalizedStringResource",
+                "valueKind": "RawLiteral",
+                "value": "Life Expectancy (Years)"
+              },
+              {
+                "label": "default",
+                "type": "Swift.Optional<Swift.Double>",
+                "valueKind": "RawLiteral",
+                "value": "90"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "label": "$lifeExpectancyYears",
+        "type": "AppIntents.IntentParameter<Swift.Double>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "false",
+        "isComputed": "true",
+        "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
+        "line": 62,
+        "valueKind": "Runtime"
+      }
+    ]
+  }
+]

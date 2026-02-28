@@ -6,6 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0D942447A54B6267580FE7A9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8696BCD4A214E0E466081C /* SwiftUI.framework */; };
+		41AFCF305C29E679B11C148B /* AppIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357B0A79BA0B978F20746EA4 /* AppIntents.framework */; };
+		449B145F6A9337A25AED574E /* LifeClockWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 58EFADCA0783FCAEE9694A95 /* LifeClockWidgetExtension.appex */; };
+		77B934CA362777A8CE5EF74D /* LifeClockWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781CFDAB881A64BA7C4B5AF /* LifeClockWidget.swift */; };
+		A7E8DB272108716BA768A4D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA59DD318CF6E392D46D22EA /* Foundation.framework */; };
+		E0EF9439958490CEED789AF1 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64432F6CDED0C5F32FC52678 /* WidgetKit.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		75A9E1502F4DB4990016AE7B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -21,33 +30,78 @@
 			remoteGlobalIDString = 75A9E13F2F4DB4980016AE7B;
 			remoteInfo = LifeClock;
 		};
+		C743A9B479FDEF7C2F6DC18D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75A9E1382F4DB4980016AE7B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3A8000D14A3686B30AC14A92;
+			remoteInfo = LifeClockWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		3918F18D1F038C6614F1F6CD /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				449B145F6A9337A25AED574E /* LifeClockWidgetExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		017C97EAC24C825E562694FD /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Info.plist; path = LifeClockWidget/Info.plist; sourceTree = "<group>"; };
+		1781CFDAB881A64BA7C4B5AF /* LifeClockWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LifeClockWidget.swift; path = LifeClockWidget/LifeClockWidget.swift; sourceTree = "<group>"; };
+		357B0A79BA0B978F20746EA4 /* AppIntents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppIntents.framework; path = System/Library/Frameworks/AppIntents.framework; sourceTree = "<group>"; };
+		58EFADCA0783FCAEE9694A95 /* LifeClockWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LifeClockWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		64432F6CDED0C5F32FC52678 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = "<group>"; };
 		75A9E1402F4DB4980016AE7B /* LifeClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A9E14F2F4DB4990016AE7B /* LifeClockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeClockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A9E1592F4DB4990016AE7B /* LifeClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeClockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA59DD318CF6E392D46D22EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		DA8696BCD4A214E0E466081C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		75A9E1422F4DB4980016AE7B /* LifeClock */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = LifeClock;
 			sourceTree = "<group>";
 		};
 		75A9E1522F4DB4990016AE7B /* LifeClockTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = LifeClockTests;
 			sourceTree = "<group>";
 		};
 		75A9E15C2F4DB4990016AE7B /* LifeClockUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = LifeClockUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2AFAE90149EDD90E29CC8BFE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7E8DB272108716BA768A4D2 /* Foundation.framework in Frameworks */,
+				E0EF9439958490CEED789AF1 /* WidgetKit.framework in Frameworks */,
+				0D942447A54B6267580FE7A9 /* SwiftUI.framework in Frameworks */,
+				41AFCF305C29E679B11C148B /* AppIntents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75A9E13D2F4DB4980016AE7B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,6 +126,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2047500D75D92F5A47BA038E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				CA59DD318CF6E392D46D22EA /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		4CE5BB622ECAED1CC98E3B59 /* LifeClockWidget */ = {
+			isa = PBXGroup;
+			children = (
+				1781CFDAB881A64BA7C4B5AF /* LifeClockWidget.swift */,
+				017C97EAC24C825E562694FD /* Info.plist */,
+			);
+			name = LifeClockWidget;
+			sourceTree = "<group>";
+		};
 		75A9E1372F4DB4980016AE7B = {
 			isa = PBXGroup;
 			children = (
@@ -79,6 +150,8 @@
 				75A9E1522F4DB4990016AE7B /* LifeClockTests */,
 				75A9E15C2F4DB4990016AE7B /* LifeClockUITests */,
 				75A9E1412F4DB4980016AE7B /* Products */,
+				8ED4461FA1594CBC19B2830E /* Frameworks */,
+				4CE5BB622ECAED1CC98E3B59 /* LifeClockWidget */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,13 +161,42 @@
 				75A9E1402F4DB4980016AE7B /* LifeClock.app */,
 				75A9E14F2F4DB4990016AE7B /* LifeClockTests.xctest */,
 				75A9E1592F4DB4990016AE7B /* LifeClockUITests.xctest */,
+				58EFADCA0783FCAEE9694A95 /* LifeClockWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8ED4461FA1594CBC19B2830E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2047500D75D92F5A47BA038E /* iOS */,
+				64432F6CDED0C5F32FC52678 /* WidgetKit.framework */,
+				DA8696BCD4A214E0E466081C /* SwiftUI.framework */,
+				357B0A79BA0B978F20746EA4 /* AppIntents.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		3A8000D14A3686B30AC14A92 /* LifeClockWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CECB67717B2794325EFC28AD /* Build configuration list for PBXNativeTarget "LifeClockWidgetExtension" */;
+			buildPhases = (
+				3E236097262191117B8A1F51 /* Sources */,
+				2AFAE90149EDD90E29CC8BFE /* Frameworks */,
+				0ED5B552C69708FCFCDF1EF1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LifeClockWidgetExtension;
+			productName = LifeClockWidgetExtension;
+			productReference = 58EFADCA0783FCAEE9694A95 /* LifeClockWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		75A9E13F2F4DB4980016AE7B /* LifeClock */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 75A9E1632F4DB4990016AE7B /* Build configuration list for PBXNativeTarget "LifeClock" */;
@@ -102,17 +204,17 @@
 				75A9E13C2F4DB4980016AE7B /* Sources */,
 				75A9E13D2F4DB4980016AE7B /* Frameworks */,
 				75A9E13E2F4DB4980016AE7B /* Resources */,
+				3918F18D1F038C6614F1F6CD /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				E19A21D797E7D9A3A1407B61 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				75A9E1422F4DB4980016AE7B /* LifeClock */,
 			);
 			name = LifeClock;
-			packageProductDependencies = (
-			);
 			productName = LifeClock;
 			productReference = 75A9E1402F4DB4980016AE7B /* LifeClock.app */;
 			productType = "com.apple.product-type.application";
@@ -134,8 +236,6 @@
 				75A9E1522F4DB4990016AE7B /* LifeClockTests */,
 			);
 			name = LifeClockTests;
-			packageProductDependencies = (
-			);
 			productName = LifeClockTests;
 			productReference = 75A9E14F2F4DB4990016AE7B /* LifeClockTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -157,8 +257,6 @@
 				75A9E15C2F4DB4990016AE7B /* LifeClockUITests */,
 			);
 			name = LifeClockUITests;
-			packageProductDependencies = (
-			);
 			productName = LifeClockUITests;
 			productReference = 75A9E1592F4DB4990016AE7B /* LifeClockUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -203,11 +301,19 @@
 				75A9E13F2F4DB4980016AE7B /* LifeClock */,
 				75A9E14E2F4DB4990016AE7B /* LifeClockTests */,
 				75A9E1582F4DB4990016AE7B /* LifeClockUITests */,
+				3A8000D14A3686B30AC14A92 /* LifeClockWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0ED5B552C69708FCFCDF1EF1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75A9E13E2F4DB4980016AE7B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,6 +338,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3E236097262191117B8A1F51 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77B934CA362777A8CE5EF74D /* LifeClockWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		75A9E13C2F4DB4980016AE7B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -265,6 +379,12 @@
 			isa = PBXTargetDependency;
 			target = 75A9E13F2F4DB4980016AE7B /* LifeClock */;
 			targetProxy = 75A9E15A2F4DB4990016AE7B /* PBXContainerItemProxy */;
+		};
+		E19A21D797E7D9A3A1407B61 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = LifeClockWidgetExtension;
+			target = 3A8000D14A3686B30AC14A92 /* LifeClockWidgetExtension */;
+			targetProxy = C743A9B479FDEF7C2F6DC18D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -538,6 +658,45 @@
 			};
 			name = Release;
 		};
+		BB9AD3EC146D8D34422BCFB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPPZFWPAN7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = LifeClockWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.GA.LifeClock.widget;
+				PRODUCT_NAME = LifeClockWidgetExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C081C7A2E45A1A18FAEE4458 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = LPPZFWPAN7;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = LifeClockWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.GA.LifeClock.widget;
+				PRODUCT_NAME = LifeClockWidgetExtension;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -573,6 +732,15 @@
 			buildConfigurations = (
 				75A9E16A2F4DB4990016AE7B /* Debug */,
 				75A9E16B2F4DB4990016AE7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CECB67717B2794325EFC28AD /* Build configuration list for PBXNativeTarget "LifeClockWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C081C7A2E45A1A18FAEE4458 /* Release */,
+				BB9AD3EC146D8D34422BCFB2 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
