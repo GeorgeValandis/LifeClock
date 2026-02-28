@@ -403,13 +403,13 @@ struct ContentView: View {
                     HStack(spacing: 14) {
                         statCard(
                             title: "Days lived",
-                            value: Int(elapsed / LifeUnit.days.seconds).formatted(.number.grouping(.automatic)),
+                            value: groupedIntegerString(Int(elapsed / LifeUnit.days.seconds)),
                             icon: "sun.max"
                         )
 
                         statCard(
                             title: "Years left (est.)",
-                            value: Int((remaining / LifeUnit.years.seconds).rounded()).formatted(.number.grouping(.automatic)),
+                            value: groupedIntegerString(Int((remaining / LifeUnit.years.seconds).rounded())),
                             icon: "hourglass.bottomhalf.filled"
                         )
                     }
@@ -630,7 +630,7 @@ struct ContentView: View {
                         .foregroundStyle(.white.opacity(0.76))
 
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
-                        Text(remainingUnits.formatted(.number.grouping(.never)))
+                        Text(groupedIntegerString(remainingUnits))
                             .font(.system(size: 44, weight: .black, design: selectedTypography.heroDesign))
                             .monospacedDigit()
                             .foregroundStyle(.white)
@@ -1141,8 +1141,22 @@ struct ContentView: View {
     }
 
     private func formattedValue(_ value: Double, unit: LifeUnit) -> String {
-        Int(value.rounded()).formatted(.number.grouping(.never))
+        groupedIntegerString(Int(value.rounded()))
     }
+
+    private func groupedIntegerString(_ value: Int) -> String {
+        Self.dotGroupingFormatter.string(from: NSNumber(value: value)) ?? "\(value)"
+    }
+
+    private static let dotGroupingFormatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.groupingSeparator = "."
+        formatter.usesGroupingSeparator = true
+        formatter.maximumFractionDigits = 0
+        formatter.minimumFractionDigits = 0
+        return formatter
+    }()
 
     private func lifeProgress(elapsed: TimeInterval) -> Double {
         let fullLife = max(lifeExpectancyYears * LifeUnit.years.seconds, 1)
