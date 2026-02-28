@@ -343,9 +343,11 @@ struct ContentView: View {
 
                                 ZStack(alignment: .leading) {
                                     Text(formattedValue(unitValue, unit: selectedUnit))
-                                        .font(.system(size: 58, weight: .black, design: selectedTypography.heroDesign))
-                                        .minimumScaleFactor(0.5)
+                                        .font(.system(size: lifeClockValueFontSize(for: selectedUnit), weight: .black, design: selectedTypography.heroDesign))
+                                        .minimumScaleFactor(0.22)
                                         .lineLimit(1)
+                                        .allowsTightening(true)
+                                        .layoutPriority(1)
                                         .monospacedDigit()
                                         .foregroundStyle(.white)
                                         .contentTransition(.numericText())
@@ -592,6 +594,15 @@ struct ContentView: View {
         case .hours: 0.84
         case .minutes: 0.78
         case .seconds: 0.72
+        }
+    }
+
+    private func lifeClockValueFontSize(for unit: LifeUnit) -> CGFloat {
+        switch unit {
+        case .seconds: 50
+        case .minutes: 54
+        case .hours: 56
+        default: 58
         }
     }
 
