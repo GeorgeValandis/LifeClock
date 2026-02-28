@@ -144,27 +144,27 @@ struct LifeGridWidgetView: View {
         case .systemSmall:
             return HomeLayout(
                 rows: 6,
-                columns: 11,
-                valueFontSize: 16,
-                horizontalPadding: 10,
-                verticalPadding: 9,
-                cardInset: 7,
-                cornerRadius: 16,
-                spacing: 5,
+                columns: 12,
+                valueFontSize: 20,
+                horizontalPadding: 9,
+                verticalPadding: 8,
+                cardInset: 4,
+                cornerRadius: 15,
+                spacing: 4,
                 showScale: false,
                 showLegend: false
             )
         case .systemMedium:
             return HomeLayout(
                 rows: 8,
-                columns: 19,
-                valueFontSize: 22,
-                horizontalPadding: 13,
-                verticalPadding: 11,
-                cardInset: 9,
-                cornerRadius: 22,
-                spacing: 7,
-                showScale: true,
+                columns: 23,
+                valueFontSize: 34,
+                horizontalPadding: 11,
+                verticalPadding: 10,
+                cardInset: 4,
+                cornerRadius: 20,
+                spacing: 5,
+                showScale: false,
                 showLegend: false
             )
         default:
@@ -444,6 +444,7 @@ struct LifeGridWidget: Widget {
             .accessoryCircular,
             .accessoryRectangular
         ])
+        .contentMarginsDisabled()
     }
 }
 
