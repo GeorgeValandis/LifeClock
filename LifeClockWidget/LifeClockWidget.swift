@@ -125,21 +125,70 @@ struct LifeGridProvider: AppIntentTimelineProvider {
 struct LifeGridWidgetView: View {
     @Environment(\.widgetFamily) private var family
     let entry: LifeGridEntry
+    
+    private struct HomeLayout {
+        let rows: Int
+        let columns: Int
+        let valueFontSize: CGFloat
+        let horizontalPadding: CGFloat
+        let verticalPadding: CGFloat
+        let cardInset: CGFloat
+        let cornerRadius: CGFloat
+        let spacing: CGFloat
+        let showScale: Bool
+        let showLegend: Bool
+    }
 
-    private var rows: Int {
+    private var homeLayout: HomeLayout {
         switch family {
-        case .systemSmall: 7
-        case .systemMedium: 10
-        default: 14
+        case .systemSmall:
+            return HomeLayout(
+                rows: 6,
+                columns: 11,
+                valueFontSize: 16,
+                horizontalPadding: 10,
+                verticalPadding: 9,
+                cardInset: 7,
+                cornerRadius: 16,
+                spacing: 5,
+                showScale: false,
+                showLegend: false
+            )
+        case .systemMedium:
+            return HomeLayout(
+                rows: 8,
+                columns: 19,
+                valueFontSize: 22,
+                horizontalPadding: 13,
+                verticalPadding: 11,
+                cardInset: 9,
+                cornerRadius: 22,
+                spacing: 7,
+                showScale: true,
+                showLegend: false
+            )
+        default:
+            return HomeLayout(
+                rows: 14,
+                columns: 28,
+                valueFontSize: 30,
+                horizontalPadding: 18,
+                verticalPadding: 18,
+                cardInset: 10,
+                cornerRadius: 24,
+                spacing: 8,
+                showScale: true,
+                showLegend: true
+            )
         }
     }
 
+    private var rows: Int {
+        homeLayout.rows
+    }
+
     private var columns: Int {
-        switch family {
-        case .systemSmall: 12
-        case .systemMedium: 22
-        default: 28
-        }
+        homeLayout.columns
     }
 
     private var cellCount: Int { rows * columns }
@@ -183,31 +232,19 @@ struct LifeGridWidgetView: View {
     }
 
     private var shouldShowLegend: Bool {
-        family == .systemLarge
+        homeLayout.showLegend
     }
 
     private var valueFontSize: CGFloat {
-        switch family {
-        case .systemSmall: 16
-        case .systemMedium: 24
-        default: 30
-        }
+        homeLayout.valueFontSize
     }
 
     private var horizontalPadding: CGFloat {
-        switch family {
-        case .systemSmall: 12
-        case .systemMedium: 14
-        default: 18
-        }
+        homeLayout.horizontalPadding
     }
 
     private var verticalPadding: CGFloat {
-        switch family {
-        case .systemSmall: 10
-        case .systemMedium: 12
-        default: 18
-        }
+        homeLayout.verticalPadding
     }
 
     private func singularUnitName(for unit: WidgetLifeUnit) -> String {
@@ -239,41 +276,51 @@ struct LifeGridWidgetView: View {
     }
 
     var body: some View {
+        switch family {
+        case .accessoryInline:
+            inlineAccessoryView
+        case .accessoryCircular:
+            circularAccessoryView
+        case .accessoryRectangular:
+            rectangularAccessoryView
+        default:
+            homeWidgetView
+        }
+    }
+
+    private var homeWidgetView: some View {
         let columnsDef = Array(repeating: GridItem(.flexible(minimum: 1, maximum: 10), spacing: 2), count: columns)
 
-        ZStack {
+        return ZStack {
             LinearGradient(
                 colors: [Color(red: 0.03, green: 0.20, blue: 0.27), Color(red: 0.22, green: 0.19, blue: 0.09)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
 
-            RoundedRectangle(cornerRadius: family == .systemSmall ? 18 : 24, style: .continuous)
+            RoundedRectangle(cornerRadius: homeLayout.cornerRadius, style: .continuous)
                 .fill(Color.white.opacity(0.24))
                 .overlay {
-                    RoundedRectangle(cornerRadius: family == .systemSmall ? 18 : 24, style: .continuous)
+                    RoundedRectangle(cornerRadius: homeLayout.cornerRadius, style: .continuous)
                         .stroke(.white.opacity(0.2), lineWidth: 1)
                 }
-                .padding(family == .systemSmall ? 8 : 10)
+                .padding(homeLayout.cardInset)
 
-            VStack(alignment: .leading, spacing: family == .systemSmall ? 5 : 8) {
+            VStack(alignment: .leading, spacing: homeLayout.spacing) {
                 Text(titleText)
-                    .font(.system(size: family == .systemSmall ? 10 : 12, weight: .bold, design: .rounded))
+                    .font(.system(size: family == .systemSmall ? 9 : 12, weight: .bold, design: .rounded))
                     .tracking(2)
                     .foregroundStyle(.white.opacity(0.78))
 
-                Text(valueLineText)
-                    .font(.system(size: valueFontSize, weight: .black, design: .rounded))
-                    .foregroundStyle(.white)
-                    .minimumScaleFactor(0.45)
-                    .lineLimit(1)
-                    .monospacedDigit()
+                valueLine
 
-                Text(cellScaleText)
-                    .font(.system(size: family == .systemSmall ? 10 : 12, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.75))
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.7)
+                if homeLayout.showScale {
+                    Text(cellScaleText)
+                        .font(.system(size: family == .systemSmall ? 10 : 12, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.white.opacity(0.75))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.72)
+                }
 
                 LazyVGrid(columns: columnsDef, spacing: 2) {
                     ForEach(0..<cellCount, id: \.self) { displayIndex in
@@ -323,6 +370,61 @@ struct LifeGridWidgetView: View {
             )
         }
     }
+
+    private var valueLine: some View {
+        ViewThatFits(in: .horizontal) {
+            Text(valueLineText)
+                .font(.system(size: valueFontSize, weight: .black, design: .rounded))
+                .foregroundStyle(.white)
+                .minimumScaleFactor(0.5)
+                .lineLimit(1)
+                .monospacedDigit()
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(entry.remainingUnits.formatted(.number.grouping(.never)))
+                    .font(.system(size: valueFontSize, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
+                    .monospacedDigit()
+                Text("\(entry.configuration.unit.rawValue.capitalized) left")
+                    .font(.system(size: max(10, valueFontSize * 0.5), weight: .semibold, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.9))
+            }
+        }
+    }
+
+    private var inlineAccessoryView: some View {
+        Text("\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.shortLabel) left")
+    }
+
+    private var circularAccessoryView: some View {
+        let ratio = min(max(entry.elapsedUnits / max(entry.totalUnits, 1), 0), 1)
+        return ZStack {
+            Circle()
+                .fill(.clear)
+            Circle()
+                .trim(from: 0, to: ratio)
+                .stroke(.white, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                .rotationEffect(.degrees(-90))
+                .padding(6)
+            Text("\(entry.remainingUnits)")
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .minimumScaleFactor(0.5)
+        }
+    }
+
+    private var rectangularAccessoryView: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text("Life Grid")
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(.secondary)
+            Text("\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.rawValue.capitalized) left")
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+        }
+    }
 }
 
 struct LifeGridWidget: Widget {
@@ -334,7 +436,14 @@ struct LifeGridWidget: Widget {
         }
         .configurationDisplayName("Life Grid")
         .description("Track your remaining lifetime as a grid.")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .supportedFamilies([
+            .systemSmall,
+            .systemMedium,
+            .systemLarge,
+            .accessoryInline,
+            .accessoryCircular,
+            .accessoryRectangular
+        ])
     }
 }
 
