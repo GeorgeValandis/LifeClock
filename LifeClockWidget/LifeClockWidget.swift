@@ -129,8 +129,8 @@ struct LifeGridWidgetView: View {
     private var rows: Int {
         switch family {
         case .systemSmall: 7
-        case .systemMedium: 9
-        default: 12
+        case .systemMedium: 10
+        default: 14
         }
     }
 
@@ -138,15 +138,35 @@ struct LifeGridWidgetView: View {
         switch family {
         case .systemSmall: 12
         case .systemMedium: 22
-        default: 30
+        default: 28
         }
     }
 
     private var cellCount: Int { rows * columns }
 
-    private var elapsedCells: Int {
-        let ratio = entry.elapsedUnits / max(entry.totalUnits, 1)
-        return min(cellCount, Int((ratio * Double(cellCount)).rounded(.down)))
+    private var elapsedUnits: Int {
+        min(max(0, Int(entry.elapsedUnits.rounded(.down))), max(0, totalWholeUnits))
+    }
+
+    private var totalWholeUnits: Int {
+        max(1, Int(entry.totalUnits.rounded(.down)))
+    }
+
+    private var windowStart: Int {
+        if totalWholeUnits <= cellCount {
+            return 0
+        }
+        let movingIndex = max(0, elapsedUnits % cellCount)
+        let alignedWindowStart = elapsedUnits - movingIndex
+        let maxStart = max(0, totalWholeUnits - cellCount)
+        return min(max(0, alignedWindowStart), maxStart)
+    }
+
+    private var currentIndexInWindow: Int {
+        if totalWholeUnits <= cellCount {
+            return min(max(0, elapsedUnits), cellCount - 1)
+        }
+        return min(max(0, elapsedUnits % cellCount), cellCount - 1)
     }
 
     private var titleText: String {
@@ -154,57 +174,146 @@ struct LifeGridWidgetView: View {
     }
 
     private var valueLineText: String {
-        "\(entry.remainingUnits) \(entry.configuration.unit.rawValue.capitalized) left"
+        "\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.rawValue.capitalized) left"
     }
 
     private var cellScaleText: String {
-        let unitsPerCell = max(1, Int((entry.totalUnits / Double(cellCount)).rounded()))
-        let unit = entry.configuration.unit.rawValue.capitalized
-        return "Each cell ≈ \(unitsPerCell) \(unit.lowercased())"
+        let unit = singularUnitName(for: entry.configuration.unit)
+        return "Each cell = 1 \(unit) • rolling window"
+    }
+
+    private var shouldShowLegend: Bool {
+        family == .systemLarge
+    }
+
+    private var valueFontSize: CGFloat {
+        switch family {
+        case .systemSmall: 16
+        case .systemMedium: 24
+        default: 30
+        }
+    }
+
+    private var horizontalPadding: CGFloat {
+        switch family {
+        case .systemSmall: 12
+        case .systemMedium: 14
+        default: 18
+        }
+    }
+
+    private var verticalPadding: CGFloat {
+        switch family {
+        case .systemSmall: 10
+        case .systemMedium: 12
+        default: 18
+        }
+    }
+
+    private func singularUnitName(for unit: WidgetLifeUnit) -> String {
+        switch unit {
+        case .years: "year"
+        case .months: "month"
+        case .weeks: "week"
+        case .days: "day"
+        case .hours: "hour"
+        case .minutes: "minute"
+        case .seconds: "second"
+        }
+    }
+
+    private func futureIntensity(index: Int) -> Double {
+        let futureRange = max(1, cellCount - currentIndexInWindow)
+        let distance = Double(max(0, index - currentIndexInWindow)) / Double(futureRange)
+        return max(0, 1 - distance)
+    }
+
+    private func cellColor(isPast: Bool, isCurrent: Bool, futureIntensity: Double) -> Color {
+        if isCurrent {
+            return .white.opacity(0.95)
+        }
+        if isPast {
+            return Color(red: 0.15, green: 0.88, blue: 0.86).opacity(0.9)
+        }
+        return Color(red: 1.0, green: 0.60, blue: 0.24).opacity(0.18 + (0.56 * futureIntensity))
     }
 
     var body: some View {
         let columnsDef = Array(repeating: GridItem(.flexible(minimum: 1, maximum: 10), spacing: 2), count: columns)
 
-        VStack(alignment: .leading, spacing: 8) {
-            Text(titleText)
-                .font(.system(size: family == .systemSmall ? 11 : 12, weight: .bold, design: .rounded))
-                .tracking(2)
-                .foregroundStyle(.white.opacity(0.78))
+        ZStack {
+            LinearGradient(
+                colors: [Color(red: 0.03, green: 0.20, blue: 0.27), Color(red: 0.22, green: 0.19, blue: 0.09)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
 
-            Text(valueLineText)
-                .font(.system(size: family == .systemSmall ? 24 : 28, weight: .black, design: .rounded))
-                .foregroundStyle(.white)
-                .minimumScaleFactor(0.55)
-                .lineLimit(1)
-
-            Text(cellScaleText)
-                .font(.system(size: family == .systemSmall ? 11 : 12, weight: .semibold, design: .rounded))
-                .foregroundStyle(.white.opacity(0.75))
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
-
-            LazyVGrid(columns: columnsDef, spacing: 2) {
-                ForEach(0..<cellCount, id: \.self) { displayIndex in
-                    let row = displayIndex / columns
-                    let column = displayIndex % columns
-                    let progressIndex = (column * rows) + row
-                    let isPast = progressIndex < elapsedCells
-                    let isCurrent = progressIndex == elapsedCells && elapsedCells < cellCount
-
-                    RoundedRectangle(cornerRadius: 1.8, style: .continuous)
-                        .fill(isPast ? Color.orange.opacity(0.9) : Color.orange.opacity(0.24))
-                        .aspectRatio(1, contentMode: .fit)
-                        .overlay {
-                            if isCurrent {
-                                RoundedRectangle(cornerRadius: 1.8, style: .continuous)
-                                    .stroke(Color.white.opacity(0.95), lineWidth: 0.8)
-                            }
-                        }
+            RoundedRectangle(cornerRadius: family == .systemSmall ? 18 : 24, style: .continuous)
+                .fill(Color.white.opacity(0.24))
+                .overlay {
+                    RoundedRectangle(cornerRadius: family == .systemSmall ? 18 : 24, style: .continuous)
+                        .stroke(.white.opacity(0.2), lineWidth: 1)
                 }
-            }
+                .padding(family == .systemSmall ? 8 : 10)
 
-            Spacer(minLength: 0)
+            VStack(alignment: .leading, spacing: family == .systemSmall ? 5 : 8) {
+                Text(titleText)
+                    .font(.system(size: family == .systemSmall ? 10 : 12, weight: .bold, design: .rounded))
+                    .tracking(2)
+                    .foregroundStyle(.white.opacity(0.78))
+
+                Text(valueLineText)
+                    .font(.system(size: valueFontSize, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+                    .minimumScaleFactor(0.45)
+                    .lineLimit(1)
+                    .monospacedDigit()
+
+                Text(cellScaleText)
+                    .font(.system(size: family == .systemSmall ? 10 : 12, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.75))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.7)
+
+                LazyVGrid(columns: columnsDef, spacing: 2) {
+                    ForEach(0..<cellCount, id: \.self) { displayIndex in
+                        let row = displayIndex / columns
+                        let column = displayIndex % columns
+                        let progressIndex = (column * rows) + row
+                        let absoluteUnitIndex = windowStart + progressIndex
+                        let isPast = absoluteUnitIndex < elapsedUnits
+                        let isCurrent = progressIndex == currentIndexInWindow
+
+                        Circle()
+                            .fill(cellColor(isPast: isPast, isCurrent: isCurrent, futureIntensity: futureIntensity(index: progressIndex)))
+                            .frame(maxWidth: .infinity)
+                            .aspectRatio(1, contentMode: .fit)
+                            .overlay {
+                                if isCurrent {
+                                    Circle()
+                                        .stroke(Color(red: 1.0, green: 0.52, blue: 0.20), lineWidth: 1.1)
+                                }
+                            }
+                    }
+                }
+
+                if shouldShowLegend {
+                    HStack(spacing: 12) {
+                        Label("Past", systemImage: "square.fill")
+                            .foregroundStyle(.white.opacity(0.65))
+                        Label("Current", systemImage: "location.fill")
+                            .foregroundStyle(.white.opacity(0.9))
+                        Label("Future", systemImage: "sparkles")
+                            .foregroundStyle(Color(red: 1.0, green: 0.60, blue: 0.24))
+                    }
+                    .font(.system(size: 10, weight: .semibold, design: .rounded))
+                }
+
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, horizontalPadding)
+            .padding(.vertical, verticalPadding)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
         .containerBackground(for: .widget) {
             LinearGradient(
