@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-private enum LifeUnit: String, CaseIterable, Identifiable {
+enum LifeUnit: String, CaseIterable, Identifiable {
     case years
     case months
     case weeks
@@ -224,6 +224,7 @@ struct ContentView: View {
     @State private var unitSwapPulse = false
     @State private var showLifeGrid = false
     @State private var cardsAppeared = false
+    @State private var pendingOnboardingRestart = false
     @Namespace private var unitChipSelectionAnimation
 
     private var greeting: String {
@@ -287,6 +288,12 @@ struct ContentView: View {
             }
             .sheet(isPresented: $showSettings) {
                 settingsSheet
+            }
+            .onChange(of: showSettings) { _, isPresented in
+                if !isPresented && pendingOnboardingRestart {
+                    pendingOnboardingRestart = false
+                    showOnboarding = true
+                }
             }
             .fullScreenCover(isPresented: $showOnboarding) {
                 OnboardingView(
@@ -1212,7 +1219,8 @@ struct ContentView: View {
                         VStack(spacing: 0) {
                             Button {
                                 hasCompletedOnboarding = false
-                                showOnboarding = true
+                                pendingOnboardingRestart = true
+                                showSettings = false
                                 performSelectionHaptic()
                             } label: {
                                 HStack {
@@ -1588,313 +1596,6 @@ extension View {
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
                     .stroke(.white.opacity(0.18), lineWidth: 1)
             }
-    }
-}
-
-private struct OnboardingView: View {
-    @Binding var birthDateTimestamp: Double
-    @Binding var selectedUnitRaw: String
-    @Binding var lifeExpectancyYears: Double
-
-    let completeAction: () -> Void
-    @State private var showBirthDatePicker = false
-    @State private var appeared = false
-    @State private var glowAnimate = false
-
-    private let accentGreen = Color(red: 0.42, green: 0.98, blue: 0.76)
-    private let accentOrange = Color(red: 1.0, green: 0.60, blue: 0.24)
-    private let accentTeal = Color(red: 0.20, green: 0.88, blue: 0.90)
-
-    private var birthDateBinding: Binding<Date> {
-        Binding(
-            get: { Date(timeIntervalSince1970: birthDateTimestamp) },
-            set: { birthDateTimestamp = min($0, Date()).timeIntervalSince1970 }
-        )
-    }
-
-    var body: some View {
-        ZStack {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.02, green: 0.06, blue: 0.14),
-                    Color(red: 0.04, green: 0.14, blue: 0.26),
-                    Color(red: 0.12, green: 0.07, blue: 0.04),
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
-
-            ZStack {
-                Circle()
-                    .fill(accentTeal.opacity(0.18))
-                    .frame(width: 240)
-                    .blur(radius: 60)
-                    .offset(x: glowAnimate ? -80 : -30, y: glowAnimate ? -280 : -200)
-                Circle()
-                    .fill(accentOrange.opacity(0.14))
-                    .frame(width: 300)
-                    .blur(radius: 70)
-                    .offset(x: glowAnimate ? 100 : 40, y: glowAnimate ? 320 : 220)
-            }
-            .ignoresSafeArea()
-
-            ScrollView {
-                VStack(alignment: .leading, spacing: 24) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Image(systemName: "hourglass.circle.fill")
-                            .font(.system(size: 48))
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [accentTeal, accentGreen], startPoint: .topLeading,
-                                    endPoint: .bottomTrailing)
-                            )
-                            .shadow(color: accentTeal.opacity(0.4), radius: 16, x: 0, y: 4)
-
-                        Text("Welcome to\nLifeClock")
-                            .font(.system(size: 36, weight: .black, design: .rounded))
-                            .foregroundStyle(.white)
-                            .lineSpacing(2)
-
-                        Text("Your life, visualized. Set up in seconds.")
-                            .font(.system(size: 16, weight: .medium, design: .rounded))
-                            .foregroundStyle(.white.opacity(0.65))
-                    }
-                    .padding(.top, 20)
-                    .opacity(appeared ? 1 : 0)
-                    .offset(y: appeared ? 0 : 20)
-
-                    VStack(spacing: 16) {
-                        onboardingStep(
-                            number: 1, icon: "birthday.cake.fill", title: "Birth date",
-                            accent: accentTeal
-                        ) {
-                            Button {
-                                showBirthDatePicker = true
-                            } label: {
-                                HStack {
-                                    Text(
-                                        birthDateBinding.wrappedValue.formatted(
-                                            date: .abbreviated, time: .omitted)
-                                    )
-                                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundStyle(accentTeal)
-                                    Spacer()
-                                    Image(systemName: "chevron.right")
-                                        .font(.system(size: 12, weight: .bold))
-                                        .foregroundStyle(.white.opacity(0.5))
-                                }
-                            }
-                            .buttonStyle(.plain)
-                        }
-                        .opacity(appeared ? 1 : 0)
-                        .offset(y: appeared ? 0 : 24)
-
-                        onboardingStep(
-                            number: 2, icon: "heart.text.clipboard.fill", title: "Life expectancy",
-                            accent: accentOrange
-                        ) {
-                            VStack(spacing: 10) {
-                                HStack {
-                                    Spacer()
-                                    Text("\(Int(lifeExpectancyYears)) years")
-                                        .font(.system(size: 22, weight: .black, design: .rounded))
-                                        .foregroundStyle(.white)
-                                        .monospacedDigit()
-                                }
-                                Slider(value: $lifeExpectancyYears, in: 50...120, step: 1)
-                                    .tint(accentOrange)
-                            }
-                        }
-                        .opacity(appeared ? 1 : 0)
-                        .offset(y: appeared ? 0 : 28)
-
-                        onboardingStep(
-                            number: 3,
-                            icon: "gauge.open.with.lines.needle.33percent.and.arrowtriangle",
-                            title: "Default unit", accent: accentGreen
-                        ) {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack(spacing: 8) {
-                                    ForEach(LifeUnit.allCases) { unit in
-                                        let isSelected =
-                                            (LifeUnit(rawValue: selectedUnitRaw) ?? .days) == unit
-                                        Button {
-                                            selectedUnitRaw = unit.rawValue
-                                        } label: {
-                                            Text(unit.title)
-                                                .font(
-                                                    .system(
-                                                        size: 13, weight: .bold, design: .rounded)
-                                                )
-                                                .foregroundStyle(
-                                                    isSelected ? .black : .white.opacity(0.9)
-                                                )
-                                                .padding(.horizontal, 14)
-                                                .padding(.vertical, 8)
-                                                .background(
-                                                    RoundedRectangle(
-                                                        cornerRadius: 14, style: .continuous
-                                                    )
-                                                    .fill(
-                                                        isSelected
-                                                            ? accentGreen
-                                                            : Color.white.opacity(0.12))
-                                                )
-                                                .overlay {
-                                                    if !isSelected {
-                                                        RoundedRectangle(
-                                                            cornerRadius: 14, style: .continuous
-                                                        )
-                                                        .stroke(.white.opacity(0.15), lineWidth: 1)
-                                                    }
-                                                }
-                                        }
-                                        .buttonStyle(.plain)
-                                    }
-                                }
-                            }
-                        }
-                        .opacity(appeared ? 1 : 0)
-                        .offset(y: appeared ? 0 : 32)
-                    }
-
-                    Button(action: completeAction) {
-                        HStack(spacing: 8) {
-                            Text("Start LifeClock")
-                                .font(.system(size: 17, weight: .bold, design: .rounded))
-                            Image(systemName: "arrow.right")
-                                .font(.system(size: 14, weight: .bold))
-                        }
-                        .foregroundStyle(.black)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(
-                            LinearGradient(
-                                colors: [accentGreen, accentTeal],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            ),
-                            in: RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        )
-                        .shadow(color: accentGreen.opacity(0.4), radius: 12, x: 0, y: 6)
-                    }
-                    .buttonStyle(.plain)
-                    .padding(.top, 8)
-                    .opacity(appeared ? 1 : 0)
-                    .offset(y: appeared ? 0 : 36)
-                }
-                .padding(24)
-                .animation(.spring(response: 0.8, dampingFraction: 0.82), value: appeared)
-            }
-        }
-        .onAppear {
-            withAnimation(.easeInOut(duration: 8).repeatForever(autoreverses: true)) {
-                glowAnimate = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                appeared = true
-            }
-        }
-        .sheet(isPresented: $showBirthDatePicker) {
-            ZStack {
-                LinearGradient(
-                    colors: [
-                        Color(red: 0.04, green: 0.08, blue: 0.16),
-                        Color(red: 0.06, green: 0.12, blue: 0.22),
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-                .ignoresSafeArea()
-
-                VStack(alignment: .leading, spacing: 16) {
-                    HStack {
-                        Image(systemName: "birthday.cake.fill")
-                            .font(.system(size: 20))
-                            .foregroundStyle(accentTeal)
-                        Text("Birth date")
-                            .font(.system(size: 24, weight: .black, design: .rounded))
-                            .foregroundStyle(.white)
-                    }
-
-                    DatePicker(
-                        "",
-                        selection: birthDateBinding,
-                        in: ...Date(),
-                        displayedComponents: .date
-                    )
-                    .datePickerStyle(.graphical)
-                    .labelsHidden()
-                    .tint(accentTeal)
-                    .colorScheme(.dark)
-
-                    HStack {
-                        Spacer()
-                        Button("Done") {
-                            showBirthDatePicker = false
-                        }
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                        .foregroundStyle(.black)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 12)
-                        .background(
-                            LinearGradient(
-                                colors: [accentGreen, accentTeal],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            ),
-                            in: RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        )
-                    }
-                }
-                .padding(24)
-            }
-            .presentationDetents([.medium])
-            .presentationDragIndicator(.visible)
-        }
-    }
-
-    private func onboardingStep<Content: View>(
-        number: Int, icon: String, title: String, accent: Color, @ViewBuilder content: () -> Content
-    ) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            HStack(spacing: 10) {
-                Image(systemName: icon)
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(accent)
-                    .frame(width: 30, height: 30)
-                    .background(
-                        accent.opacity(0.15),
-                        in: RoundedRectangle(cornerRadius: 8, style: .continuous))
-
-                Text(title)
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
-
-                Spacer()
-
-                Text("\(number)/3")
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.4))
-            }
-
-            content()
-        }
-        .padding(16)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 20, style: .continuous)
-                .stroke(
-                    LinearGradient(
-                        colors: [accent.opacity(0.25), .white.opacity(0.08)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ),
-                    lineWidth: 1
-                )
-        }
-        .foregroundStyle(.white)
     }
 }
 

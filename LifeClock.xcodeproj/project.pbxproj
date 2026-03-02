@@ -69,22 +69,16 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		75A9E1422F4DB4980016AE7B /* LifeClock */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = LifeClock;
 			sourceTree = "<group>";
 		};
 		75A9E1522F4DB4990016AE7B /* LifeClockTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = LifeClockTests;
 			sourceTree = "<group>";
 		};
 		75A9E15C2F4DB4990016AE7B /* LifeClockUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = LifeClockUITests;
 			sourceTree = "<group>";
 		};

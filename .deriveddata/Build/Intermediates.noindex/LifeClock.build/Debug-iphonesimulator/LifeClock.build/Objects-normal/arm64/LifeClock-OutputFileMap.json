@@ -45,5 +45,15 @@
     "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp.o",
     "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp.swiftdeps",
     "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/LifeClockApp~partial.swiftmodule"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/OnboardingView.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/OnboardingView.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/OnboardingView.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/OnboardingView.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/OnboardingView.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/OnboardingView.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/OnboardingView.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/OnboardingView.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/LifeClock.build/Debug-iphonesimulator/LifeClock.build/Objects-normal/arm64/OnboardingView~partial.swiftmodule"
   }
 }
