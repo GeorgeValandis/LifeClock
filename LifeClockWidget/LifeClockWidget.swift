@@ -293,16 +293,16 @@ struct LifeGridWidgetView: View {
 
         return ZStack {
             LinearGradient(
-                colors: [Color(red: 0.03, green: 0.20, blue: 0.27), Color(red: 0.22, green: 0.19, blue: 0.09)],
+                colors: [Color(red: 0.03, green: 0.18, blue: 0.24), Color(red: 0.16, green: 0.14, blue: 0.08)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
 
             RoundedRectangle(cornerRadius: homeLayout.cornerRadius, style: .continuous)
-                .fill(Color.white.opacity(0.24))
+                .fill(Color(red: 0.31, green: 0.38, blue: 0.43))
                 .overlay {
                     RoundedRectangle(cornerRadius: homeLayout.cornerRadius, style: .continuous)
-                        .stroke(.white.opacity(0.2), lineWidth: 1)
+                        .stroke(Color.white.opacity(0.08), lineWidth: 1)
                 }
                 .padding(homeLayout.cardInset)
 
@@ -364,7 +364,7 @@ struct LifeGridWidgetView: View {
         }
         .containerBackground(for: .widget) {
             LinearGradient(
-                colors: [Color(red: 0.17, green: 0.07, blue: 0.03), Color(red: 0.56, green: 0.27, blue: 0.08)],
+                colors: [Color(red: 0.10, green: 0.07, blue: 0.05), Color(red: 0.24, green: 0.16, blue: 0.10)],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
