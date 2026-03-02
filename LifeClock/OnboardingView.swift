@@ -4,8 +4,31 @@ struct OnboardingView: View {
     @Binding var birthDateTimestamp: Double
     @Binding var selectedUnitRaw: String
     @Binding var lifeExpectancyYears: Double
+    @Binding var clockThemeRaw: String
 
     let completeAction: () -> Void
+
+    enum Gender: String, CaseIterable {
+        case male, female
+        var title: String {
+            switch self {
+            case .male: "Male"
+            case .female: "Female"
+            }
+        }
+        var icon: String {
+            switch self {
+            case .male: "figure.stand"
+            case .female: "figure.stand.dress"
+            }
+        }
+        var averageExpectancy: Double {
+            switch self {
+            case .male: 78
+            case .female: 83
+            }
+        }
+    }
 
     @State private var currentStep = 0
     @State private var showBirthDatePicker = false
@@ -13,11 +36,17 @@ struct OnboardingView: View {
     @State private var appeared = false
     @State private var iconPulse = false
     @State private var selectedFeature: String? = nil
+    @State private var selectedGender: Gender? = nil
 
     private let accentGreen = Color(red: 0.42, green: 0.98, blue: 0.76)
     private let accentOrange = Color(red: 1.0, green: 0.60, blue: 0.24)
     private let accentTeal = Color(red: 0.20, green: 0.88, blue: 0.90)
-    private let totalSteps = 4
+    private let accentPurple = Color(red: 0.65, green: 0.45, blue: 1.0)
+    private let totalSteps = 5
+
+    private var selectedTheme: ClockTheme {
+        ClockTheme(rawValue: clockThemeRaw) ?? .aurora
+    }
 
     private var birthDateBinding: Binding<Date> {
         Binding(
@@ -69,6 +98,9 @@ struct OnboardingView: View {
             StepInfo(
                 icon: "timer.circle.fill", title: "Unit", subtitle: "How to count your time?",
                 accent: accentGreen),
+            StepInfo(
+                icon: "paintpalette.fill", title: "Theme", subtitle: "Choose your visual style",
+                accent: accentPurple),
         ]
     }
 
@@ -210,6 +242,7 @@ struct OnboardingView: View {
         case 1: birthDateContent
         case 2: expectancyContent
         case 3: unitContent
+        case 4: themeContent
         default: EmptyView()
         }
     }
@@ -342,9 +375,43 @@ struct OnboardingView: View {
     // MARK: Step 2 – Life Expectancy
 
     private var expectancyContent: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
+            HStack(spacing: 12) {
+                ForEach(Gender.allCases, id: \.rawValue) { gender in
+                    let isSelected = selectedGender == gender
+                    Button {
+                        withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                            selectedGender = gender
+                            lifeExpectancyYears = gender.averageExpectancy
+                        }
+                    } label: {
+                        HStack(spacing: 8) {
+                            Image(systemName: gender.icon)
+                                .font(.system(size: 16, weight: .semibold))
+                            Text(gender.title)
+                                .font(.system(size: 15, weight: .bold, design: .rounded))
+                        }
+                        .foregroundStyle(isSelected ? .black : .white.opacity(0.8))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background(
+                            RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                .fill(isSelected ? accentOrange : .white.opacity(0.08))
+                        )
+                        .overlay {
+                            if !isSelected {
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .stroke(.white.opacity(0.1), lineWidth: 1)
+                            }
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .animation(.spring(response: 0.35, dampingFraction: 0.8), value: isSelected)
+                }
+            }
+
             Text("\(Int(lifeExpectancyYears))")
-                .font(.system(size: 72, weight: .black, design: .rounded))
+                .font(.system(size: 64, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
                 .monospacedDigit()
                 .shadow(color: accentOrange.opacity(0.25), radius: 16, x: 0, y: 4)
@@ -352,9 +419,9 @@ struct OnboardingView: View {
                 .animation(.spring(response: 0.3, dampingFraction: 0.8), value: lifeExpectancyYears)
 
             Text("years")
-                .font(.system(size: 18, weight: .semibold, design: .rounded))
+                .font(.system(size: 16, weight: .semibold, design: .rounded))
                 .foregroundStyle(.white.opacity(0.5))
-                .offset(y: -10)
+                .offset(y: -6)
 
             Slider(value: $lifeExpectancyYears, in: 50...120, step: 1)
                 .tint(accentOrange)
@@ -381,6 +448,15 @@ struct OnboardingView: View {
                     .buttonStyle(.plain)
                     .animation(.spring(response: 0.3, dampingFraction: 0.8), value: isSelected)
                 }
+            }
+
+            if let gender = selectedGender {
+                Text(
+                    "Avg. life expectancy (\(gender.title)): ≈ \(Int(gender.averageExpectancy)) years"
+                )
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(.white.opacity(0.45))
+                .transition(.opacity)
             }
         }
         .transition(
@@ -433,6 +509,91 @@ struct OnboardingView: View {
                     .buttonStyle(.plain)
                     .animation(.spring(response: 0.35, dampingFraction: 0.8), value: isSelected)
                 }
+            }
+        }
+        .transition(
+            .asymmetric(
+                insertion: .move(edge: .trailing).combined(with: .opacity),
+                removal: .move(edge: .leading).combined(with: .opacity)))
+    }
+
+    // MARK: Step 4 – Theme
+
+    private var themeContent: some View {
+        VStack(spacing: 20) {
+            ForEach(ClockTheme.allCases) { theme in
+                let isSelected = selectedTheme == theme
+                Button {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                        clockThemeRaw = theme.rawValue
+                    }
+                } label: {
+                    HStack(spacing: 14) {
+                        ZStack {
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: theme.ringColors,
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .frame(width: 44, height: 44)
+
+                            if isSelected {
+                                Circle()
+                                    .stroke(.white, lineWidth: 2)
+                                    .frame(width: 50, height: 50)
+                                Image(systemName: "checkmark")
+                                    .font(.system(size: 14, weight: .bold))
+                                    .foregroundStyle(.white)
+                            }
+                        }
+
+                        VStack(alignment: .leading, spacing: 3) {
+                            Text(theme.title)
+                                .font(.system(size: 16, weight: .bold, design: .rounded))
+                                .foregroundStyle(.white)
+
+                            HStack(spacing: 6) {
+                                RoundedRectangle(cornerRadius: 3, style: .continuous)
+                                    .fill(theme.topGlow)
+                                    .frame(width: 20, height: 8)
+                                RoundedRectangle(cornerRadius: 3, style: .continuous)
+                                    .fill(theme.bottomGlow)
+                                    .frame(width: 20, height: 8)
+                                Text("Preview")
+                                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                                    .foregroundStyle(.white.opacity(0.4))
+                            }
+                        }
+
+                        Spacer()
+
+                        if isSelected {
+                            Image(systemName: "checkmark.circle.fill")
+                                .font(.system(size: 22, weight: .semibold))
+                                .foregroundStyle(accentPurple)
+                                .transition(.scale.combined(with: .opacity))
+                        }
+                    }
+                    .padding(14)
+                    .background(
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .fill(isSelected ? accentPurple.opacity(0.1) : .white.opacity(0.05))
+                    )
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .stroke(
+                                isSelected ? accentPurple.opacity(0.4) : .white.opacity(0.08),
+                                lineWidth: isSelected ? 1.5 : 1)
+                    }
+                    .shadow(
+                        color: isSelected ? accentPurple.opacity(0.2) : .clear, radius: 10, x: 0,
+                        y: 4)
+                }
+                .buttonStyle(.plain)
+                .animation(.spring(response: 0.35, dampingFraction: 0.8), value: isSelected)
             }
         }
         .transition(

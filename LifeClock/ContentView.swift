@@ -53,7 +53,7 @@ enum LifeUnit: String, CaseIterable, Identifiable {
     }
 }
 
-private enum ClockTheme: String, CaseIterable, Identifiable {
+enum ClockTheme: String, CaseIterable, Identifiable {
     case aurora
     case solar
     case deepSea
@@ -300,6 +300,7 @@ struct ContentView: View {
                     birthDateTimestamp: $birthDateTimestamp,
                     selectedUnitRaw: $selectedUnitRaw,
                     lifeExpectancyYears: $lifeExpectancyYears,
+                    clockThemeRaw: $clockThemeRaw,
                     completeAction: {
                         hasCompletedOnboarding = true
                         showOnboarding = false
