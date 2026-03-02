@@ -235,6 +235,8 @@ struct ContentView: View {
     @State private var showLifeGrid = false
     @State private var cardsAppeared = false
     @State private var pendingOnboardingRestart = false
+    @State private var showLifetimePaywallManually = false
+    @State private var pendingManualPaywallPresentation = false
     @State private var lifetimeProduct: Product?
     @State private var isPurchasingLifetime = false
     @State private var isRestoringPurchases = false
@@ -336,6 +338,11 @@ struct ContentView: View {
                     pendingOnboardingRestart = false
                     showOnboarding = true
                 }
+
+                if !isPresented && pendingManualPaywallPresentation {
+                    pendingManualPaywallPresentation = false
+                    showLifetimePaywallManually = true
+                }
             }
             .onChange(of: selectedUnitRaw) { _, _ in
                 WidgetCenter.shared.reloadAllTimelines()
@@ -361,7 +368,10 @@ struct ContentView: View {
             .fullScreenCover(
                 isPresented: Binding(get: { shouldShowLifetimePaywall }, set: { _ in })
             ) {
-                lifetimePaywallView
+                lifetimePaywallView(allowDismiss: false)
+            }
+            .fullScreenCover(isPresented: $showLifetimePaywallManually) {
+                lifetimePaywallView(allowDismiss: true)
             }
             .alert(
                 "Icon Update Failed",
@@ -420,12 +430,29 @@ struct ContentView: View {
         .ignoresSafeArea()
     }
 
-    private var lifetimePaywallView: some View {
+    private func lifetimePaywallView(allowDismiss: Bool) -> some View {
         ZStack {
             background
             settingsReadabilityLayer
 
             VStack(spacing: 18) {
+                if allowDismiss {
+                    HStack {
+                        Spacer()
+                        Button {
+                            showLifetimePaywallManually = false
+                        } label: {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundStyle(.white.opacity(0.9))
+                                .frame(width: 34, height: 34)
+                                .background(.white.opacity(0.1), in: Circle())
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+
                 Image(systemName: "lock.shield.fill")
                     .font(.system(size: 34, weight: .bold))
                     .foregroundStyle(selectedTheme.topGlow)
@@ -526,7 +553,7 @@ struct ContentView: View {
             }
             .padding(.horizontal, 24)
         }
-        .interactiveDismissDisabled(true)
+        .interactiveDismissDisabled(!allowDismiss)
         .task {
             await preloadLifetimeProduct()
             await refreshLifetimeEntitlement()
@@ -1259,6 +1286,71 @@ struct ContentView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 22) {
                         settingsHeader(title: "Settings")
+
+                        if !lifetimeUnlocked {
+                            Button {
+                                pendingManualPaywallPresentation = true
+                                showSettings = false
+                                performSelectionHaptic()
+                            } label: {
+                                HStack(spacing: 12) {
+                                    ZStack {
+                                        Circle()
+                                            .fill(selectedTheme.topGlow.opacity(0.2))
+                                            .frame(width: 40, height: 40)
+                                        Image(systemName: "crown.fill")
+                                            .font(.system(size: 15, weight: .bold))
+                                            .foregroundStyle(selectedTheme.topGlow)
+                                    }
+
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text("Go Premium")
+                                            .font(
+                                                .system(
+                                                    size: 17,
+                                                    weight: .bold,
+                                                    design: selectedTypography.bodyDesign)
+                                            )
+                                            .foregroundStyle(.white)
+                                        Text("Unlock Lifetime Access")
+                                            .font(
+                                                .system(
+                                                    size: 13,
+                                                    weight: .medium,
+                                                    design: selectedTypography.bodyDesign)
+                                            )
+                                            .foregroundStyle(.white.opacity(0.7))
+                                    }
+
+                                    Spacer()
+
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 12, weight: .bold))
+                                        .foregroundStyle(.white.opacity(0.65))
+                                }
+                                .padding(16)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                        .fill(.white.opacity(0.08))
+                                )
+                                .overlay {
+                                    RoundedRectangle(cornerRadius: 18, style: .continuous)
+                                        .stroke(
+                                            LinearGradient(
+                                                colors: [
+                                                    selectedTheme.topGlow.opacity(0.34),
+                                                    .white.opacity(0.12),
+                                                ],
+                                                startPoint: .topLeading,
+                                                endPoint: .bottomTrailing
+                                            ),
+                                            lineWidth: 1
+                                        )
+                                }
+                            }
+                            .buttonStyle(.plain)
+                        }
+
                         settingsSectionTitle("Life Profile", icon: "person.crop.circle")
                         VStack(spacing: 0) {
                             HStack {
