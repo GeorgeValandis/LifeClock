@@ -433,131 +433,246 @@ struct ContentView: View {
     private func lifetimePaywallView(allowDismiss: Bool) -> some View {
         ZStack {
             background
-            settingsReadabilityLayer
 
-            VStack(spacing: 18) {
-                if allowDismiss {
-                    HStack {
-                        Spacer()
-                        Button {
-                            showLifetimePaywallManually = false
-                        } label: {
-                            Image(systemName: "xmark")
-                                .font(.system(size: 14, weight: .bold))
-                                .foregroundStyle(.white.opacity(0.9))
-                                .frame(width: 34, height: 34)
-                                .background(.white.opacity(0.1), in: Circle())
+            ScrollView {
+                VStack(spacing: 0) {
+
+                    // MARK: – Close button
+                    if allowDismiss {
+                        HStack {
+                            Spacer()
+                            Button {
+                                showLifetimePaywallManually = false
+                            } label: {
+                                Image(systemName: "xmark")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundStyle(.white.opacity(0.8))
+                                    .frame(width: 30, height: 30)
+                                    .background(.ultraThinMaterial, in: Circle())
+                                    .overlay {
+                                        Circle().stroke(.white.opacity(0.12), lineWidth: 1)
+                                    }
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 16)
+                    } else {
+                        Spacer().frame(height: 56)
                     }
-                    .frame(maxWidth: .infinity)
-                }
 
-                Image(systemName: "lock.shield.fill")
-                    .font(.system(size: 34, weight: .bold))
-                    .foregroundStyle(selectedTheme.topGlow)
+                    // MARK: – Hero icon
+                    ZStack {
+                        Circle()
+                            .fill(
+                                RadialGradient(
+                                    colors: [
+                                        selectedTheme.topGlow.opacity(0.35),
+                                        selectedTheme.topGlow.opacity(0.08),
+                                        .clear,
+                                    ],
+                                    center: .center,
+                                    startRadius: 20,
+                                    endRadius: 80
+                                )
+                            )
+                            .frame(width: 160, height: 160)
 
-                Text("Trial ended")
-                    .font(.system(size: 34, weight: .heavy, design: selectedTypography.heroDesign))
-                    .foregroundStyle(.white)
+                        Image(systemName: "crown.fill")
+                            .font(.system(size: 48, weight: .bold))
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [selectedTheme.topGlow, selectedTheme.bottomGlow],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .shadow(
+                                color: selectedTheme.topGlow.opacity(0.5), radius: 20, x: 0, y: 8)
+                    }
+                    .padding(.top, 12)
 
-                Text(
-                    "Your 3-day test period is over. Unlock LifeClock forever with Lifetime Access."
-                )
-                .font(.system(size: 16, weight: .medium, design: selectedTypography.bodyDesign))
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.white.opacity(0.84))
-                .padding(.horizontal, 4)
-
-                VStack(spacing: 10) {
-                    Text("Started: \(trialStartDate.formatted(date: .abbreviated, time: .omitted))")
-                    Text("Ended: \(trialEndDate.formatted(date: .abbreviated, time: .omitted))")
-                }
-                .font(.system(size: 13, weight: .medium, design: selectedTypography.bodyDesign))
-                .foregroundStyle(.white.opacity(0.58))
-
-                Button {
-                    Task { await purchaseLifetime() }
-                } label: {
-                    HStack(spacing: 8) {
-                        if isPurchasingLifetime {
-                            ProgressView()
-                                .tint(.black)
-                        }
-                        Text(
-                            lifetimeProduct.map { "Unlock Lifetime • \($0.displayPrice)" }
-                                ?? "Unlock Lifetime"
+                    // MARK: – Headline
+                    Text("Unlock LifeClock")
+                        .font(
+                            .system(size: 32, weight: .heavy, design: selectedTypography.heroDesign)
                         )
+                        .foregroundStyle(.white)
+                        .padding(.top, 20)
+
+                    Text("One purchase. Forever yours.")
                         .font(
                             .system(
-                                size: 16,
-                                weight: .bold,
-                                design: selectedTypography.bodyDesign)
+                                size: 16, weight: .medium, design: selectedTypography.bodyDesign)
+                        )
+                        .foregroundStyle(.white.opacity(0.6))
+                        .padding(.top, 4)
+
+                    // MARK: – Feature list
+                    VStack(spacing: 0) {
+                        paywallFeatureRow(
+                            icon: "infinity",
+                            title: "Unlimited Access",
+                            subtitle: "Use every feature, forever"
+                        )
+                        paywallDivider
+                        paywallFeatureRow(
+                            icon: "square.grid.3x3.fill",
+                            title: "Life Grid & Clock",
+                            subtitle: "All visualization modes"
+                        )
+                        paywallDivider
+                        paywallFeatureRow(
+                            icon: "paintpalette.fill",
+                            title: "Themes & Typography",
+                            subtitle: "Personalize your experience"
+                        )
+                        paywallDivider
+                        paywallFeatureRow(
+                            icon: "widget.small",
+                            title: "Home Screen Widgets",
+                            subtitle: "Glanceable life progress"
+                        )
+                        paywallDivider
+                        paywallFeatureRow(
+                            icon: "bolt.shield.fill",
+                            title: "No Subscription",
+                            subtitle: "Pay once — no recurring fees"
                         )
                     }
-                    .foregroundStyle(.black)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
+                    .padding(.vertical, 6)
                     .background(
-                        selectedTheme.topGlow,
-                        in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-                }
-                .buttonStyle(.plain)
-                .disabled(isPurchasingLifetime || isRestoringPurchases)
-
-                Button {
-                    Task { await restorePurchases() }
-                } label: {
-                    HStack(spacing: 8) {
-                        if isRestoringPurchases {
-                            ProgressView()
-                                .tint(.white)
-                        }
-                        Text("Restore Purchases")
-                            .font(
-                                .system(
-                                    size: 15,
-                                    weight: .semibold,
-                                    design: selectedTypography.bodyDesign)
-                            )
-                    }
-                    .foregroundStyle(.white.opacity(0.9))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(
-                        .white.opacity(0.08),
-                        in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .ultraThinMaterial,
+                        in: RoundedRectangle(cornerRadius: 20, style: .continuous)
                     )
                     .overlay {
-                        RoundedRectangle(cornerRadius: 14, style: .continuous)
-                            .stroke(.white.opacity(0.16), lineWidth: 1)
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(.white.opacity(0.1), lineWidth: 1)
                     }
+                    .padding(.horizontal, 24)
+                    .padding(.top, 28)
+
+                    // MARK: – CTA button
+                    Button {
+                        Task { await purchaseLifetime() }
+                    } label: {
+                        HStack(spacing: 10) {
+                            if isPurchasingLifetime {
+                                ProgressView()
+                                    .tint(.black)
+                            }
+                            Text(
+                                lifetimeProduct.map { "Unlock Lifetime — \($0.displayPrice)" }
+                                    ?? "Unlock Lifetime"
+                            )
+                            .font(
+                                .system(
+                                    size: 17, weight: .bold, design: selectedTypography.bodyDesign))
+                        }
+                        .foregroundStyle(.black)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            LinearGradient(
+                                colors: [selectedTheme.topGlow, selectedTheme.bottomGlow],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            ),
+                            in: RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        )
+                        .shadow(color: selectedTheme.topGlow.opacity(0.4), radius: 16, x: 0, y: 6)
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(isPurchasingLifetime || isRestoringPurchases)
+                    .padding(.horizontal, 24)
+                    .padding(.top, 24)
+
+                    // MARK: – One-time badge
+                    HStack(spacing: 6) {
+                        Image(systemName: "checkmark.seal.fill")
+                            .font(.system(size: 12))
+                            .foregroundStyle(selectedTheme.bottomGlow)
+                        Text("One-time purchase • No subscription")
+                            .font(
+                                .system(
+                                    size: 12, weight: .medium, design: selectedTypography.bodyDesign
+                                )
+                            )
+                            .foregroundStyle(.white.opacity(0.5))
+                    }
+                    .padding(.top, 10)
+
+                    // MARK: – Restore
+                    Button {
+                        Task { await restorePurchases() }
+                    } label: {
+                        HStack(spacing: 6) {
+                            if isRestoringPurchases {
+                                ProgressView()
+                                    .tint(.white.opacity(0.7))
+                                    .scaleEffect(0.8)
+                            }
+                            Text("Restore Purchases")
+                                .font(
+                                    .system(
+                                        size: 14, weight: .semibold,
+                                        design: selectedTypography.bodyDesign))
+                        }
+                        .foregroundStyle(.white.opacity(0.55))
+                        .padding(.vertical, 12)
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(isPurchasingLifetime || isRestoringPurchases)
+                    .padding(.top, 4)
+
+                    Spacer().frame(height: 32)
                 }
-                .buttonStyle(.plain)
-                .disabled(isPurchasingLifetime || isRestoringPurchases)
             }
-            .padding(24)
-            .background(
-                .ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous)
-            )
-            .overlay {
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
-                    .stroke(
-                        LinearGradient(
-                            colors: [selectedTheme.topGlow.opacity(0.3), .white.opacity(0.12)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 1
-                    )
-            }
-            .padding(.horizontal, 24)
+            .scrollIndicators(.hidden)
         }
         .interactiveDismissDisabled(!allowDismiss)
         .task {
             await preloadLifetimeProduct()
             await refreshLifetimeEntitlement()
         }
+    }
+
+    private func paywallFeatureRow(icon: String, title: String, subtitle: String) -> some View {
+        HStack(spacing: 14) {
+            Image(systemName: icon)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(selectedTheme.topGlow)
+                .frame(width: 36, height: 36)
+                .background(
+                    selectedTheme.topGlow.opacity(0.12),
+                    in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(
+                        .system(size: 15, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
+                    .foregroundStyle(.white)
+                Text(subtitle)
+                    .font(.system(size: 13, weight: .medium, design: selectedTypography.bodyDesign))
+                    .foregroundStyle(.white.opacity(0.5))
+            }
+
+            Spacer()
+
+            Image(systemName: "checkmark")
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(selectedTheme.bottomGlow.opacity(0.8))
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+    }
+
+    private var paywallDivider: some View {
+        Rectangle()
+            .fill(.white.opacity(0.06))
+            .frame(height: 1)
+            .padding(.leading, 66)
     }
 
     private func mainContent(now: Date) -> some View {
