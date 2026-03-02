@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import WidgetKit
 
 enum LifeUnit: String, CaseIterable, Identifiable {
     case years
@@ -204,12 +205,16 @@ private enum AppIconChoice: String, CaseIterable, Identifiable {
 }
 
 struct ContentView: View {
-    @AppStorage("birthDateTimestamp") private var birthDateTimestamp: Double = Date(
-        timeIntervalSinceNow: -26 * 31_556_952
-    ).timeIntervalSince1970
-    @AppStorage("selectedUnitRaw") private var selectedUnitRaw: String = LifeUnit.days.rawValue
-    @AppStorage("lifeExpectancyYears") private var lifeExpectancyYears: Double = 90
-    @AppStorage("clockThemeRaw") private var clockThemeRaw: String = ClockTheme.aurora.rawValue
+    @AppStorage(SharedDefaults.keyBirthDate, store: SharedDefaults.store) private
+        var birthDateTimestamp: Double = Date(
+            timeIntervalSinceNow: -26 * 31_556_952
+        ).timeIntervalSince1970
+    @AppStorage(SharedDefaults.keySelectedUnit, store: SharedDefaults.store) private
+        var selectedUnitRaw: String = LifeUnit.days.rawValue
+    @AppStorage(SharedDefaults.keyLifeExpectancy, store: SharedDefaults.store) private
+        var lifeExpectancyYears: Double = 90
+    @AppStorage(SharedDefaults.keyClockTheme, store: SharedDefaults.store) private
+        var clockThemeRaw: String = ClockTheme.aurora.rawValue
     @AppStorage("typographyPresetRaw") private var typographyPresetRaw: String = TypographyPreset
         .modern.rawValue
     @AppStorage("hapticsEnabled") private var hapticsEnabled: Bool = true
@@ -294,6 +299,15 @@ struct ContentView: View {
                     pendingOnboardingRestart = false
                     showOnboarding = true
                 }
+            }
+            .onChange(of: selectedUnitRaw) { _, _ in
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+            .onChange(of: birthDateTimestamp) { _, _ in
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+            .onChange(of: lifeExpectancyYears) { _, _ in
+                WidgetCenter.shared.reloadAllTimelines()
             }
             .fullScreenCover(isPresented: $showOnboarding) {
                 OnboardingView(

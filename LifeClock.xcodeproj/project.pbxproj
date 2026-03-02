@@ -59,6 +59,7 @@
 		357B0A79BA0B978F20746EA4 /* AppIntents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppIntents.framework; path = System/Library/Frameworks/AppIntents.framework; sourceTree = "<group>"; };
 		58EFADCA0783FCAEE9694A95 /* LifeClockWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LifeClockWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		64432F6CDED0C5F32FC52678 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = "<group>"; };
+		7562F00C2F55AEC400DCC218 /* LifeClockWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LifeClockWidgetExtension.entitlements; sourceTree = "<group>"; };
 		75A9E1402F4DB4980016AE7B /* LifeClock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LifeClock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A9E14F2F4DB4990016AE7B /* LifeClockTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeClockTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75A9E1592F4DB4990016AE7B /* LifeClockUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LifeClockUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,9 +67,22 @@
 		DA8696BCD4A214E0E466081C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7562F00E2F55AF6500DCC218 /* Exceptions for "LifeClock" folder in "LifeClockWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SharedDefaults.swift,
+			);
+			target = 3A8000D14A3686B30AC14A92 /* LifeClockWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		75A9E1422F4DB4980016AE7B /* LifeClock */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7562F00E2F55AF6500DCC218 /* Exceptions for "LifeClock" folder in "LifeClockWidgetExtension" target */,
+			);
 			path = LifeClock;
 			sourceTree = "<group>";
 		};
@@ -140,6 +154,7 @@
 		75A9E1372F4DB4980016AE7B = {
 			isa = PBXGroup;
 			children = (
+				7562F00C2F55AEC400DCC218 /* LifeClockWidgetExtension.entitlements */,
 				75A9E1422F4DB4980016AE7B /* LifeClock */,
 				75A9E1522F4DB4990016AE7B /* LifeClockTests */,
 				75A9E15C2F4DB4990016AE7B /* LifeClockUITests */,
@@ -509,6 +524,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LifeClock/LifeClock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LPPZFWPAN7;
@@ -541,6 +557,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LifeClock/LifeClock.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LPPZFWPAN7;
@@ -657,6 +674,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = LifeClockWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPPZFWPAN7;
 				GENERATE_INFOPLIST_FILE = NO;
@@ -676,6 +694,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_ENTITLEMENTS = LifeClockWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = LPPZFWPAN7;
 				GENERATE_INFOPLIST_FILE = NO;

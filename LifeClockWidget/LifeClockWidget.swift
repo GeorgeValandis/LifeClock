@@ -68,16 +68,20 @@ struct LifeGridEntry: TimelineEntry {
     let remainingUnits: Int
     let elapsedUnits: Double
     let totalUnits: Double
+    let resolvedUnit: WidgetLifeUnit
 }
 
 struct LifeGridProvider: AppIntentTimelineProvider {
+    private static let sharedDefaults = UserDefaults(suiteName: "group.com.GA.LifeClock")
+
     func placeholder(in context: Context) -> LifeGridEntry {
         LifeGridEntry(
             date: .now,
             configuration: LifeGridConfigurationIntent(),
             remainingUnits: 38,
             elapsedUnits: 37,
-            totalUnits: 90
+            totalUnits: 90,
+            resolvedUnit: resolvedUnit(from: LifeGridConfigurationIntent())
         )
     }
 
@@ -93,8 +97,9 @@ struct LifeGridProvider: AppIntentTimelineProvider {
         let now = Date()
         let entry = makeEntry(configuration: configuration, now: now)
 
+        let unit = resolvedUnit(from: configuration)
         let refreshMinutes: Int
-        switch configuration.unit {
+        switch unit {
         case .seconds: refreshMinutes = 1
         case .minutes: refreshMinutes = 1
         case .hours: refreshMinutes = 5
@@ -107,13 +112,37 @@ struct LifeGridProvider: AppIntentTimelineProvider {
         return Timeline(entries: [entry], policy: .after(next))
     }
 
+    private func resolvedUnit(from configuration: LifeGridConfigurationIntent) -> WidgetLifeUnit {
+        if let raw = Self.sharedDefaults?.string(forKey: "selectedUnitRaw"),
+            let unit = WidgetLifeUnit(rawValue: raw)
+        {
+            return unit
+        }
+        return configuration.unit
+    }
+
     private func makeEntry(configuration: LifeGridConfigurationIntent, now: Date) -> LifeGridEntry {
-        let birthDate = min(configuration.birthDate, now)
-        let lifeSeconds = max(1, configuration.lifeExpectancyYears * WidgetLifeUnit.years.seconds)
+        let shared = Self.sharedDefaults
+
+        let birthDate: Date
+        if let ts = shared?.object(forKey: "birthDateTimestamp") as? Double {
+            birthDate = min(Date(timeIntervalSince1970: ts), now)
+        } else {
+            birthDate = min(configuration.birthDate, now)
+        }
+
+        let lifeExpYears: Double
+        if let le = shared?.object(forKey: "lifeExpectancyYears") as? Double, le > 0 {
+            lifeExpYears = le
+        } else {
+            lifeExpYears = configuration.lifeExpectancyYears
+        }
+
+        let lifeSeconds = max(1, lifeExpYears * WidgetLifeUnit.years.seconds)
         let elapsed = max(0, now.timeIntervalSince(birthDate))
         let elapsedClamped = min(elapsed, lifeSeconds)
 
-        let unit = configuration.unit
+        let unit = resolvedUnit(from: configuration)
         let totalUnits = max(1, lifeSeconds / unit.seconds)
         let elapsedUnits = min(totalUnits, elapsedClamped / unit.seconds)
         let remainingUnits = max(0, Int((totalUnits - elapsedUnits).rounded()))
@@ -123,7 +152,8 @@ struct LifeGridProvider: AppIntentTimelineProvider {
             configuration: configuration,
             remainingUnits: remainingUnits,
             elapsedUnits: elapsedUnits,
-            totalUnits: totalUnits
+            totalUnits: totalUnits,
+            resolvedUnit: unit
         )
     }
 }
@@ -229,11 +259,11 @@ struct LifeGridWidgetView: View {
     }
 
     private var valueLineText: String {
-        "\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.rawValue.capitalized) left"
+        "\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.resolvedUnit.rawValue.capitalized) left"
     }
 
     private var cellScaleText: String {
-        let unit = singularUnitName(for: entry.configuration.unit)
+        let unit = singularUnitName(for: entry.resolvedUnit)
         return "Each cell = 1 \(unit) • rolling window"
     }
 
@@ -431,7 +461,7 @@ struct LifeGridWidgetView: View {
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
                     .monospacedDigit()
-                Text("\(entry.configuration.unit.rawValue.capitalized) left")
+                Text("\(entry.resolvedUnit.rawValue.capitalized) left")
                     .font(
                         .system(
                             size: max(10, valueFontSize * 0.5), weight: .semibold, design: .rounded)
@@ -443,7 +473,7 @@ struct LifeGridWidgetView: View {
 
     private var inlineAccessoryView: some View {
         Text(
-            "\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.shortLabel) left"
+            "\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.resolvedUnit.shortLabel) left"
         )
     }
 
@@ -462,7 +492,7 @@ struct LifeGridWidgetView: View {
                 Text("\(entry.remainingUnits)")
                     .font(.system(size: 12, weight: .black, design: .rounded))
                     .minimumScaleFactor(0.5)
-                Text(entry.configuration.unit.shortLabel)
+                Text(entry.resolvedUnit.shortLabel)
                     .font(.system(size: 7, weight: .medium, design: .rounded))
                     .foregroundStyle(.secondary)
             }
@@ -480,7 +510,7 @@ struct LifeGridWidgetView: View {
             }
             .foregroundStyle(.secondary)
             Text(
-                "\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.rawValue.capitalized) left"
+                "\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.resolvedUnit.rawValue.capitalized) left"
             )
             .font(.system(size: 14, weight: .black, design: .rounded))
             .lineLimit(1)
