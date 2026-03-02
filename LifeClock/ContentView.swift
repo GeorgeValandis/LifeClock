@@ -375,8 +375,15 @@ struct ContentView: View {
                     .opacity(cardsAppeared ? 1 : 0)
                     .offset(y: cardsAppeared ? 0 : 18)
 
-                ZStack {
-                    // Front: Life Clock Card
+                if showLifeGrid {
+                    VStack(spacing: 24) {
+                        lifeGridCard(elapsed: elapsed, remaining: remaining)
+                        unitPicker
+                    }
+                    .transition(.asymmetric(insertion: .flipForward, removal: .flipBackward))
+                    .opacity(cardsAppeared ? 1 : 0)
+                    .offset(y: cardsAppeared ? 0 : 24)
+                } else {
                     VStack(alignment: .leading, spacing: 18) {
                         HStack(alignment: .top) {
                             VStack(alignment: .leading, spacing: 7) {
@@ -494,27 +501,10 @@ struct ContentView: View {
                     .scaleEffect(unitSwapPulse ? 0.985 : 1)
                     .opacity(unitSwapPulse ? 0.95 : 1)
                     .animation(.spring(response: 0.35, dampingFraction: 0.8), value: unitSwapPulse)
-                    .rotation3DEffect(
-                        .degrees(showLifeGrid ? 180 : 0),
-                        axis: (x: 0, y: 1, z: 0),
-                        perspective: 0.4
-                    )
-                    .opacity(showLifeGrid ? 0 : 1)
-
-                    // Back: Life Grid Card
-                    VStack(spacing: 24) {
-                        lifeGridCard(elapsed: elapsed, remaining: remaining)
-                        unitPicker
-                    }
-                    .rotation3DEffect(
-                        .degrees(showLifeGrid ? 0 : -180),
-                        axis: (x: 0, y: 1, z: 0),
-                        perspective: 0.4
-                    )
-                    .opacity(showLifeGrid ? 1 : 0)
+                    .transition(.asymmetric(insertion: .flipBackward, removal: .flipForward))
+                    .opacity(cardsAppeared ? 1 : 0)
+                    .offset(y: cardsAppeared ? 0 : 24)
                 }
-                .opacity(cardsAppeared ? 1 : 0)
-                .offset(y: cardsAppeared ? 0 : 24)
 
                 if !showLifeGrid {
                     timeLeftHero(remaining: remaining)
@@ -1597,6 +1587,30 @@ private struct LifeProgressRing: View {
                 pulsing = true
             }
         }
+    }
+}
+
+private struct FlipModifier: ViewModifier {
+    let angle: Double
+    func body(content: Content) -> some View {
+        content
+            .rotation3DEffect(.degrees(angle), axis: (x: 0, y: 1, z: 0), perspective: 0.4)
+            .opacity(abs(angle) > 89 ? 0 : 1)
+    }
+}
+
+extension AnyTransition {
+    static var flipForward: AnyTransition {
+        .modifier(
+            active: FlipModifier(angle: -90),
+            identity: FlipModifier(angle: 0)
+        )
+    }
+    static var flipBackward: AnyTransition {
+        .modifier(
+            active: FlipModifier(angle: 90),
+            identity: FlipModifier(angle: 0)
+        )
     }
 }
 
