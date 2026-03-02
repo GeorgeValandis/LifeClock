@@ -11,6 +11,7 @@ struct OnboardingView: View {
     @State private var showBirthDatePicker = false
     @State private var glowAnimate = false
     @State private var contentAppeared = false
+    @State private var tappedPill: String? = nil
 
     private let accentGreen = Color(red: 0.42, green: 0.98, blue: 0.76)
     private let accentOrange = Color(red: 1.0, green: 0.60, blue: 0.24)
@@ -47,7 +48,8 @@ struct OnboardingView: View {
 
     private var remainingSelectedUnitText: String {
         let value = Int((remainingSeconds / selectedUnit.seconds).rounded(.down))
-        return "\(value.formatted(.number.grouping(.automatic))) \(selectedUnit.title.lowercased()) left"
+        return
+            "\(value.formatted(.number.grouping(.automatic))) \(selectedUnit.title.lowercased()) left"
     }
 
     var body: some View {
@@ -256,41 +258,62 @@ struct OnboardingView: View {
     }
 
     private var welcomeStep: some View {
-        onboardingStep(icon: "hourglass.circle.fill", title: "Welcome to LifeClock", accent: accentTeal) {
+        onboardingStep(
+            icon: "hourglass.circle.fill", title: "Welcome to LifeClock", accent: accentTeal
+        ) {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Every second counts. Set up your timeline now and start with a clear visual of your lifetime.")
-                    .font(.system(size: 16, weight: .medium, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.84))
+                Text(
+                    "Every second counts. Set up your timeline now and start with a clear visual of your lifetime."
+                )
+                .font(.system(size: 16, weight: .medium, design: .rounded))
+                .foregroundStyle(.white.opacity(0.84))
 
                 HStack(spacing: 10) {
-                    previewPill(title: "Counter", value: "Live")
-                    previewPill(title: "Grid", value: "Visual")
-                    previewPill(title: "Widget", value: "Ready")
+                    previewPill(
+                        title: "Counter", value: "Live", isSelected: tappedPill == "Counter"
+                    ) {
+                        selectPill("Counter")
+                    }
+                    previewPill(title: "Grid", value: "Visual", isSelected: tappedPill == "Grid") {
+                        selectPill("Grid")
+                    }
+                    previewPill(title: "Widget", value: "Ready", isSelected: tappedPill == "Widget")
+                    {
+                        selectPill("Widget")
+                    }
                 }
 
-                Text("Tap to continue")
+                Text(tappedPill == nil ? "Tap a feature to continue" : "Great choice!")
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.58))
-            }
-        }
-        .contentShape(Rectangle())
-        .onTapGesture {
-            withAnimation(.spring(response: 0.42, dampingFraction: 0.84)) {
-                currentStep = min(totalSteps - 1, 1)
+                    .foregroundStyle(
+                        tappedPill == nil ? .white.opacity(0.58) : accentGreen.opacity(0.9)
+                    )
+                    .animation(.easeInOut(duration: 0.25), value: tappedPill)
             }
         }
     }
 
+    private func selectPill(_ name: String) {
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+            tappedPill = name
+        }
+    }
+
     private var birthDateStep: some View {
-        onboardingStep(icon: "birthday.cake.fill", title: "Pick your birth date", accent: accentTeal) {
+        onboardingStep(
+            icon: "birthday.cake.fill", title: "Pick your birth date", accent: accentTeal
+        ) {
             VStack(alignment: .leading, spacing: 14) {
                 Button {
                     showBirthDatePicker = true
                 } label: {
                     HStack {
-                        Text(birthDateBinding.wrappedValue.formatted(date: .abbreviated, time: .omitted))
-                            .font(.system(size: 18, weight: .bold, design: .rounded))
-                            .foregroundStyle(accentTeal)
+                        Text(
+                            birthDateBinding.wrappedValue.formatted(
+                                date: .abbreviated, time: .omitted)
+                        )
+                        .font(.system(size: 18, weight: .bold, design: .rounded))
+                        .foregroundStyle(accentTeal)
                         Spacer()
                         Image(systemName: "calendar")
                             .font(.system(size: 15, weight: .semibold))
@@ -316,7 +339,9 @@ struct OnboardingView: View {
     }
 
     private var lifeExpectancyStep: some View {
-        onboardingStep(icon: "heart.text.clipboard.fill", title: "Choose life expectancy", accent: accentOrange) {
+        onboardingStep(
+            icon: "heart.text.clipboard.fill", title: "Choose life expectancy", accent: accentOrange
+        ) {
             VStack(alignment: .leading, spacing: 12) {
                 Text("\(Int(lifeExpectancyYears)) years")
                     .font(.system(size: 30, weight: .black, design: .rounded))
@@ -336,7 +361,10 @@ struct OnboardingView: View {
     }
 
     private var defaultUnitStep: some View {
-        onboardingStep(icon: "gauge.open.with.lines.needle.33percent.and.arrowtriangle", title: "Select default unit", accent: accentGreen) {
+        onboardingStep(
+            icon: "gauge.open.with.lines.needle.33percent.and.arrowtriangle",
+            title: "Select default unit", accent: accentGreen
+        ) {
             VStack(alignment: .leading, spacing: 12) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
@@ -373,25 +401,35 @@ struct OnboardingView: View {
         }
     }
 
-    private func previewPill(title: String, value: String) -> some View {
-        VStack(spacing: 4) {
-            Text(title)
-                .font(.system(size: 11, weight: .semibold, design: .rounded))
-                .foregroundStyle(.white.opacity(0.65))
-            Text(value)
-                .font(.system(size: 13, weight: .bold, design: .rounded))
-                .foregroundStyle(.white)
+    private func previewPill(
+        title: String, value: String, isSelected: Bool, action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            VStack(spacing: 4) {
+                Text(title)
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+                    .foregroundStyle(isSelected ? accentTeal : .white.opacity(0.65))
+                Text(value)
+                    .font(.system(size: 13, weight: .bold, design: .rounded))
+                    .foregroundStyle(isSelected ? .white : .white.opacity(0.85))
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(isSelected ? accentTeal.opacity(0.2) : .white.opacity(0.1))
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .stroke(
+                        isSelected ? accentTeal.opacity(0.6) : .white.opacity(0.12),
+                        lineWidth: isSelected ? 1.5 : 1)
+            }
+            .scaleEffect(isSelected ? 1.05 : 1.0)
+            .shadow(color: isSelected ? accentTeal.opacity(0.4) : .clear, radius: 8, x: 0, y: 2)
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 10)
-        .background(
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .fill(.white.opacity(0.1))
-        )
-        .overlay {
-            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .stroke(.white.opacity(0.12), lineWidth: 1)
-        }
+        .buttonStyle(.plain)
+        .animation(.spring(response: 0.35, dampingFraction: 0.7), value: isSelected)
     }
 
     private func quickExpectancyButton(_ years: Int) -> some View {
