@@ -375,13 +375,8 @@ struct ContentView: View {
                     .opacity(cardsAppeared ? 1 : 0)
                     .offset(y: cardsAppeared ? 0 : 18)
 
-                if showLifeGrid {
-                    lifeGridCard(elapsed: elapsed, remaining: remaining)
-                        .opacity(cardsAppeared ? 1 : 0)
-                        .offset(y: cardsAppeared ? 0 : 24)
-                    unitPicker
-                        .opacity(cardsAppeared ? 1 : 0)
-                } else {
+                ZStack {
+                    // Front: Life Clock Card
                     VStack(alignment: .leading, spacing: 18) {
                         HStack(alignment: .top) {
                             VStack(alignment: .leading, spacing: 7) {
@@ -499,9 +494,29 @@ struct ContentView: View {
                     .scaleEffect(unitSwapPulse ? 0.985 : 1)
                     .opacity(unitSwapPulse ? 0.95 : 1)
                     .animation(.spring(response: 0.35, dampingFraction: 0.8), value: unitSwapPulse)
-                    .opacity(cardsAppeared ? 1 : 0)
-                    .offset(y: cardsAppeared ? 0 : 28)
+                    .rotation3DEffect(
+                        .degrees(showLifeGrid ? 180 : 0),
+                        axis: (x: 0, y: 1, z: 0),
+                        perspective: 0.4
+                    )
+                    .opacity(showLifeGrid ? 0 : 1)
 
+                    // Back: Life Grid Card
+                    VStack(spacing: 24) {
+                        lifeGridCard(elapsed: elapsed, remaining: remaining)
+                        unitPicker
+                    }
+                    .rotation3DEffect(
+                        .degrees(showLifeGrid ? 0 : -180),
+                        axis: (x: 0, y: 1, z: 0),
+                        perspective: 0.4
+                    )
+                    .opacity(showLifeGrid ? 1 : 0)
+                }
+                .opacity(cardsAppeared ? 1 : 0)
+                .offset(y: cardsAppeared ? 0 : 24)
+
+                if !showLifeGrid {
                     timeLeftHero(remaining: remaining)
                         .opacity(cardsAppeared ? 1 : 0)
                         .offset(y: cardsAppeared ? 0 : 32)
@@ -567,7 +582,7 @@ struct ContentView: View {
                     systemName: showLifeGrid
                         ? "chart.bar.doc.horizontal.fill" : "square.grid.3x3.fill"
                 ) {
-                    withAnimation(.spring(response: 0.42, dampingFraction: 0.86)) {
+                    withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
                         showLifeGrid.toggle()
                     }
                 }
