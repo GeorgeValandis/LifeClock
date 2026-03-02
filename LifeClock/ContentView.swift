@@ -74,19 +74,19 @@ private enum ClockTheme: String, CaseIterable, Identifiable {
             [
                 Color(red: 0.03, green: 0.09, blue: 0.17),
                 Color(red: 0.02, green: 0.25, blue: 0.24),
-                Color(red: 0.20, green: 0.12, blue: 0.05)
+                Color(red: 0.20, green: 0.12, blue: 0.05),
             ]
         case .solar:
             [
                 Color(red: 0.17, green: 0.07, blue: 0.03),
                 Color(red: 0.33, green: 0.14, blue: 0.06),
-                Color(red: 0.56, green: 0.27, blue: 0.08)
+                Color(red: 0.56, green: 0.27, blue: 0.08),
             ]
         case .deepSea:
             [
                 Color(red: 0.01, green: 0.05, blue: 0.14),
                 Color(red: 0.04, green: 0.15, blue: 0.30),
-                Color(red: 0.01, green: 0.31, blue: 0.39)
+                Color(red: 0.01, green: 0.31, blue: 0.39),
             ]
         }
     }
@@ -113,19 +113,19 @@ private enum ClockTheme: String, CaseIterable, Identifiable {
             [
                 Color(red: 0.95, green: 0.94, blue: 0.64),
                 Color(red: 1.0, green: 0.54, blue: 0.18),
-                Color(red: 0.11, green: 0.87, blue: 0.84)
+                Color(red: 0.11, green: 0.87, blue: 0.84),
             ]
         case .solar:
             [
                 Color(red: 1.0, green: 0.90, blue: 0.39),
                 Color(red: 1.0, green: 0.63, blue: 0.21),
-                Color(red: 1.0, green: 0.35, blue: 0.17)
+                Color(red: 1.0, green: 0.35, blue: 0.17),
             ]
         case .deepSea:
             [
                 Color(red: 0.69, green: 0.95, blue: 1.0),
                 Color(red: 0.26, green: 0.70, blue: 1.0),
-                Color(red: 0.15, green: 0.95, blue: 0.81)
+                Color(red: 0.15, green: 0.95, blue: 0.81),
             ]
         }
     }
@@ -204,13 +204,17 @@ private enum AppIconChoice: String, CaseIterable, Identifiable {
 }
 
 struct ContentView: View {
-    @AppStorage("birthDateTimestamp") private var birthDateTimestamp: Double = Date(timeIntervalSinceNow: -26 * 31_556_952).timeIntervalSince1970
+    @AppStorage("birthDateTimestamp") private var birthDateTimestamp: Double = Date(
+        timeIntervalSinceNow: -26 * 31_556_952
+    ).timeIntervalSince1970
     @AppStorage("selectedUnitRaw") private var selectedUnitRaw: String = LifeUnit.days.rawValue
     @AppStorage("lifeExpectancyYears") private var lifeExpectancyYears: Double = 90
     @AppStorage("clockThemeRaw") private var clockThemeRaw: String = ClockTheme.aurora.rawValue
-    @AppStorage("typographyPresetRaw") private var typographyPresetRaw: String = TypographyPreset.modern.rawValue
+    @AppStorage("typographyPresetRaw") private var typographyPresetRaw: String = TypographyPreset
+        .modern.rawValue
     @AppStorage("hapticsEnabled") private var hapticsEnabled: Bool = true
-    @AppStorage("appIconChoiceRaw") private var appIconChoiceRaw: String = AppIconChoice.primary.rawValue
+    @AppStorage("appIconChoiceRaw") private var appIconChoiceRaw: String = AppIconChoice.primary
+        .rawValue
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
 
     @State private var showSettings = false
@@ -219,7 +223,18 @@ struct ContentView: View {
     @State private var iconErrorMessage: String?
     @State private var unitSwapPulse = false
     @State private var showLifeGrid = false
+    @State private var cardsAppeared = false
     @Namespace private var unitChipSelectionAnimation
+
+    private var greeting: String {
+        let hour = Calendar.current.component(.hour, from: Date())
+        switch hour {
+        case 5..<12: return "Good Morning"
+        case 12..<17: return "Good Afternoon"
+        case 17..<22: return "Good Evening"
+        default: return "Night Owl"
+        }
+    }
 
     private var selectedUnit: LifeUnit {
         LifeUnit(rawValue: selectedUnitRaw) ?? .days
@@ -266,6 +281,9 @@ struct ContentView: View {
                     animateBackground.toggle()
                 }
                 showOnboarding = !hasCompletedOnboarding
+                withAnimation(.spring(response: 0.7, dampingFraction: 0.82).delay(0.15)) {
+                    cardsAppeared = true
+                }
             }
             .sheet(isPresented: $showSettings) {
                 settingsSheet
@@ -281,14 +299,17 @@ struct ContentView: View {
                     }
                 )
             }
-            .alert("Icon Update Failed", isPresented: Binding(
-                get: { iconErrorMessage != nil },
-                set: { isPresented in
-                    if !isPresented {
-                        iconErrorMessage = nil
+            .alert(
+                "Icon Update Failed",
+                isPresented: Binding(
+                    get: { iconErrorMessage != nil },
+                    set: { isPresented in
+                        if !isPresented {
+                            iconErrorMessage = nil
+                        }
                     }
-                }
-            )) {
+                )
+            ) {
                 Button("OK", role: .cancel) { iconErrorMessage = nil }
             } message: {
                 Text(iconErrorMessage ?? "Unknown error")
@@ -327,98 +348,172 @@ struct ContentView: View {
         let remaining = remainingLifeSeconds(elapsed: elapsed)
 
         return ScrollView {
-            VStack(spacing: 22) {
+            VStack(spacing: 24) {
                 header
+                    .opacity(cardsAppeared ? 1 : 0)
+                    .offset(y: cardsAppeared ? 0 : 18)
+
                 if showLifeGrid {
                     lifeGridCard(elapsed: elapsed, remaining: remaining)
+                        .opacity(cardsAppeared ? 1 : 0)
+                        .offset(y: cardsAppeared ? 0 : 24)
                     unitPicker
+                        .opacity(cardsAppeared ? 1 : 0)
                 } else {
                     VStack(alignment: .leading, spacing: 18) {
                         HStack(alignment: .top) {
                             VStack(alignment: .leading, spacing: 7) {
                                 Text("LIFE CLOCK")
-                                    .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
+                                    .font(
+                                        .system(
+                                            size: 12, weight: .bold,
+                                            design: selectedTypography.bodyDesign)
+                                    )
                                     .tracking(1.8)
                                     .foregroundStyle(.white.opacity(0.74))
 
                                 ZStack(alignment: .leading) {
                                     Text(formattedValue(unitValue, unit: selectedUnit))
-                                        .font(.system(size: lifeClockValueFontSize(for: selectedUnit), weight: .black, design: selectedTypography.heroDesign))
+                                        .font(
+                                            .system(
+                                                size: lifeClockValueFontSize(for: selectedUnit),
+                                                weight: .black,
+                                                design: selectedTypography.heroDesign)
+                                        )
                                         .minimumScaleFactor(0.22)
                                         .lineLimit(1)
                                         .allowsTightening(true)
                                         .layoutPriority(1)
                                         .monospacedDigit()
                                         .foregroundStyle(.white)
+                                        .shadow(
+                                            color: selectedTheme.topGlow.opacity(0.25), radius: 16,
+                                            x: 0, y: 2
+                                        )
                                         .contentTransition(.numericText())
                                         .id("life-clock-value-\(selectedUnitRaw)")
                                         .transition(unitSwapTransition)
                                 }
-                                .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
+                                .animation(
+                                    .spring(response: 0.42, dampingFraction: 0.84),
+                                    value: selectedUnitRaw)
 
                                 ZStack(alignment: .leading) {
                                     Text(selectedUnit.title)
-                                        .font(.system(size: 18, weight: .semibold, design: selectedTypography.bodyDesign))
+                                        .font(
+                                            .system(
+                                                size: 18, weight: .semibold,
+                                                design: selectedTypography.bodyDesign)
+                                        )
                                         .foregroundStyle(.white.opacity(0.88))
                                         .id("life-clock-unit-\(selectedUnitRaw)")
                                         .transition(unitSwapTransition)
                                 }
-                                .animation(.spring(response: 0.42, dampingFraction: 0.84), value: selectedUnitRaw)
+                                .animation(
+                                    .spring(response: 0.42, dampingFraction: 0.84),
+                                    value: selectedUnitRaw)
                             }
 
                             Spacer()
 
-                            LifeProgressRing(progress: progress, colors: selectedTheme.ringColors)
+                            LifeProgressRing(
+                                progress: progress, colors: selectedTheme.ringColors,
+                                glowColor: selectedTheme.topGlow)
                         }
 
-                        Divider().overlay(.white.opacity(0.25))
+                        LinearGradient(
+                            colors: [
+                                selectedTheme.topGlow.opacity(0.6),
+                                selectedTheme.bottomGlow.opacity(0.6),
+                            ],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                        .frame(height: 1)
+                        .padding(.horizontal, 4)
 
                         HStack {
                             Label {
-                                Text("Since \(birthDate.formatted(date: .abbreviated, time: .omitted))")
+                                Text(
+                                    "Since \(birthDate.formatted(date: .abbreviated, time: .omitted))"
+                                )
                             } icon: {
                                 Image(systemName: "calendar")
                             }
 
                             Spacer()
 
-                            Text(progress.formatted(.percent.precision(.fractionLength(0))))
-                                .font(.system(size: 16, weight: .bold, design: selectedTypography.bodyDesign))
+                            Text(progress.formatted(.percent.precision(.fractionLength(1))))
+                                .font(
+                                    .system(
+                                        size: 16, weight: .bold,
+                                        design: selectedTypography.bodyDesign))
                         }
-                        .font(.system(size: 14, weight: .medium, design: selectedTypography.bodyDesign))
+                        .font(
+                            .system(
+                                size: 14, weight: .medium, design: selectedTypography.bodyDesign)
+                        )
                         .foregroundStyle(.white.opacity(0.86))
                     }
                     .padding(22)
-                    .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 34, style: .continuous))
+                    .background(
+                        .ultraThinMaterial,
+                        in: RoundedRectangle(cornerRadius: 34, style: .continuous)
+                    )
                     .overlay {
                         RoundedRectangle(cornerRadius: 34, style: .continuous)
-                            .stroke(.white.opacity(0.18), lineWidth: 1)
+                            .stroke(
+                                LinearGradient(
+                                    colors: [
+                                        selectedTheme.topGlow.opacity(0.25), .white.opacity(0.1),
+                                        selectedTheme.bottomGlow.opacity(0.2),
+                                    ],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                ),
+                                lineWidth: 1
+                            )
                     }
                     .scaleEffect(unitSwapPulse ? 0.985 : 1)
                     .opacity(unitSwapPulse ? 0.95 : 1)
                     .animation(.spring(response: 0.35, dampingFraction: 0.8), value: unitSwapPulse)
+                    .opacity(cardsAppeared ? 1 : 0)
+                    .offset(y: cardsAppeared ? 0 : 28)
 
                     timeLeftHero(remaining: remaining)
+                        .opacity(cardsAppeared ? 1 : 0)
+                        .offset(y: cardsAppeared ? 0 : 32)
+
                     unitPicker
+                        .opacity(cardsAppeared ? 1 : 0)
+
                     nextMilestoneCard(now: now, elapsed: elapsed)
+                        .opacity(cardsAppeared ? 1 : 0)
+                        .offset(y: cardsAppeared ? 0 : 36)
 
                     HStack(spacing: 14) {
                         statCard(
                             title: "Days lived",
                             value: groupedIntegerString(Int(elapsed / LifeUnit.days.seconds)),
-                            icon: "sun.max"
+                            icon: "sun.max",
+                            accentColor: selectedTheme.topGlow
                         )
 
                         statCard(
                             title: "Years left (est.)",
-                            value: groupedIntegerString(Int((remaining / LifeUnit.years.seconds).rounded())),
-                            icon: "hourglass.bottomhalf.filled"
+                            value: groupedIntegerString(
+                                Int((remaining / LifeUnit.years.seconds).rounded())),
+                            icon: "hourglass.bottomhalf.filled",
+                            accentColor: selectedTheme.bottomGlow
                         )
                     }
+                    .opacity(cardsAppeared ? 1 : 0)
+                    .offset(y: cardsAppeared ? 0 : 40)
                 }
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 24)
+            .animation(.spring(response: 0.7, dampingFraction: 0.82), value: cardsAppeared)
         }
         .scrollIndicators(.hidden)
     }
@@ -426,19 +521,30 @@ struct ContentView: View {
     private var header: some View {
         HStack(spacing: 16) {
             VStack(alignment: .leading, spacing: 6) {
+                Text(greeting)
+                    .font(
+                        .system(size: 14, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
+                    .foregroundStyle(selectedTheme.topGlow.opacity(0.9))
+                    .tracking(1.2)
+
                 Text("Your Time")
                     .font(.system(size: 35, weight: .heavy, design: selectedTypography.heroDesign))
                     .foregroundStyle(.white)
+                    .shadow(color: selectedTheme.topGlow.opacity(0.3), radius: 12, x: 0, y: 4)
 
                 Text("Every second counts.")
                     .font(.system(size: 15, weight: .medium, design: selectedTypography.bodyDesign))
-                    .foregroundStyle(.white.opacity(0.78))
+                    .foregroundStyle(.white.opacity(0.6))
             }
 
             Spacer()
 
             HStack(spacing: 10) {
-                circleButton(systemName: showLifeGrid ? "chart.bar.doc.horizontal.fill" : "square.grid.3x3.fill") {
+                circleButton(
+                    systemName: showLifeGrid
+                        ? "chart.bar.doc.horizontal.fill" : "square.grid.3x3.fill"
+                ) {
                     withAnimation(.spring(response: 0.42, dampingFraction: 0.86)) {
                         showLifeGrid.toggle()
                     }
@@ -452,20 +558,43 @@ struct ContentView: View {
         .padding(.top, 8)
     }
 
+    private func alternateTimeLeftDescription(remaining: TimeInterval) -> String {
+        let years = Int(remaining / LifeUnit.years.seconds)
+        let months = Int(
+            (remaining.truncatingRemainder(dividingBy: LifeUnit.years.seconds))
+                / LifeUnit.months.seconds)
+        if years > 0 {
+            return "≈ \(years) years, \(months) months remaining"
+        }
+        let days = Int(remaining / LifeUnit.days.seconds)
+        return "≈ \(groupedIntegerString(days)) days remaining"
+    }
+
     private func timeLeftHero(remaining: TimeInterval) -> some View {
         let selectedLeftValue = selectedUnit.convert(from: remaining)
 
         return VStack(alignment: .leading, spacing: 10) {
-            Text("TIME LEFT (EST.)")
-                .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
-                .tracking(1.6)
-                .foregroundStyle(.white.opacity(0.75))
+            HStack {
+                Text("TIME LEFT (EST.)")
+                    .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
+                    .tracking(1.6)
+                    .foregroundStyle(.white.opacity(0.75))
+                Spacer()
+                Image(systemName: "clock.arrow.trianglehead.counterclockwise.rotate.90")
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(selectedTheme.bottomGlow.opacity(0.7))
+            }
 
             HStack(alignment: .firstTextBaseline) {
                 ZStack(alignment: .leading) {
                     Text(formattedValue(selectedLeftValue, unit: selectedUnit))
-                        .font(.system(size: 44, weight: .black, design: selectedTypography.heroDesign))
+                        .font(
+                            .system(size: 44, weight: .black, design: selectedTypography.heroDesign)
+                        )
                         .monospacedDigit()
+                        .shadow(
+                            color: selectedTheme.bottomGlow.opacity(0.2), radius: 12, x: 0, y: 2
+                        )
                         .contentTransition(.numericText())
                         .id("time-left-value-\(selectedUnitRaw)")
                         .transition(unitSwapTransition)
@@ -474,7 +603,10 @@ struct ContentView: View {
 
                 ZStack(alignment: .leading) {
                     Text(selectedUnit.title)
-                        .font(.system(size: 18, weight: .semibold, design: selectedTypography.bodyDesign))
+                        .font(
+                            .system(
+                                size: 18, weight: .semibold, design: selectedTypography.bodyDesign)
+                        )
                         .foregroundStyle(.white.opacity(0.86))
                         .id("time-left-unit-\(selectedUnitRaw)")
                         .transition(unitSwapTransition)
@@ -484,9 +616,9 @@ struct ContentView: View {
             .foregroundStyle(.white)
 
             ZStack(alignment: .leading) {
-                Text("≈ \(formattedValue(selectedLeftValue, unit: selectedUnit)) \(selectedUnit.title) left")
+                Text(alternateTimeLeftDescription(remaining: remaining))
                     .font(.system(size: 14, weight: .medium, design: selectedTypography.bodyDesign))
-                    .foregroundStyle(.white.opacity(0.75))
+                    .foregroundStyle(.white.opacity(0.6))
                     .id("time-left-subtitle-\(selectedUnitRaw)")
                     .transition(unitSwapTransition)
             }
@@ -502,11 +634,18 @@ struct ContentView: View {
             .animation(.spring(response: 0.45, dampingFraction: 0.86), value: selectedUnitRaw)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(18)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .padding(20)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
         .overlay {
-            RoundedRectangle(cornerRadius: 26, style: .continuous)
-                .stroke(.white.opacity(0.18), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .stroke(
+                    LinearGradient(
+                        colors: [selectedTheme.bottomGlow.opacity(0.2), .white.opacity(0.1)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1
+                )
         }
         .scaleEffect(unitSwapPulse ? 0.985 : 1)
         .opacity(unitSwapPulse ? 0.95 : 1)
@@ -552,7 +691,9 @@ struct ContentView: View {
                     }
                 }
                 .stroke(
-                    LinearGradient(colors: [selectedTheme.topGlow, selectedTheme.bottomGlow], startPoint: .leading, endPoint: .trailing),
+                    LinearGradient(
+                        colors: [selectedTheme.topGlow, selectedTheme.bottomGlow],
+                        startPoint: .leading, endPoint: .trailing),
                     style: StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round)
                 )
 
@@ -565,13 +706,17 @@ struct ContentView: View {
             }
             .overlay(alignment: .topLeading) {
                 Text("Now")
-                    .font(.system(size: 10, weight: .semibold, design: selectedTypography.bodyDesign))
+                    .font(
+                        .system(size: 10, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
                     .foregroundStyle(.white.opacity(0.62))
                     .offset(y: -2)
             }
             .overlay(alignment: .topTrailing) {
                 Text("End")
-                    .font(.system(size: 10, weight: .semibold, design: selectedTypography.bodyDesign))
+                    .font(
+                        .system(size: 10, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
                     .foregroundStyle(.white.opacity(0.62))
                     .offset(y: -2)
             }
@@ -607,7 +752,8 @@ struct ContentView: View {
     }
 
     private func lifeGridCard(elapsed: TimeInterval, remaining: TimeInterval) -> some View {
-        let totalUnits = max((lifeExpectancyYears * LifeUnit.years.seconds) / selectedUnit.seconds, 1)
+        let totalUnits = max(
+            (lifeExpectancyYears * LifeUnit.years.seconds) / selectedUnit.seconds, 1)
         let elapsedUnitsRaw = min(max(elapsed / selectedUnit.seconds, 0), totalUnits)
         let elapsedUnits = Int(elapsedUnitsRaw.rounded(.down))
         let remainingUnits = max(0, Int((totalUnits - Double(elapsedUnits)).rounded()))
@@ -630,19 +776,25 @@ struct ContentView: View {
             let alignedWindowStart = elapsedUnits - currentIndexInWindow
             windowStart = min(max(0, alignedWindowStart), maxStart)
         }
-        let gridColumns = Array(repeating: GridItem(.flexible(minimum: 1, maximum: 12), spacing: 2), count: columns)
+        let gridColumns = Array(
+            repeating: GridItem(.flexible(minimum: 1, maximum: 12), spacing: 2), count: columns)
 
         return VStack(alignment: .leading, spacing: 14) {
             HStack {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("LIFE GRID")
-                        .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
+                        .font(
+                            .system(size: 12, weight: .bold, design: selectedTypography.bodyDesign)
+                        )
                         .tracking(1.5)
                         .foregroundStyle(.white.opacity(0.76))
 
                     HStack(alignment: .firstTextBaseline, spacing: 8) {
                         Text(groupedIntegerString(remainingUnits))
-                            .font(.system(size: 44, weight: .black, design: selectedTypography.heroDesign))
+                            .font(
+                                .system(
+                                    size: 44, weight: .black, design: selectedTypography.heroDesign)
+                            )
                             .monospacedDigit()
                             .foregroundStyle(.white)
                             .contentTransition(.numericText())
@@ -650,7 +802,11 @@ struct ContentView: View {
                             .minimumScaleFactor(0.42)
 
                         Text("\(selectedUnit.title) left")
-                            .font(.system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign))
+                            .font(
+                                .system(
+                                    size: 17, weight: .semibold,
+                                    design: selectedTypography.bodyDesign)
+                            )
                             .foregroundStyle(.white.opacity(0.86))
                     }
                 }
@@ -669,10 +825,16 @@ struct ContentView: View {
                     let absoluteUnitIndex = windowStart + progressIndex
                     let isPast = absoluteUnitIndex < elapsedUnits
                     let isCurrent = progressIndex == currentIndexInWindow
-                    let futureIntensity = gridFutureIntensity(index: progressIndex, elapsedCells: currentIndexInWindow, cellCount: cellCount)
+                    let futureIntensity = gridFutureIntensity(
+                        index: progressIndex, elapsedCells: currentIndexInWindow,
+                        cellCount: cellCount)
 
                     RoundedRectangle(cornerRadius: 3, style: .continuous)
-                        .fill(gridHeatColor(isPast: isPast, isCurrent: isCurrent, futureIntensity: futureIntensity))
+                        .fill(
+                            gridHeatColor(
+                                isPast: isPast, isCurrent: isCurrent,
+                                futureIntensity: futureIntensity)
+                        )
                         .aspectRatio(1, contentMode: .fit)
                         .overlay {
                             if isCurrent {
@@ -697,7 +859,17 @@ struct ContentView: View {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 28, style: .continuous)
-                .stroke(.white.opacity(0.16), lineWidth: 1)
+                .stroke(
+                    LinearGradient(
+                        colors: [
+                            selectedTheme.topGlow.opacity(0.2), .white.opacity(0.08),
+                            selectedTheme.bottomGlow.opacity(0.15),
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1
+                )
         }
     }
 
@@ -709,13 +881,13 @@ struct ContentView: View {
 
     private func gridDimensions(for unit: LifeUnit) -> (rows: Int, columns: Int) {
         switch unit {
-        case .years: (10, 10)       // 100
-        case .months: (18, 30)      // 540
-        case .weeks: (20, 40)       // 800
-        case .days: (24, 40)        // 960
-        case .hours: (26, 42)       // 1092
-        case .minutes: (28, 44)     // 1232
-        case .seconds: (30, 46)     // 1380
+        case .years: (10, 10)  // 100
+        case .months: (18, 30)  // 540
+        case .weeks: (20, 40)  // 800
+        case .days: (24, 40)  // 960
+        case .hours: (26, 42)  // 1092
+        case .minutes: (28, 44)  // 1232
+        case .seconds: (30, 46)  // 1380
         }
     }
 
@@ -735,40 +907,58 @@ struct ContentView: View {
         let milestones = [0.25, 0.5, 0.75, 1.0]
         let nextMilestone = milestones.first(where: { $0 > progress }) ?? 1.0
         let previousMilestone = milestones.last(where: { $0 < nextMilestone }) ?? 0.0
-        let segmentProgress = min(max((progress - previousMilestone) / max(nextMilestone - previousMilestone, 0.0001), 0), 1)
+        let segmentProgress = min(
+            max((progress - previousMilestone) / max(nextMilestone - previousMilestone, 0.0001), 0),
+            1)
 
         let milestoneDate = birthDate.addingTimeInterval(fullLife * nextMilestone)
         let remainingToMilestone = max(0, milestoneDate.timeIntervalSince(now))
         let years = Int(remainingToMilestone / LifeUnit.years.seconds)
-        let months = Int((remainingToMilestone.truncatingRemainder(dividingBy: LifeUnit.years.seconds)) / LifeUnit.months.seconds)
+        let months = Int(
+            (remainingToMilestone.truncatingRemainder(dividingBy: LifeUnit.years.seconds))
+                / LifeUnit.months.seconds)
 
-        return VStack(alignment: .leading, spacing: 12) {
-            Text("NEXT MILESTONE")
-                .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
-                .tracking(1.5)
-                .foregroundStyle(.white.opacity(0.76))
+        return VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                Text("NEXT MILESTONE")
+                    .font(.system(size: 12, weight: .bold, design: selectedTypography.bodyDesign))
+                    .tracking(1.5)
+                    .foregroundStyle(.white.opacity(0.76))
+                Spacer()
+                Image(systemName: "flag.checkered")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(selectedTheme.topGlow.opacity(0.8))
+                    .frame(width: 26, height: 26)
+                    .background(selectedTheme.topGlow.opacity(0.15), in: Circle())
+            }
 
             HStack(alignment: .firstTextBaseline, spacing: 8) {
                 Text("\(Int(nextMilestone * 100))%")
-                    .font(.system(size: 36, weight: .black, design: selectedTypography.heroDesign))
+                    .font(.system(size: 38, weight: .black, design: selectedTypography.heroDesign))
                     .foregroundStyle(.white)
+                    .shadow(color: selectedTheme.topGlow.opacity(0.2), radius: 10, x: 0, y: 2)
                 Text("of lifetime")
-                    .font(.system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign))
-                    .foregroundStyle(.white.opacity(0.86))
+                    .font(
+                        .system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
+                    .foregroundStyle(.white.opacity(0.7))
             }
 
-            Text("≈ \(years)y \(months)m left")
-                .font(.system(size: 16, weight: .semibold, design: selectedTypography.bodyDesign))
-                .foregroundStyle(.white.opacity(0.9))
-
-            Text("Expected around \(milestoneDate.formatted(date: .abbreviated, time: .omitted))")
+            HStack(spacing: 6) {
+                Image(systemName: "calendar.badge.clock")
+                    .font(.system(size: 12))
+                    .foregroundStyle(selectedTheme.bottomGlow.opacity(0.8))
+                Text(
+                    "≈ \(years)y \(months)m left • \(milestoneDate.formatted(date: .abbreviated, time: .omitted))"
+                )
                 .font(.system(size: 13, weight: .medium, design: selectedTypography.bodyDesign))
-                .foregroundStyle(.white.opacity(0.72))
+                .foregroundStyle(.white.opacity(0.65))
+            }
 
             GeometryReader { proxy in
                 ZStack(alignment: .leading) {
                     Capsule()
-                        .fill(.white.opacity(0.14))
+                        .fill(.white.opacity(0.1))
                     Capsule()
                         .fill(
                             LinearGradient(
@@ -777,16 +967,38 @@ struct ContentView: View {
                                 endPoint: .trailing
                             )
                         )
+                        .shadow(color: selectedTheme.topGlow.opacity(0.5), radius: 6, x: 0, y: 0)
                         .frame(width: max(8, proxy.size.width * segmentProgress))
                 }
             }
-            .frame(height: 12)
+            .frame(height: 10)
+
+            HStack {
+                Text("\(Int(previousMilestone * 100))%")
+                    .font(
+                        .system(size: 10, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
+                    .foregroundStyle(.white.opacity(0.4))
+                Spacer()
+                Text("\(Int(nextMilestone * 100))%")
+                    .font(
+                        .system(size: 10, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
+                    .foregroundStyle(.white.opacity(0.4))
+            }
         }
-        .padding(16)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .padding(18)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
         .overlay {
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .stroke(.white.opacity(0.16), lineWidth: 1)
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(
+                    LinearGradient(
+                        colors: [selectedTheme.topGlow.opacity(0.18), .white.opacity(0.08)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1
+                )
         }
     }
 
@@ -809,11 +1021,19 @@ struct ContentView: View {
                     } label: {
                         VStack(spacing: 4) {
                             Text(unit.shortTitle)
-                                .font(.system(size: 16, weight: .bold, design: selectedTypography.bodyDesign))
+                                .font(
+                                    .system(
+                                        size: 16, weight: .bold,
+                                        design: selectedTypography.bodyDesign))
                             Text(unit.title)
-                                .font(.system(size: 12, weight: .medium, design: selectedTypography.bodyDesign))
+                                .font(
+                                    .system(
+                                        size: 12, weight: .medium,
+                                        design: selectedTypography.bodyDesign))
                         }
-                        .foregroundStyle(unit == selectedUnit ? selectedTheme.selectedChipForeground : .white)
+                        .foregroundStyle(
+                            unit == selectedUnit ? selectedTheme.selectedChipForeground : .white
+                        )
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
                         .background {
@@ -821,7 +1041,9 @@ struct ContentView: View {
                                 if unit == selectedUnit {
                                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                                         .fill(selectedTheme.selectedChipBackground)
-                                        .matchedGeometryEffect(id: "unit-chip-selection", in: unitChipSelectionAnimation)
+                                        .matchedGeometryEffect(
+                                            id: "unit-chip-selection",
+                                            in: unitChipSelectionAnimation)
                                 } else {
                                     RoundedRectangle(cornerRadius: 18, style: .continuous)
                                         .fill(Color.white.opacity(0.14))
@@ -830,8 +1052,14 @@ struct ContentView: View {
                         }
                         .overlay {
                             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                .stroke(.white.opacity(unit == selectedUnit ? 0.0 : 0.18), lineWidth: 1)
+                                .stroke(
+                                    .white.opacity(unit == selectedUnit ? 0.0 : 0.18), lineWidth: 1)
                         }
+                        .shadow(
+                            color: unit == selectedUnit
+                                ? selectedTheme.topGlow.opacity(0.3) : .clear,
+                            radius: 8, x: 0, y: 4
+                        )
                     }
                     .buttonStyle(.plain)
                 }
@@ -850,7 +1078,7 @@ struct ContentView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 22) {
                         settingsHeader(title: "Settings")
-                        settingsSectionTitle("Life Profile")
+                        settingsSectionTitle("Life Profile", icon: "person.crop.circle")
                         VStack(spacing: 0) {
                             HStack {
                                 Text("Birth date")
@@ -860,7 +1088,10 @@ struct ContentView: View {
                                     "",
                                     selection: Binding(
                                         get: { birthDate },
-                                        set: { birthDateTimestamp = min($0, Date()).timeIntervalSince1970 }
+                                        set: {
+                                            birthDateTimestamp =
+                                                min($0, Date()).timeIntervalSince1970
+                                        }
                                     ),
                                     in: ...Date(),
                                     displayedComponents: .date
@@ -889,18 +1120,56 @@ struct ContentView: View {
                         }
                         .settingsCardStyle()
 
-                        settingsSectionTitle("Appearance")
+                        settingsSectionTitle("Appearance", icon: "paintbrush")
                         VStack(spacing: 0) {
-                            settingsMenuRow(title: "Color theme", value: selectedTheme.title) {
-                                ForEach(ClockTheme.allCases) { theme in
-                                    Button(theme.title) {
-                                        clockThemeRaw = theme.rawValue
-                                        performSelectionHaptic()
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Color theme")
+                                    .foregroundStyle(.white)
+                                HStack(spacing: 12) {
+                                    ForEach(ClockTheme.allCases) { theme in
+                                        Button {
+                                            clockThemeRaw = theme.rawValue
+                                            performSelectionHaptic()
+                                        } label: {
+                                            VStack(spacing: 6) {
+                                                ZStack {
+                                                    Circle()
+                                                        .fill(
+                                                            LinearGradient(
+                                                                colors: theme.ringColors,
+                                                                startPoint: .topLeading,
+                                                                endPoint: .bottomTrailing
+                                                            )
+                                                        )
+                                                        .frame(width: 40, height: 40)
+                                                    if theme == selectedTheme {
+                                                        Circle()
+                                                            .stroke(.white, lineWidth: 2.5)
+                                                            .frame(width: 46, height: 46)
+                                                        Image(systemName: "checkmark")
+                                                            .font(.system(size: 14, weight: .bold))
+                                                            .foregroundStyle(.white)
+                                                    }
+                                                }
+                                                Text(theme.title)
+                                                    .font(
+                                                        .system(
+                                                            size: 11,
+                                                            weight: theme == selectedTheme
+                                                                ? .bold : .medium)
+                                                    )
+                                                    .foregroundStyle(
+                                                        .white.opacity(
+                                                            theme == selectedTheme ? 1 : 0.6))
+                                            }
+                                        }
+                                        .buttonStyle(.plain)
                                     }
                                 }
                             }
+                            .padding(16)
 
-                            Divider().overlay(.white.opacity(0.28))
+                            Divider().overlay(.white.opacity(0.18))
 
                             settingsMenuRow(title: "Typography", value: selectedTypography.title) {
                                 ForEach(TypographyPreset.allCases) { style in
@@ -911,9 +1180,13 @@ struct ContentView: View {
                                 }
                             }
 
-                            Divider().overlay(.white.opacity(0.28))
+                            Divider().overlay(.white.opacity(0.18))
 
-                            settingsMenuRow(title: "App icon", value: AppIconChoice(rawValue: appIconChoiceRaw)?.title ?? AppIconChoice.primary.title) {
+                            settingsMenuRow(
+                                title: "App icon",
+                                value: AppIconChoice(rawValue: appIconChoiceRaw)?.title
+                                    ?? AppIconChoice.primary.title
+                            ) {
                                 ForEach(AppIconChoice.allCases) { iconChoice in
                                     Button(iconChoice.title) {
                                         let oldValue = appIconChoiceRaw
@@ -923,18 +1196,10 @@ struct ContentView: View {
                                     }
                                 }
                             }
-
-                            Divider().overlay(.white.opacity(0.28))
-
-                            Text("Tip: Add alternate icon assets named AppIconPulse and AppIconHorizon to fully enable icon switching.")
-                                .font(.footnote)
-                                .foregroundStyle(.white.opacity(0.8))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(16)
                         }
                         .settingsCardStyle()
 
-                        settingsSectionTitle("Interactions")
+                        settingsSectionTitle("Interactions", icon: "hand.tap")
                         Toggle(isOn: $hapticsEnabled) {
                             Text("Haptics")
                                 .foregroundStyle(.white)
@@ -943,7 +1208,7 @@ struct ContentView: View {
                         .padding(16)
                         .settingsCardStyle()
 
-                        settingsSectionTitle("App")
+                        settingsSectionTitle("App", icon: "info.circle")
                         VStack(spacing: 0) {
                             Button {
                                 hasCompletedOnboarding = false
@@ -993,7 +1258,9 @@ struct ContentView: View {
                     Button("Done") {
                         showSettings = false
                     }
-                    .font(.system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign))
+                    .font(
+                        .system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
                     .foregroundStyle(.white)
                 }
             }
@@ -1010,17 +1277,20 @@ struct ContentView: View {
                     settingsHeader(title: "Legal")
                     legalBlock(
                         title: "Legal Notice",
-                        text: "Operator details, contact address, and responsible person information should be listed here."
+                        text:
+                            "Operator details, contact address, and responsible person information should be listed here."
                     )
 
                     legalBlock(
                         title: "Privacy",
-                        text: "LifeClock stores your birth date, display settings, and preferences locally on your device. No cloud sync is enabled by default."
+                        text:
+                            "LifeClock stores your birth date, display settings, and preferences locally on your device. No cloud sync is enabled by default."
                     )
 
                     legalBlock(
                         title: "Terms of Use",
-                        text: "All displayed values are estimations based on your inputs. LifeClock does not provide medical, legal, or financial advice."
+                        text:
+                            "All displayed values are estimations based on your inputs. LifeClock does not provide medical, legal, or financial advice."
                     )
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -1028,8 +1298,12 @@ struct ContentView: View {
                             .font(.system(size: 17, weight: .bold, design: .rounded))
                             .foregroundStyle(.white)
 
-                        Link("Privacy Policy", destination: URL(string: "https://example.com/privacy")!)
-                        Link("Terms & Conditions", destination: URL(string: "https://example.com/terms")!)
+                        Link(
+                            "Privacy Policy",
+                            destination: URL(string: "https://example.com/privacy")!)
+                        Link(
+                            "Terms & Conditions",
+                            destination: URL(string: "https://example.com/terms")!)
                         Link("Support", destination: URL(string: "mailto:support@example.com")!)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -1058,26 +1332,50 @@ struct ContentView: View {
             Image(systemName: systemName)
                 .font(.system(size: 16, weight: .bold, design: selectedTypography.bodyDesign))
                 .foregroundStyle(.white)
-                .frame(width: 42, height: 42)
+                .shadow(color: selectedTheme.topGlow.opacity(0.3), radius: 6, x: 0, y: 0)
+                .frame(width: 44, height: 44)
                 .background(.ultraThinMaterial, in: Circle())
                 .overlay {
-                    Circle().stroke(.white.opacity(0.2), lineWidth: 1)
+                    Circle()
+                        .stroke(
+                            LinearGradient(
+                                colors: [
+                                    .white.opacity(0.25), selectedTheme.topGlow.opacity(0.15),
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
                 }
         }
         .buttonStyle(.plain)
     }
 
-    private func statCard(title: String, value: String, icon: String) -> some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Label(title, systemImage: icon)
-                .font(.system(size: 12, weight: .semibold, design: selectedTypography.bodyDesign))
-                .foregroundStyle(.white.opacity(0.8))
+    private func statCard(title: String, value: String, icon: String, accentColor: Color = .white)
+        -> some View
+    {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 8) {
+                Image(systemName: icon)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(accentColor)
+                    .frame(width: 28, height: 28)
+                    .background(accentColor.opacity(0.18), in: Circle())
+
+                Text(title)
+                    .font(
+                        .system(size: 12, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
+                    .foregroundStyle(.white.opacity(0.75))
+            }
 
             Text(value)
-                .font(.system(size: 26, weight: .black, design: selectedTypography.heroDesign))
+                .font(.system(size: 28, weight: .black, design: selectedTypography.heroDesign))
                 .foregroundStyle(.white)
+                .shadow(color: accentColor.opacity(0.2), radius: 8, x: 0, y: 2)
                 .lineLimit(1)
-                .minimumScaleFactor(0.7)
+                .minimumScaleFactor(0.6)
                 .monospacedDigit()
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -1085,7 +1383,14 @@ struct ContentView: View {
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
         .overlay {
             RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .stroke(.white.opacity(0.16), lineWidth: 1)
+                .stroke(
+                    LinearGradient(
+                        colors: [accentColor.opacity(0.2), .white.opacity(0.08)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1
+                )
         }
     }
 
@@ -1102,22 +1407,32 @@ struct ContentView: View {
         .settingsCardStyle()
     }
 
-    private func settingsSectionTitle(_ title: String) -> some View {
-        Text(title)
-            .font(.system(size: 17, weight: .bold, design: selectedTypography.bodyDesign))
-            .foregroundStyle(.white.opacity(0.95))
-            .padding(.leading, 4)
+    private func settingsSectionTitle(_ title: String, icon: String? = nil) -> some View {
+        HStack(spacing: 8) {
+            if let icon {
+                Image(systemName: icon)
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(selectedTheme.topGlow.opacity(0.8))
+            }
+            Text(title)
+                .font(.system(size: 17, weight: .bold, design: selectedTypography.bodyDesign))
+                .foregroundStyle(.white.opacity(0.95))
+        }
+        .padding(.leading, 4)
     }
 
     private func settingsHeader(title: String) -> some View {
         Text(title)
             .font(.system(size: 48, weight: .heavy, design: selectedTypography.heroDesign))
             .foregroundStyle(.white)
+            .shadow(color: selectedTheme.topGlow.opacity(0.2), radius: 16, x: 0, y: 4)
             .padding(.top, 6)
             .padding(.leading, 4)
     }
 
-    private func settingsMenuRow<Options: View>(title: String, value: String, @ViewBuilder options: () -> Options) -> some View {
+    private func settingsMenuRow<Options: View>(
+        title: String, value: String, @ViewBuilder options: () -> Options
+    ) -> some View {
         HStack {
             Text(title)
                 .foregroundStyle(.white)
@@ -1143,7 +1458,7 @@ struct ContentView: View {
             colors: [
                 Color.black.opacity(0.22),
                 Color.black.opacity(0.14),
-                Color.black.opacity(0.2)
+                Color.black.opacity(0.2),
             ],
             startPoint: .top,
             endPoint: .bottom
@@ -1211,32 +1526,64 @@ struct ContentView: View {
 private struct LifeProgressRing: View {
     let progress: Double
     let colors: [Color]
+    var glowColor: Color = .orange
+
+    @State private var pulsing = false
+
+    private var tipPosition: CGPoint {
+        let angle = Angle.degrees(360 * progress - 90)
+        let radius: CGFloat = 48
+        return CGPoint(
+            x: 48 + radius * cos(CGFloat(angle.radians)),
+            y: 48 + radius * sin(CGFloat(angle.radians))
+        )
+    }
 
     var body: some View {
         ZStack {
             Circle()
-                .stroke(.white.opacity(0.2), lineWidth: 10)
+                .stroke(.white.opacity(0.12), lineWidth: 10)
 
             Circle()
                 .trim(from: 0, to: progress)
                 .stroke(
-                    AngularGradient(colors: colors, center: .center),
+                    AngularGradient(colors: colors + [colors.first ?? .white], center: .center),
                     style: StrokeStyle(lineWidth: 10, lineCap: .round)
                 )
                 .rotationEffect(.degrees(-90))
+                .shadow(color: glowColor.opacity(0.45), radius: 8, x: 0, y: 0)
 
-            Text(progress.formatted(.percent.precision(.fractionLength(0))))
-                .font(.system(size: 12, weight: .bold, design: .rounded))
-                .foregroundStyle(.white.opacity(0.9))
+            Circle()
+                .fill(.white)
+                .frame(width: 8, height: 8)
+                .shadow(color: glowColor.opacity(0.8), radius: pulsing ? 8 : 4)
+                .scaleEffect(pulsing ? 1.3 : 1.0)
+                .position(tipPosition)
+
+            VStack(spacing: 1) {
+                Text(progress.formatted(.percent.precision(.fractionLength(0))))
+                    .font(.system(size: 15, weight: .black, design: .rounded))
+                    .foregroundStyle(.white)
+                Text("lived")
+                    .font(.system(size: 9, weight: .medium, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.6))
+            }
         }
-        .frame(width: 88, height: 88)
+        .frame(width: 96, height: 96)
+        .onAppear {
+            withAnimation(.easeInOut(duration: 1.6).repeatForever(autoreverses: true)) {
+                pulsing = true
+            }
+        }
     }
 }
 
-private extension View {
-    func settingsCardStyle() -> some View {
+extension View {
+    fileprivate func settingsCardStyle() -> some View {
         self
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+            .background(
+                .ultraThinMaterial, in: RoundedRectangle(cornerRadius: 22, style: .continuous)
+            )
             .overlay {
                 RoundedRectangle(cornerRadius: 22, style: .continuous)
                     .stroke(.white.opacity(0.18), lineWidth: 1)
@@ -1251,6 +1598,12 @@ private struct OnboardingView: View {
 
     let completeAction: () -> Void
     @State private var showBirthDatePicker = false
+    @State private var appeared = false
+    @State private var glowAnimate = false
+
+    private let accentGreen = Color(red: 0.42, green: 0.98, blue: 0.76)
+    private let accentOrange = Color(red: 1.0, green: 0.60, blue: 0.24)
+    private let accentTeal = Color(red: 0.20, green: 0.88, blue: 0.90)
 
     private var birthDateBinding: Binding<Date> {
         Binding(
@@ -1263,103 +1616,192 @@ private struct OnboardingView: View {
         ZStack {
             LinearGradient(
                 colors: [
-                    Color(red: 0.03, green: 0.09, blue: 0.17),
-                    Color(red: 0.05, green: 0.17, blue: 0.29),
-                    Color(red: 0.16, green: 0.09, blue: 0.05)
+                    Color(red: 0.02, green: 0.06, blue: 0.14),
+                    Color(red: 0.04, green: 0.14, blue: 0.26),
+                    Color(red: 0.12, green: 0.07, blue: 0.04),
                 ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
             .ignoresSafeArea()
 
+            ZStack {
+                Circle()
+                    .fill(accentTeal.opacity(0.18))
+                    .frame(width: 240)
+                    .blur(radius: 60)
+                    .offset(x: glowAnimate ? -80 : -30, y: glowAnimate ? -280 : -200)
+                Circle()
+                    .fill(accentOrange.opacity(0.14))
+                    .frame(width: 300)
+                    .blur(radius: 70)
+                    .offset(x: glowAnimate ? 100 : 40, y: glowAnimate ? 320 : 220)
+            }
+            .ignoresSafeArea()
+
             ScrollView {
-                VStack(alignment: .leading, spacing: 18) {
-                    Text("Welcome to LifeClock")
-                        .font(.system(size: 34, weight: .black, design: .rounded))
-                        .foregroundStyle(.white)
+                VStack(alignment: .leading, spacing: 24) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Image(systemName: "hourglass.circle.fill")
+                            .font(.system(size: 48))
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [accentTeal, accentGreen], startPoint: .topLeading,
+                                    endPoint: .bottomTrailing)
+                            )
+                            .shadow(color: accentTeal.opacity(0.4), radius: 16, x: 0, y: 4)
 
-                    Text("Set up your profile in less than a minute.")
-                        .font(.system(size: 16, weight: .medium, design: .rounded))
-                        .foregroundStyle(.white.opacity(0.82))
+                        Text("Welcome to\nLifeClock")
+                            .font(.system(size: 36, weight: .black, design: .rounded))
+                            .foregroundStyle(.white)
+                            .lineSpacing(2)
 
-                    card {
-                        Button {
-                            showBirthDatePicker = true
-                        } label: {
-                            HStack {
-                                Text("Birth date")
-                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                    .foregroundStyle(.white)
-                                Spacer()
-                                Text(birthDateBinding.wrappedValue.formatted(date: .abbreviated, time: .omitted))
+                        Text("Your life, visualized. Set up in seconds.")
+                            .font(.system(size: 16, weight: .medium, design: .rounded))
+                            .foregroundStyle(.white.opacity(0.65))
+                    }
+                    .padding(.top, 20)
+                    .opacity(appeared ? 1 : 0)
+                    .offset(y: appeared ? 0 : 20)
+
+                    VStack(spacing: 16) {
+                        onboardingStep(
+                            number: 1, icon: "birthday.cake.fill", title: "Birth date",
+                            accent: accentTeal
+                        ) {
+                            Button {
+                                showBirthDatePicker = true
+                            } label: {
+                                HStack {
+                                    Text(
+                                        birthDateBinding.wrappedValue.formatted(
+                                            date: .abbreviated, time: .omitted)
+                                    )
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundStyle(.teal)
+                                    .foregroundStyle(accentTeal)
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 12, weight: .bold))
+                                        .foregroundStyle(.white.opacity(0.5))
+                                }
+                            }
+                            .buttonStyle(.plain)
+                        }
+                        .opacity(appeared ? 1 : 0)
+                        .offset(y: appeared ? 0 : 24)
+
+                        onboardingStep(
+                            number: 2, icon: "heart.text.clipboard.fill", title: "Life expectancy",
+                            accent: accentOrange
+                        ) {
+                            VStack(spacing: 10) {
+                                HStack {
+                                    Spacer()
+                                    Text("\(Int(lifeExpectancyYears)) years")
+                                        .font(.system(size: 22, weight: .black, design: .rounded))
+                                        .foregroundStyle(.white)
+                                        .monospacedDigit()
+                                }
+                                Slider(value: $lifeExpectancyYears, in: 50...120, step: 1)
+                                    .tint(accentOrange)
                             }
                         }
-                        .buttonStyle(.plain)
-                    }
+                        .opacity(appeared ? 1 : 0)
+                        .offset(y: appeared ? 0 : 28)
 
-                    card {
-                        VStack(alignment: .leading, spacing: 12) {
-                            HStack {
-                                Text("Expected lifespan")
-                                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-                                Spacer()
-                                Text("\(Int(lifeExpectancyYears)) years")
-                                    .font(.system(size: 15, weight: .bold, design: .rounded))
-                            }
-                            Slider(value: $lifeExpectancyYears, in: 50...120, step: 1)
-                                .tint(.orange)
-                        }
-                    }
-
-                    card {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Default unit")
-                                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                        onboardingStep(
+                            number: 3,
+                            icon: "gauge.open.with.lines.needle.33percent.and.arrowtriangle",
+                            title: "Default unit", accent: accentGreen
+                        ) {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 8) {
                                     ForEach(LifeUnit.allCases) { unit in
+                                        let isSelected =
+                                            (LifeUnit(rawValue: selectedUnitRaw) ?? .days) == unit
                                         Button {
                                             selectedUnitRaw = unit.rawValue
                                         } label: {
                                             Text(unit.title)
-                                                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                                                .foregroundStyle((LifeUnit(rawValue: selectedUnitRaw) ?? .days) == unit ? .black : .white)
-                                                .padding(.horizontal, 12)
+                                                .font(
+                                                    .system(
+                                                        size: 13, weight: .bold, design: .rounded)
+                                                )
+                                                .foregroundStyle(
+                                                    isSelected ? .black : .white.opacity(0.9)
+                                                )
+                                                .padding(.horizontal, 14)
                                                 .padding(.vertical, 8)
                                                 .background(
-                                                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                                        .fill((LifeUnit(rawValue: selectedUnitRaw) ?? .days) == unit ? Color.white : Color.white.opacity(0.16))
+                                                    RoundedRectangle(
+                                                        cornerRadius: 14, style: .continuous
+                                                    )
+                                                    .fill(
+                                                        isSelected
+                                                            ? accentGreen
+                                                            : Color.white.opacity(0.12))
                                                 )
+                                                .overlay {
+                                                    if !isSelected {
+                                                        RoundedRectangle(
+                                                            cornerRadius: 14, style: .continuous
+                                                        )
+                                                        .stroke(.white.opacity(0.15), lineWidth: 1)
+                                                    }
+                                                }
                                         }
                                         .buttonStyle(.plain)
                                     }
                                 }
                             }
                         }
+                        .opacity(appeared ? 1 : 0)
+                        .offset(y: appeared ? 0 : 32)
                     }
 
                     Button(action: completeAction) {
-                        Text("Start LifeClock")
-                            .font(.system(size: 17, weight: .bold, design: .rounded))
-                            .foregroundStyle(.black)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 14)
-                            .background(Color(red: 0.85, green: 0.99, blue: 0.95), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+                        HStack(spacing: 8) {
+                            Text("Start LifeClock")
+                                .font(.system(size: 17, weight: .bold, design: .rounded))
+                            Image(systemName: "arrow.right")
+                                .font(.system(size: 14, weight: .bold))
+                        }
+                        .foregroundStyle(.black)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            LinearGradient(
+                                colors: [accentGreen, accentTeal],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            ),
+                            in: RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        )
+                        .shadow(color: accentGreen.opacity(0.4), radius: 12, x: 0, y: 6)
                     }
                     .buttonStyle(.plain)
                     .padding(.top, 8)
+                    .opacity(appeared ? 1 : 0)
+                    .offset(y: appeared ? 0 : 36)
                 }
                 .padding(24)
+                .animation(.spring(response: 0.8, dampingFraction: 0.82), value: appeared)
+            }
+        }
+        .onAppear {
+            withAnimation(.easeInOut(duration: 8).repeatForever(autoreverses: true)) {
+                glowAnimate = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                appeared = true
             }
         }
         .sheet(isPresented: $showBirthDatePicker) {
             ZStack {
                 LinearGradient(
                     colors: [
-                        Color(red: 0.06, green: 0.10, blue: 0.17),
-                        Color(red: 0.08, green: 0.13, blue: 0.21)
+                        Color(red: 0.04, green: 0.08, blue: 0.16),
+                        Color(red: 0.06, green: 0.12, blue: 0.22),
                     ],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
@@ -1367,9 +1809,14 @@ private struct OnboardingView: View {
                 .ignoresSafeArea()
 
                 VStack(alignment: .leading, spacing: 16) {
-                    Text("Birth date")
-                        .font(.system(size: 24, weight: .black, design: .rounded))
-                        .foregroundStyle(.white)
+                    HStack {
+                        Image(systemName: "birthday.cake.fill")
+                            .font(.system(size: 20))
+                            .foregroundStyle(accentTeal)
+                        Text("Birth date")
+                            .font(.system(size: 24, weight: .black, design: .rounded))
+                            .foregroundStyle(.white)
+                    }
 
                     DatePicker(
                         "",
@@ -1379,7 +1826,7 @@ private struct OnboardingView: View {
                     )
                     .datePickerStyle(.graphical)
                     .labelsHidden()
-                    .tint(.teal)
+                    .tint(accentTeal)
                     .colorScheme(.dark)
 
                     HStack {
@@ -1389,11 +1836,15 @@ private struct OnboardingView: View {
                         }
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                         .foregroundStyle(.black)
-                        .padding(.horizontal, 18)
-                        .padding(.vertical, 10)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 12)
                         .background(
-                            RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                .fill(Color(red: 0.85, green: 0.99, blue: 0.95))
+                            LinearGradient(
+                                colors: [accentGreen, accentTeal],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            ),
+                            in: RoundedRectangle(cornerRadius: 14, style: .continuous)
                         )
                     }
                 }
@@ -1404,15 +1855,46 @@ private struct OnboardingView: View {
         }
     }
 
-    private func card<Content: View>(@ViewBuilder _ content: () -> Content) -> some View {
-        content()
-            .padding(16)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(.white.opacity(0.15), lineWidth: 1)
+    private func onboardingStep<Content: View>(
+        number: Int, icon: String, title: String, accent: Color, @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 10) {
+                Image(systemName: icon)
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(accent)
+                    .frame(width: 30, height: 30)
+                    .background(
+                        accent.opacity(0.15),
+                        in: RoundedRectangle(cornerRadius: 8, style: .continuous))
+
+                Text(title)
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+
+                Spacer()
+
+                Text("\(number)/3")
+                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white.opacity(0.4))
             }
-            .foregroundStyle(.white)
+
+            content()
+        }
+        .padding(16)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(
+                    LinearGradient(
+                        colors: [accent.opacity(0.25), .white.opacity(0.08)],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1
+                )
+        }
+        .foregroundStyle(.white)
     }
 }
 

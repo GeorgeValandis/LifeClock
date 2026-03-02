@@ -1,6 +1,6 @@
-import WidgetKit
-import SwiftUI
 import AppIntents
+import SwiftUI
+import WidgetKit
 
 enum WidgetLifeUnit: String, CaseIterable, AppEnum {
     case years
@@ -20,7 +20,7 @@ enum WidgetLifeUnit: String, CaseIterable, AppEnum {
         .days: "Days",
         .hours: "Hours",
         .minutes: "Minutes",
-        .seconds: "Seconds"
+        .seconds: "Seconds",
     ]
 
     var seconds: Double {
@@ -81,11 +81,15 @@ struct LifeGridProvider: AppIntentTimelineProvider {
         )
     }
 
-    func snapshot(for configuration: LifeGridConfigurationIntent, in context: Context) async -> LifeGridEntry {
+    func snapshot(for configuration: LifeGridConfigurationIntent, in context: Context) async
+        -> LifeGridEntry
+    {
         makeEntry(configuration: configuration, now: .now)
     }
 
-    func timeline(for configuration: LifeGridConfigurationIntent, in context: Context) async -> Timeline<LifeGridEntry> {
+    func timeline(for configuration: LifeGridConfigurationIntent, in context: Context) async
+        -> Timeline<LifeGridEntry>
+    {
         let now = Date()
         let entry = makeEntry(configuration: configuration, now: now)
 
@@ -97,7 +101,9 @@ struct LifeGridProvider: AppIntentTimelineProvider {
         case .days, .weeks, .months, .years: refreshMinutes = 30
         }
 
-        let next = Calendar.current.date(byAdding: .minute, value: refreshMinutes, to: now) ?? now.addingTimeInterval(Double(refreshMinutes) * 60)
+        let next =
+            Calendar.current.date(byAdding: .minute, value: refreshMinutes, to: now)
+            ?? now.addingTimeInterval(Double(refreshMinutes) * 60)
         return Timeline(entries: [entry], policy: .after(next))
     }
 
@@ -125,7 +131,7 @@ struct LifeGridProvider: AppIntentTimelineProvider {
 struct LifeGridWidgetView: View {
     @Environment(\.widgetFamily) private var family
     let entry: LifeGridEntry
-    
+
     private struct HomeLayout {
         let rows: Int
         let columns: Int
@@ -289,35 +295,57 @@ struct LifeGridWidgetView: View {
     }
 
     private var homeWidgetView: some View {
-        let columnsDef = Array(repeating: GridItem(.flexible(minimum: 1, maximum: 10), spacing: 2), count: columns)
+        let columnsDef = Array(
+            repeating: GridItem(.flexible(minimum: 1, maximum: 10), spacing: 2), count: columns)
 
         return ZStack {
             LinearGradient(
-                colors: [Color(red: 0.03, green: 0.18, blue: 0.24), Color(red: 0.16, green: 0.14, blue: 0.08)],
+                colors: [
+                    Color(red: 0.02, green: 0.08, blue: 0.16),
+                    Color(red: 0.04, green: 0.14, blue: 0.22),
+                    Color(red: 0.12, green: 0.08, blue: 0.04),
+                ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
 
             RoundedRectangle(cornerRadius: homeLayout.cornerRadius, style: .continuous)
-                .fill(Color(red: 0.31, green: 0.38, blue: 0.43))
+                .fill(Color.white.opacity(0.06))
                 .overlay {
                     RoundedRectangle(cornerRadius: homeLayout.cornerRadius, style: .continuous)
-                        .stroke(Color.white.opacity(0.08), lineWidth: 1)
+                        .stroke(
+                            LinearGradient(
+                                colors: [
+                                    Color(red: 0.15, green: 0.88, blue: 0.86).opacity(0.2),
+                                    .white.opacity(0.06),
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            ),
+                            lineWidth: 1
+                        )
                 }
                 .padding(homeLayout.cardInset)
 
             VStack(alignment: .leading, spacing: homeLayout.spacing) {
                 Text(titleText)
-                    .font(.system(size: family == .systemSmall ? 9 : 12, weight: .bold, design: .rounded))
+                    .font(
+                        .system(
+                            size: family == .systemSmall ? 9 : 12, weight: .bold, design: .rounded)
+                    )
                     .tracking(2)
-                    .foregroundStyle(.white.opacity(0.78))
+                    .foregroundStyle(.white.opacity(0.7))
 
                 valueLine
 
                 if homeLayout.showScale {
                     Text(cellScaleText)
-                        .font(.system(size: family == .systemSmall ? 10 : 12, weight: .semibold, design: .rounded))
-                        .foregroundStyle(.white.opacity(0.75))
+                        .font(
+                            .system(
+                                size: family == .systemSmall ? 10 : 12, weight: .medium,
+                                design: .rounded)
+                        )
+                        .foregroundStyle(.white.opacity(0.55))
                         .lineLimit(1)
                         .minimumScaleFactor(0.72)
                 }
@@ -331,29 +359,33 @@ struct LifeGridWidgetView: View {
                         let isPast = absoluteUnitIndex < elapsedUnits
                         let isCurrent = progressIndex == currentIndexInWindow
 
-                        Circle()
-                            .fill(cellColor(isPast: isPast, isCurrent: isCurrent, futureIntensity: futureIntensity(index: progressIndex)))
+                        RoundedRectangle(cornerRadius: 2.5, style: .continuous)
+                            .fill(
+                                cellColor(
+                                    isPast: isPast, isCurrent: isCurrent,
+                                    futureIntensity: futureIntensity(index: progressIndex))
+                            )
                             .frame(maxWidth: .infinity)
                             .aspectRatio(1, contentMode: .fit)
                             .overlay {
                                 if isCurrent {
-                                    Circle()
-                                        .stroke(Color(red: 1.0, green: 0.52, blue: 0.20), lineWidth: 1.1)
+                                    RoundedRectangle(cornerRadius: 2.5, style: .continuous)
+                                        .stroke(.white.opacity(0.9), lineWidth: 1)
                                 }
                             }
                     }
                 }
 
                 if shouldShowLegend {
-                    HStack(spacing: 12) {
+                    HStack(spacing: 14) {
                         Label("Past", systemImage: "square.fill")
-                            .foregroundStyle(.white.opacity(0.65))
-                        Label("Current", systemImage: "location.fill")
+                            .foregroundStyle(Color(red: 0.15, green: 0.88, blue: 0.86).opacity(0.8))
+                        Label("Now", systemImage: "location.fill")
                             .foregroundStyle(.white.opacity(0.9))
                         Label("Future", systemImage: "sparkles")
-                            .foregroundStyle(Color(red: 1.0, green: 0.60, blue: 0.24))
+                            .foregroundStyle(Color(red: 1.0, green: 0.60, blue: 0.24).opacity(0.85))
                     }
-                    .font(.system(size: 10, weight: .semibold, design: .rounded))
+                    .font(.system(size: 10, weight: .medium, design: .rounded))
                 }
 
                 Spacer(minLength: 0)
@@ -364,7 +396,11 @@ struct LifeGridWidgetView: View {
         }
         .containerBackground(for: .widget) {
             LinearGradient(
-                colors: [Color(red: 0.10, green: 0.07, blue: 0.05), Color(red: 0.24, green: 0.16, blue: 0.10)],
+                colors: [
+                    Color(red: 0.02, green: 0.06, blue: 0.12),
+                    Color(red: 0.06, green: 0.10, blue: 0.18),
+                    Color(red: 0.10, green: 0.06, blue: 0.04),
+                ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -376,6 +412,10 @@ struct LifeGridWidgetView: View {
             Text(valueLineText)
                 .font(.system(size: valueFontSize, weight: .black, design: .rounded))
                 .foregroundStyle(.white)
+                .shadow(
+                    color: Color(red: 0.15, green: 0.88, blue: 0.86).opacity(0.2), radius: 8, x: 0,
+                    y: 2
+                )
                 .minimumScaleFactor(0.5)
                 .lineLimit(1)
                 .monospacedDigit()
@@ -384,45 +424,67 @@ struct LifeGridWidgetView: View {
                 Text(entry.remainingUnits.formatted(.number.grouping(.never)))
                     .font(.system(size: valueFontSize, weight: .black, design: .rounded))
                     .foregroundStyle(.white)
+                    .shadow(
+                        color: Color(red: 0.15, green: 0.88, blue: 0.86).opacity(0.2), radius: 8,
+                        x: 0, y: 2
+                    )
                     .minimumScaleFactor(0.5)
                     .lineLimit(1)
                     .monospacedDigit()
                 Text("\(entry.configuration.unit.rawValue.capitalized) left")
-                    .font(.system(size: max(10, valueFontSize * 0.5), weight: .semibold, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.9))
+                    .font(
+                        .system(
+                            size: max(10, valueFontSize * 0.5), weight: .semibold, design: .rounded)
+                    )
+                    .foregroundStyle(.white.opacity(0.7))
             }
         }
     }
 
     private var inlineAccessoryView: some View {
-        Text("\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.shortLabel) left")
+        Text(
+            "\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.shortLabel) left"
+        )
     }
 
     private var circularAccessoryView: some View {
         let ratio = min(max(entry.elapsedUnits / max(entry.totalUnits, 1), 0), 1)
         return ZStack {
             Circle()
-                .fill(.clear)
+                .stroke(.white.opacity(0.15), lineWidth: 3)
+                .padding(6)
             Circle()
                 .trim(from: 0, to: ratio)
                 .stroke(.white, style: StrokeStyle(lineWidth: 3, lineCap: .round))
                 .rotationEffect(.degrees(-90))
                 .padding(6)
-            Text("\(entry.remainingUnits)")
-                .font(.system(size: 12, weight: .bold, design: .rounded))
-                .minimumScaleFactor(0.5)
+            VStack(spacing: 0) {
+                Text("\(entry.remainingUnits)")
+                    .font(.system(size: 12, weight: .black, design: .rounded))
+                    .minimumScaleFactor(0.5)
+                Text(entry.configuration.unit.shortLabel)
+                    .font(.system(size: 7, weight: .medium, design: .rounded))
+                    .foregroundStyle(.secondary)
+            }
         }
     }
 
     private var rectangularAccessoryView: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text("Life Grid")
-                .font(.caption2.weight(.semibold))
-                .foregroundStyle(.secondary)
-            Text("\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.rawValue.capitalized) left")
-                .font(.system(size: 13, weight: .bold, design: .rounded))
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
+        VStack(alignment: .leading, spacing: 3) {
+            HStack(spacing: 4) {
+                Image(systemName: "hourglass")
+                    .font(.system(size: 9, weight: .bold))
+                Text("LIFE CLOCK")
+                    .font(.system(size: 9, weight: .bold, design: .rounded))
+                    .tracking(0.8)
+            }
+            .foregroundStyle(.secondary)
+            Text(
+                "\(entry.remainingUnits.formatted(.number.grouping(.never))) \(entry.configuration.unit.rawValue.capitalized) left"
+            )
+            .font(.system(size: 14, weight: .black, design: .rounded))
+            .lineLimit(1)
+            .minimumScaleFactor(0.7)
         }
     }
 }
@@ -431,7 +493,9 @@ struct LifeGridWidget: Widget {
     let kind: String = "LifeGridWidget"
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: LifeGridConfigurationIntent.self, provider: LifeGridProvider()) { entry in
+        AppIntentConfiguration(
+            kind: kind, intent: LifeGridConfigurationIntent.self, provider: LifeGridProvider()
+        ) { entry in
             LifeGridWidgetView(entry: entry)
         }
         .configurationDisplayName("Life Grid")
@@ -442,7 +506,7 @@ struct LifeGridWidget: Widget {
             .systemLarge,
             .accessoryInline,
             .accessoryCircular,
-            .accessoryRectangular
+            .accessoryRectangular,
         ])
         .contentMarginsDisabled()
     }
