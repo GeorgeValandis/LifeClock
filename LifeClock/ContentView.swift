@@ -1011,70 +1011,54 @@ struct ContentView: View {
     }
 
     private var unitPicker: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
-                ForEach(LifeUnit.allCases) { unit in
-                    Button {
-                        guard selectedUnitRaw != unit.rawValue else { return }
-                        withAnimation(.spring(response: 0.45, dampingFraction: 0.84)) {
-                            selectedUnitRaw = unit.rawValue
-                            unitSwapPulse = true
-                        }
-                        performSelectionHaptic()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.24) {
-                            withAnimation(.easeOut(duration: 0.28)) {
-                                unitSwapPulse = false
-                            }
-                        }
-                    } label: {
-                        VStack(spacing: 4) {
-                            Text(unit.shortTitle)
-                                .font(
-                                    .system(
-                                        size: 16, weight: .bold,
-                                        design: selectedTypography.bodyDesign))
-                            Text(unit.title)
-                                .font(
-                                    .system(
-                                        size: 12, weight: .medium,
-                                        design: selectedTypography.bodyDesign))
-                        }
-                        .foregroundStyle(
-                            unit == selectedUnit ? selectedTheme.selectedChipForeground : .white
-                        )
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 10)
-                        .background {
-                            ZStack {
-                                if unit == selectedUnit {
-                                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                        .fill(selectedTheme.selectedChipBackground)
-                                        .matchedGeometryEffect(
-                                            id: "unit-chip-selection",
-                                            in: unitChipSelectionAnimation)
-                                } else {
-                                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                        .fill(Color.white.opacity(0.14))
-                                }
-                            }
-                        }
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                                .stroke(
-                                    .white.opacity(unit == selectedUnit ? 0.0 : 0.18), lineWidth: 1)
-                        }
-                        .shadow(
-                            color: unit == selectedUnit
-                                ? selectedTheme.topGlow.opacity(0.3) : .clear,
-                            radius: 8, x: 0, y: 4
-                        )
+        HStack(spacing: 8) {
+            ForEach(LifeUnit.allCases) { unit in
+                let isSelected = unit == selectedUnit
+                Button {
+                    guard selectedUnitRaw != unit.rawValue else { return }
+                    withAnimation(.spring(response: 0.45, dampingFraction: 0.84)) {
+                        selectedUnitRaw = unit.rawValue
+                        unitSwapPulse = true
                     }
-                    .buttonStyle(.plain)
+                    performSelectionHaptic()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.24) {
+                        withAnimation(.easeOut(duration: 0.28)) {
+                            unitSwapPulse = false
+                        }
+                    }
+                } label: {
+                    Text(unit.shortTitle)
+                        .font(
+                            .system(size: 15, weight: .bold, design: selectedTypography.bodyDesign)
+                        )
+                        .foregroundStyle(
+                            isSelected ? selectedTheme.selectedChipForeground : .white.opacity(0.7)
+                        )
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                        .background {
+                            if isSelected {
+                                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                                    .fill(selectedTheme.selectedChipBackground)
+                                    .matchedGeometryEffect(
+                                        id: "unit-chip-selection",
+                                        in: unitChipSelectionAnimation)
+                            }
+                        }
                 }
+                .buttonStyle(.plain)
             }
-            .padding(4)
-            .animation(.spring(response: 0.42, dampingFraction: 0.82), value: selectedUnitRaw)
         }
+        .padding(4)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(.white.opacity(0.08))
+        )
+        .overlay {
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(.white.opacity(0.1), lineWidth: 1)
+        }
+        .animation(.spring(response: 0.42, dampingFraction: 0.82), value: selectedUnitRaw)
     }
 
     private var settingsSheet: some View {
