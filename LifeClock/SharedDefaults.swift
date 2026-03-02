@@ -8,4 +8,6 @@ enum SharedDefaults {
     static let keySelectedUnit = "selectedUnitRaw"
     static let keyLifeExpectancy = "lifeExpectancyYears"
     static let keyClockTheme = "clockThemeRaw"
+    static let keyTrialStartTimestamp = "trialStartTimestamp"
+    static let keyLifetimeUnlocked = "lifetimeUnlocked"
 }

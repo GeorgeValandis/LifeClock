@@ -1,3 +1,4 @@
+import StoreKit
 import SwiftUI
 import UIKit
 import WidgetKit
@@ -221,6 +222,10 @@ struct ContentView: View {
     @AppStorage("appIconChoiceRaw") private var appIconChoiceRaw: String = AppIconChoice.primary
         .rawValue
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
+    @AppStorage(SharedDefaults.keyTrialStartTimestamp, store: SharedDefaults.store) private
+        var trialStartTimestamp: Double = 0
+    @AppStorage(SharedDefaults.keyLifetimeUnlocked, store: SharedDefaults.store) private
+        var lifetimeUnlocked: Bool = false
 
     @State private var showSettings = false
     @State private var showOnboarding = false
@@ -230,7 +235,14 @@ struct ContentView: View {
     @State private var showLifeGrid = false
     @State private var cardsAppeared = false
     @State private var pendingOnboardingRestart = false
+    @State private var lifetimeProduct: Product?
+    @State private var isPurchasingLifetime = false
+    @State private var isRestoringPurchases = false
+    @State private var paywallMessage: String?
     @Namespace private var unitChipSelectionAnimation
+
+    private let lifetimeProductID = "com.GA.LifeClock.lifetime"
+    private let trialDuration: TimeInterval = 3 * 24 * 60 * 60
 
     private var greeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
@@ -256,6 +268,26 @@ struct ContentView: View {
 
     private var birthDate: Date {
         Date(timeIntervalSince1970: birthDateTimestamp)
+    }
+
+    private var trialStartDate: Date {
+        Date(timeIntervalSince1970: trialStartTimestamp)
+    }
+
+    private var trialEndDate: Date {
+        trialStartDate.addingTimeInterval(trialDuration)
+    }
+
+    private var trialRemaining: TimeInterval {
+        max(0, trialEndDate.timeIntervalSinceNow)
+    }
+
+    private var isTrialExpired: Bool {
+        trialStartTimestamp > 0 && trialRemaining <= 0
+    }
+
+    private var shouldShowLifetimePaywall: Bool {
+        hasCompletedOnboarding && !showOnboarding && !lifetimeUnlocked && isTrialExpired
     }
 
     private var timelineRefreshInterval: TimeInterval {
@@ -286,10 +318,15 @@ struct ContentView: View {
                 withAnimation(.easeInOut(duration: 10).repeatForever(autoreverses: true)) {
                     animateBackground.toggle()
                 }
+                initializeTrialIfNeeded()
                 showOnboarding = !hasCompletedOnboarding
                 withAnimation(.spring(response: 0.7, dampingFraction: 0.82).delay(0.15)) {
                     cardsAppeared = true
                 }
+            }
+            .task {
+                await preloadLifetimeProduct()
+                await refreshLifetimeEntitlement()
             }
             .sheet(isPresented: $showSettings) {
                 settingsSheet
@@ -321,6 +358,11 @@ struct ContentView: View {
                     }
                 )
             }
+            .fullScreenCover(
+                isPresented: Binding(get: { shouldShowLifetimePaywall }, set: { _ in })
+            ) {
+                lifetimePaywallView
+            }
             .alert(
                 "Icon Update Failed",
                 isPresented: Binding(
@@ -335,6 +377,21 @@ struct ContentView: View {
                 Button("OK", role: .cancel) { iconErrorMessage = nil }
             } message: {
                 Text(iconErrorMessage ?? "Unknown error")
+            }
+            .alert(
+                "Purchase Notice",
+                isPresented: Binding(
+                    get: { paywallMessage != nil },
+                    set: { isPresented in
+                        if !isPresented {
+                            paywallMessage = nil
+                        }
+                    }
+                )
+            ) {
+                Button("OK", role: .cancel) { paywallMessage = nil }
+            } message: {
+                Text(paywallMessage ?? "")
             }
         }
     }
@@ -361,6 +418,119 @@ struct ContentView: View {
             }
         }
         .ignoresSafeArea()
+    }
+
+    private var lifetimePaywallView: some View {
+        ZStack {
+            background
+            settingsReadabilityLayer
+
+            VStack(spacing: 18) {
+                Image(systemName: "lock.shield.fill")
+                    .font(.system(size: 34, weight: .bold))
+                    .foregroundStyle(selectedTheme.topGlow)
+
+                Text("Trial ended")
+                    .font(.system(size: 34, weight: .heavy, design: selectedTypography.heroDesign))
+                    .foregroundStyle(.white)
+
+                Text(
+                    "Your 3-day test period is over. Unlock LifeClock forever with Lifetime Access."
+                )
+                .font(.system(size: 16, weight: .medium, design: selectedTypography.bodyDesign))
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.white.opacity(0.84))
+                .padding(.horizontal, 4)
+
+                VStack(spacing: 10) {
+                    Text("Started: \(trialStartDate.formatted(date: .abbreviated, time: .omitted))")
+                    Text("Ended: \(trialEndDate.formatted(date: .abbreviated, time: .omitted))")
+                }
+                .font(.system(size: 13, weight: .medium, design: selectedTypography.bodyDesign))
+                .foregroundStyle(.white.opacity(0.58))
+
+                Button {
+                    Task { await purchaseLifetime() }
+                } label: {
+                    HStack(spacing: 8) {
+                        if isPurchasingLifetime {
+                            ProgressView()
+                                .tint(.black)
+                        }
+                        Text(
+                            lifetimeProduct.map { "Unlock Lifetime • \($0.displayPrice)" }
+                                ?? "Unlock Lifetime"
+                        )
+                        .font(
+                            .system(
+                                size: 16,
+                                weight: .bold,
+                                design: selectedTypography.bodyDesign)
+                        )
+                    }
+                    .foregroundStyle(.black)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(
+                        selectedTheme.topGlow,
+                        in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+                }
+                .buttonStyle(.plain)
+                .disabled(isPurchasingLifetime || isRestoringPurchases)
+
+                Button {
+                    Task { await restorePurchases() }
+                } label: {
+                    HStack(spacing: 8) {
+                        if isRestoringPurchases {
+                            ProgressView()
+                                .tint(.white)
+                        }
+                        Text("Restore Purchases")
+                            .font(
+                                .system(
+                                    size: 15,
+                                    weight: .semibold,
+                                    design: selectedTypography.bodyDesign)
+                            )
+                    }
+                    .foregroundStyle(.white.opacity(0.9))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(
+                        .white.opacity(0.08),
+                        in: RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    )
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .stroke(.white.opacity(0.16), lineWidth: 1)
+                    }
+                }
+                .buttonStyle(.plain)
+                .disabled(isPurchasingLifetime || isRestoringPurchases)
+            }
+            .padding(24)
+            .background(
+                .ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous)
+            )
+            .overlay {
+                RoundedRectangle(cornerRadius: 28, style: .continuous)
+                    .stroke(
+                        LinearGradient(
+                            colors: [selectedTheme.topGlow.opacity(0.3), .white.opacity(0.12)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        ),
+                        lineWidth: 1
+                    )
+            }
+            .padding(.horizontal, 24)
+        }
+        .interactiveDismissDisabled(true)
+        .task {
+            await preloadLifetimeProduct()
+            await refreshLifetimeEntitlement()
+        }
     }
 
     private func mainContent(now: Date) -> some View {
@@ -1508,6 +1678,83 @@ struct ContentView: View {
     private func performSelectionHaptic() {
         guard hapticsEnabled else { return }
         UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+    }
+
+    private func initializeTrialIfNeeded() {
+        guard trialStartTimestamp <= 0 else { return }
+        trialStartTimestamp = Date().timeIntervalSince1970
+    }
+
+    private func preloadLifetimeProduct() async {
+        guard lifetimeProduct == nil else { return }
+        do {
+            lifetimeProduct = try await Product.products(for: [lifetimeProductID]).first
+        } catch {
+            paywallMessage = "Could not load purchase data. Please try again."
+        }
+    }
+
+    private func refreshLifetimeEntitlement() async {
+        for await result in Transaction.currentEntitlements {
+            guard case .verified(let transaction) = result else { continue }
+            if transaction.productID == lifetimeProductID {
+                lifetimeUnlocked = true
+                await transaction.finish()
+                return
+            }
+        }
+    }
+
+    private func purchaseLifetime() async {
+        guard !isPurchasingLifetime else { return }
+        guard let product = lifetimeProduct else {
+            await preloadLifetimeProduct()
+            if lifetimeProduct == nil {
+                paywallMessage = "Lifetime product unavailable."
+            }
+            return
+        }
+
+        isPurchasingLifetime = true
+        defer { isPurchasingLifetime = false }
+
+        do {
+            let result = try await product.purchase()
+            switch result {
+            case .success(let verification):
+                switch verification {
+                case .verified(let transaction):
+                    lifetimeUnlocked = true
+                    await transaction.finish()
+                case .unverified:
+                    paywallMessage = "Purchase could not be verified."
+                }
+            case .userCancelled:
+                break
+            case .pending:
+                paywallMessage = "Purchase is pending approval."
+            @unknown default:
+                paywallMessage = "Unknown purchase result."
+            }
+        } catch {
+            paywallMessage = "Purchase failed. Please try again."
+        }
+    }
+
+    private func restorePurchases() async {
+        guard !isRestoringPurchases else { return }
+        isRestoringPurchases = true
+        defer { isRestoringPurchases = false }
+
+        do {
+            try await AppStore.sync()
+            await refreshLifetimeEntitlement()
+            if !lifetimeUnlocked {
+                paywallMessage = "No lifetime purchase found for this Apple ID."
+            }
+        } catch {
+            paywallMessage = "Restore failed. Please try again."
+        }
     }
 
     private func applyAppIcon(from oldValue: String, to newValue: String) {
