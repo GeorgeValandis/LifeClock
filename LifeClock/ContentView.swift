@@ -707,46 +707,63 @@ struct ContentView: View {
                     .opacity(cardsAppeared ? 1 : 0)
                     .offset(y: cardsAppeared ? 0 : 24)
                 } else {
-                    VStack(alignment: .leading, spacing: 18) {
+                    VStack(alignment: .leading, spacing: 14) {
+                        HStack {
+                            Text("LIFE CLOCK")
+                                .font(
+                                    .system(
+                                        size: 12, weight: .bold,
+                                        design: selectedTypography.bodyDesign)
+                                )
+                                .tracking(1.8)
+                                .foregroundStyle(.white.opacity(0.74))
+                            Spacer()
+                            Image(systemName: "hourglass")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundStyle(selectedTheme.topGlow.opacity(0.8))
+                                .frame(width: 28, height: 28)
+                                .background(selectedTheme.topGlow.opacity(0.12), in: Circle())
+                        }
+
                         HStack(alignment: .top) {
-                            VStack(alignment: .leading, spacing: 7) {
-                                Text("LIFE CLOCK")
+                            VStack(alignment: .leading, spacing: 6) {
+                                ZStack(alignment: .leading) {
+                                    Text(
+                                        formattedValue(
+                                            selectedUnit.convert(from: remaining),
+                                            unit: selectedUnit)
+                                    )
                                     .font(
                                         .system(
-                                            size: 12, weight: .bold,
-                                            design: selectedTypography.bodyDesign)
+                                            size: lifeClockValueFontSize(for: selectedUnit),
+                                            weight: .black,
+                                            design: selectedTypography.heroDesign)
                                     )
-                                    .tracking(1.8)
-                                    .foregroundStyle(.white.opacity(0.74))
-
-                                ZStack(alignment: .leading) {
-                                    Text(formattedValue(unitValue, unit: selectedUnit))
-                                        .font(
-                                            .system(
-                                                size: lifeClockValueFontSize(for: selectedUnit),
-                                                weight: .black,
-                                                design: selectedTypography.heroDesign)
-                                        )
-                                        .minimumScaleFactor(0.22)
-                                        .lineLimit(1)
-                                        .allowsTightening(true)
-                                        .layoutPriority(1)
-                                        .monospacedDigit()
-                                        .foregroundStyle(.white)
-                                        .shadow(
-                                            color: selectedTheme.topGlow.opacity(0.25), radius: 16,
-                                            x: 0, y: 2
-                                        )
-                                        .contentTransition(.numericText())
-                                        .id("life-clock-value-\(selectedUnitRaw)")
-                                        .transition(unitSwapTransition)
+                                    .minimumScaleFactor(0.22)
+                                    .lineLimit(1)
+                                    .allowsTightening(true)
+                                    .layoutPriority(1)
+                                    .monospacedDigit()
+                                    .foregroundStyle(.white)
+                                    .shadow(
+                                        color: selectedTheme.topGlow.opacity(0.25), radius: 16,
+                                        x: 0, y: 2
+                                    )
+                                    .contentTransition(.numericText())
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .id("life-clock-value-\(selectedUnitRaw)")
+                                    .transition(unitSwapTransition)
                                 }
+                                .frame(
+                                    height: lifeClockValueFontSize(for: selectedUnit) * 1.15,
+                                    alignment: .leading
+                                )
                                 .animation(
                                     .spring(response: 0.42, dampingFraction: 0.84),
                                     value: selectedUnitRaw)
 
                                 ZStack(alignment: .leading) {
-                                    Text(selectedUnit.title)
+                                    Text("\(selectedUnit.title) left")
                                         .font(
                                             .system(
                                                 size: 18, weight: .semibold,
@@ -759,7 +776,21 @@ struct ContentView: View {
                                 .animation(
                                     .spring(response: 0.42, dampingFraction: 0.84),
                                     value: selectedUnitRaw)
+
+                                ZStack(alignment: .leading) {
+                                    Text(alternateTimeLeftDescription(remaining: remaining))
+                                        .font(
+                                            .system(
+                                                size: 13, weight: .medium,
+                                                design: selectedTypography.bodyDesign)
+                                        )
+                                        .foregroundStyle(.white.opacity(0.55))
+                                        .id("life-clock-subtitle-\(selectedUnitRaw)")
+                                        .transition(unitSwapTransition)
+                                }
+                                .animation(.easeInOut(duration: 0.35), value: selectedUnitRaw)
                             }
+                            .layoutPriority(1)
 
                             Spacer()
 
@@ -770,8 +801,8 @@ struct ContentView: View {
 
                         LinearGradient(
                             colors: [
-                                selectedTheme.topGlow.opacity(0.6),
-                                selectedTheme.bottomGlow.opacity(0.6),
+                                selectedTheme.topGlow.opacity(0.4),
+                                selectedTheme.bottomGlow.opacity(0.4),
                             ],
                             startPoint: .leading,
                             endPoint: .trailing
@@ -782,7 +813,7 @@ struct ContentView: View {
                         HStack {
                             Label {
                                 Text(
-                                    "Since \(birthDate.formatted(date: .abbreviated, time: .omitted))"
+                                    "\(formattedValue(unitValue, unit: selectedUnit)) \(selectedUnit.title) lived"
                                 )
                             } icon: {
                                 Image(systemName: "calendar")
@@ -790,17 +821,17 @@ struct ContentView: View {
 
                             Spacer()
 
-                            Text(progress.formatted(.percent.precision(.fractionLength(1))))
-                                .font(
-                                    .system(
-                                        size: 16, weight: .bold,
-                                        design: selectedTypography.bodyDesign))
+                            Text(
+                                "Since \(birthDate.formatted(date: .abbreviated, time: .omitted))"
+                            )
                         }
                         .font(
                             .system(
-                                size: 14, weight: .medium, design: selectedTypography.bodyDesign)
+                                size: 13, weight: .medium, design: selectedTypography.bodyDesign)
                         )
-                        .foregroundStyle(.white.opacity(0.86))
+                        .foregroundStyle(.white.opacity(0.65))
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
                     }
                     .padding(22)
                     .background(
@@ -830,10 +861,6 @@ struct ContentView: View {
                 }
 
                 if !showLifeGrid {
-                    timeLeftHero(remaining: remaining)
-                        .opacity(cardsAppeared ? 1 : 0)
-                        .offset(y: cardsAppeared ? 0 : 32)
-
                     unitPicker
                         .opacity(cardsAppeared ? 1 : 0)
 
