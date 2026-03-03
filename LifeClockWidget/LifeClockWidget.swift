@@ -1,8 +1,9 @@
-#if !os(macOS)
-import AppIntents
-#endif
 import SwiftUI
 import WidgetKit
+
+#if !os(macOS)
+    import AppIntents
+#endif
 
 enum WidgetLifeUnit: String, CaseIterable {
     case years
@@ -39,19 +40,19 @@ enum WidgetLifeUnit: String, CaseIterable {
 }
 
 #if !os(macOS)
-extension WidgetLifeUnit: AppEnum {
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Unit"
+    extension WidgetLifeUnit: AppEnum {
+        static var typeDisplayRepresentation: TypeDisplayRepresentation = "Unit"
 
-    static var caseDisplayRepresentations: [WidgetLifeUnit: DisplayRepresentation] = [
-        .years: "Years",
-        .months: "Months",
-        .weeks: "Weeks",
-        .days: "Days",
-        .hours: "Hours",
-        .minutes: "Minutes",
-        .seconds: "Seconds",
-    ]
-}
+        static var caseDisplayRepresentations: [WidgetLifeUnit: DisplayRepresentation] = [
+            .years: "Years",
+            .months: "Months",
+            .weeks: "Weeks",
+            .days: "Days",
+            .hours: "Hours",
+            .minutes: "Minutes",
+            .seconds: "Seconds",
+        ]
+    }
 #endif
 
 private enum LifeGridDefaults {
@@ -60,9 +61,9 @@ private enum LifeGridDefaults {
     static let lifeExpectancyYears = 90.0
 }
 
-private extension View {
+extension View {
     @ViewBuilder
-    func widgetContainerBackground<Background: View>(
+    fileprivate func widgetContainerBackground<Background: View>(
         @ViewBuilder _ background: () -> Background
     ) -> some View {
         if #available(iOSApplicationExtension 17.0, macOSApplicationExtension 14.0, *) {
@@ -74,19 +75,20 @@ private extension View {
 }
 
 #if !os(macOS)
-struct LifeGridConfigurationIntent: WidgetConfigurationIntent {
-    static var title: LocalizedStringResource = "Life Grid"
-    static var description = IntentDescription("Show remaining life as a grid in your chosen unit.")
+    struct LifeGridConfigurationIntent: WidgetConfigurationIntent {
+        static var title: LocalizedStringResource = "Life Grid"
+        static var description = IntentDescription(
+            "Show remaining life as a grid in your chosen unit.")
 
-    @Parameter(title: "Unit", default: .years)
-    var unit: WidgetLifeUnit
+        @Parameter(title: "Unit", default: .years)
+        var unit: WidgetLifeUnit
 
-    @Parameter(title: "Birth Date", default: Date(timeIntervalSince1970: 592_444_800))
-    var birthDate: Date
+        @Parameter(title: "Birth Date", default: Date(timeIntervalSince1970: 592_444_800))
+        var birthDate: Date
 
-    @Parameter(title: "Life Expectancy (Years)", default: 90)
-    var lifeExpectancyYears: Double
-}
+        @Parameter(title: "Life Expectancy (Years)", default: 90)
+        var lifeExpectancyYears: Double
+    }
 #endif
 
 struct LifeGridEntry: TimelineEntry {
@@ -181,64 +183,66 @@ private enum LifeGridEntryFactory {
 }
 
 #if os(macOS)
-struct LifeGridProvider: TimelineProvider {
-    func placeholder(in context: Context) -> LifeGridEntry {
-        LifeGridEntryFactory.placeholder()
-    }
+    struct LifeGridProvider: TimelineProvider {
+        func placeholder(in context: Context) -> LifeGridEntry {
+            LifeGridEntryFactory.placeholder()
+        }
 
-    func getSnapshot(in context: Context, completion: @escaping (LifeGridEntry) -> Void) {
-        let entry = LifeGridEntryFactory.makeEntry(
-            now: .now,
-            configuredUnit: LifeGridDefaults.unit,
-            configuredBirthDate: LifeGridDefaults.birthDate,
-            configuredLifeExpectancyYears: LifeGridDefaults.lifeExpectancyYears
-        )
-        completion(entry)
-    }
+        func getSnapshot(in context: Context, completion: @escaping (LifeGridEntry) -> Void) {
+            let entry = LifeGridEntryFactory.makeEntry(
+                now: .now,
+                configuredUnit: LifeGridDefaults.unit,
+                configuredBirthDate: LifeGridDefaults.birthDate,
+                configuredLifeExpectancyYears: LifeGridDefaults.lifeExpectancyYears
+            )
+            completion(entry)
+        }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<LifeGridEntry>) -> Void) {
-        let now = Date()
-        let entry = LifeGridEntryFactory.makeEntry(
-            now: now,
-            configuredUnit: LifeGridDefaults.unit,
-            configuredBirthDate: LifeGridDefaults.birthDate,
-            configuredLifeExpectancyYears: LifeGridDefaults.lifeExpectancyYears
-        )
-        let next = LifeGridEntryFactory.nextRefreshDate(for: entry.resolvedUnit, from: now)
-        completion(Timeline(entries: [entry], policy: .after(next)))
+        func getTimeline(
+            in context: Context, completion: @escaping (Timeline<LifeGridEntry>) -> Void
+        ) {
+            let now = Date()
+            let entry = LifeGridEntryFactory.makeEntry(
+                now: now,
+                configuredUnit: LifeGridDefaults.unit,
+                configuredBirthDate: LifeGridDefaults.birthDate,
+                configuredLifeExpectancyYears: LifeGridDefaults.lifeExpectancyYears
+            )
+            let next = LifeGridEntryFactory.nextRefreshDate(for: entry.resolvedUnit, from: now)
+            completion(Timeline(entries: [entry], policy: .after(next)))
+        }
     }
-}
 #else
-struct LifeGridProvider: AppIntentTimelineProvider {
-    func placeholder(in context: Context) -> LifeGridEntry {
-        LifeGridEntryFactory.placeholder()
-    }
+    struct LifeGridProvider: AppIntentTimelineProvider {
+        func placeholder(in context: Context) -> LifeGridEntry {
+            LifeGridEntryFactory.placeholder()
+        }
 
-    func snapshot(for configuration: LifeGridConfigurationIntent, in context: Context) async
-        -> LifeGridEntry
-    {
-        LifeGridEntryFactory.makeEntry(
-            now: .now,
-            configuredUnit: configuration.unit,
-            configuredBirthDate: configuration.birthDate,
-            configuredLifeExpectancyYears: configuration.lifeExpectancyYears
-        )
-    }
+        func snapshot(for configuration: LifeGridConfigurationIntent, in context: Context) async
+            -> LifeGridEntry
+        {
+            LifeGridEntryFactory.makeEntry(
+                now: .now,
+                configuredUnit: configuration.unit,
+                configuredBirthDate: configuration.birthDate,
+                configuredLifeExpectancyYears: configuration.lifeExpectancyYears
+            )
+        }
 
-    func timeline(for configuration: LifeGridConfigurationIntent, in context: Context) async
-        -> Timeline<LifeGridEntry>
-    {
-        let now = Date()
-        let entry = LifeGridEntryFactory.makeEntry(
-            now: now,
-            configuredUnit: configuration.unit,
-            configuredBirthDate: configuration.birthDate,
-            configuredLifeExpectancyYears: configuration.lifeExpectancyYears
-        )
-        let next = LifeGridEntryFactory.nextRefreshDate(for: entry.resolvedUnit, from: now)
-        return Timeline(entries: [entry], policy: .after(next))
+        func timeline(for configuration: LifeGridConfigurationIntent, in context: Context) async
+            -> Timeline<LifeGridEntry>
+        {
+            let now = Date()
+            let entry = LifeGridEntryFactory.makeEntry(
+                now: now,
+                configuredUnit: configuration.unit,
+                configuredBirthDate: configuration.birthDate,
+                configuredLifeExpectancyYears: configuration.lifeExpectancyYears
+            )
+            let next = LifeGridEntryFactory.nextRefreshDate(for: entry.resolvedUnit, from: now)
+            return Timeline(entries: [entry], policy: .after(next))
+        }
     }
-}
 #endif
 
 struct LifeGridWidgetView: View {
@@ -251,8 +255,6 @@ struct LifeGridWidgetView: View {
         let valueFontSize: CGFloat
         let horizontalPadding: CGFloat
         let verticalPadding: CGFloat
-        let cardInset: CGFloat
-        let cornerRadius: CGFloat
         let spacing: CGFloat
         let showScale: Bool
         let showLegend: Bool
@@ -265,10 +267,8 @@ struct LifeGridWidgetView: View {
                 rows: 6,
                 columns: 12,
                 valueFontSize: 20,
-                horizontalPadding: 9,
-                verticalPadding: 8,
-                cardInset: 4,
-                cornerRadius: 15,
+                horizontalPadding: 0,
+                verticalPadding: 0,
                 spacing: 4,
                 showScale: false,
                 showLegend: false
@@ -278,10 +278,8 @@ struct LifeGridWidgetView: View {
                 rows: 8,
                 columns: 23,
                 valueFontSize: 34,
-                horizontalPadding: 11,
-                verticalPadding: 10,
-                cardInset: 4,
-                cornerRadius: 20,
+                horizontalPadding: 0,
+                verticalPadding: 0,
                 spacing: 5,
                 showScale: false,
                 showLegend: false
@@ -291,10 +289,8 @@ struct LifeGridWidgetView: View {
                 rows: 14,
                 columns: 28,
                 valueFontSize: 30,
-                horizontalPadding: 18,
-                verticalPadding: 18,
-                cardInset: 10,
-                cornerRadius: 24,
+                horizontalPadding: 0,
+                verticalPadding: 0,
                 spacing: 8,
                 showScale: true,
                 showLegend: true
@@ -415,102 +411,72 @@ struct LifeGridWidgetView: View {
         let columnsDef = Array(
             repeating: GridItem(.flexible(minimum: 1, maximum: 10), spacing: 2), count: columns)
 
-        return ZStack {
-            LinearGradient(
-                colors: [
-                    Color(red: 0.02, green: 0.08, blue: 0.16),
-                    Color(red: 0.04, green: 0.14, blue: 0.22),
-                    Color(red: 0.12, green: 0.08, blue: 0.04),
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
+        return VStack(alignment: .leading, spacing: homeLayout.spacing) {
+            Text(titleText)
+                .font(
+                    .system(
+                        size: family == .systemSmall ? 9 : 12, weight: .bold, design: .rounded)
+                )
+                .tracking(2)
+                .foregroundStyle(.white.opacity(0.7))
 
-            RoundedRectangle(cornerRadius: homeLayout.cornerRadius, style: .continuous)
-                .fill(Color.white.opacity(0.06))
-                .overlay {
-                    RoundedRectangle(cornerRadius: homeLayout.cornerRadius, style: .continuous)
-                        .stroke(
-                            LinearGradient(
-                                colors: [
-                                    Color(red: 0.15, green: 0.88, blue: 0.86).opacity(0.2),
-                                    .white.opacity(0.06),
-                                ],
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1
-                        )
-                }
-                .padding(homeLayout.cardInset)
+            valueLine
 
-            VStack(alignment: .leading, spacing: homeLayout.spacing) {
-                Text(titleText)
+            if homeLayout.showScale {
+                Text(cellScaleText)
                     .font(
                         .system(
-                            size: family == .systemSmall ? 9 : 12, weight: .bold, design: .rounded)
+                            size: family == .systemSmall ? 10 : 12, weight: .medium,
+                            design: .rounded)
                     )
-                    .tracking(2)
-                    .foregroundStyle(.white.opacity(0.7))
-
-                valueLine
-
-                if homeLayout.showScale {
-                    Text(cellScaleText)
-                        .font(
-                            .system(
-                                size: family == .systemSmall ? 10 : 12, weight: .medium,
-                                design: .rounded)
-                        )
-                        .foregroundStyle(.white.opacity(0.55))
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.72)
-                }
-
-                LazyVGrid(columns: columnsDef, spacing: 2) {
-                    ForEach(0..<cellCount, id: \.self) { displayIndex in
-                        let row = displayIndex / columns
-                        let column = displayIndex % columns
-                        let progressIndex = (column * rows) + row
-                        let absoluteUnitIndex = windowStart + progressIndex
-                        let isPast = absoluteUnitIndex < elapsedUnits
-                        let isCurrent = progressIndex == currentIndexInWindow
-
-                        RoundedRectangle(cornerRadius: 2.5, style: .continuous)
-                            .fill(
-                                cellColor(
-                                    isPast: isPast, isCurrent: isCurrent,
-                                    futureIntensity: futureIntensity(index: progressIndex))
-                            )
-                            .frame(maxWidth: .infinity)
-                            .aspectRatio(1, contentMode: .fit)
-                            .overlay {
-                                if isCurrent {
-                                    RoundedRectangle(cornerRadius: 2.5, style: .continuous)
-                                        .stroke(.white.opacity(0.9), lineWidth: 1)
-                                }
-                            }
-                    }
-                }
-
-                if shouldShowLegend {
-                    HStack(spacing: 14) {
-                        Label("Past", systemImage: "square.fill")
-                            .foregroundStyle(Color(red: 0.15, green: 0.88, blue: 0.86).opacity(0.8))
-                        Label("Now", systemImage: "location.fill")
-                            .foregroundStyle(.white.opacity(0.9))
-                        Label("Future", systemImage: "sparkles")
-                            .foregroundStyle(Color(red: 1.0, green: 0.60, blue: 0.24).opacity(0.85))
-                    }
-                    .font(.system(size: 10, weight: .medium, design: .rounded))
-                }
-
-                Spacer(minLength: 0)
+                    .foregroundStyle(.white.opacity(0.55))
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.72)
             }
-            .padding(.horizontal, horizontalPadding)
-            .padding(.vertical, verticalPadding)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+
+            LazyVGrid(columns: columnsDef, spacing: 2) {
+                ForEach(0..<cellCount, id: \.self) { displayIndex in
+                    let row = displayIndex / columns
+                    let column = displayIndex % columns
+                    let progressIndex = (column * rows) + row
+                    let absoluteUnitIndex = windowStart + progressIndex
+                    let isPast = absoluteUnitIndex < elapsedUnits
+                    let isCurrent = progressIndex == currentIndexInWindow
+
+                    RoundedRectangle(cornerRadius: 2.5, style: .continuous)
+                        .fill(
+                            cellColor(
+                                isPast: isPast, isCurrent: isCurrent,
+                                futureIntensity: futureIntensity(index: progressIndex))
+                        )
+                        .frame(maxWidth: .infinity)
+                        .aspectRatio(1, contentMode: .fit)
+                        .overlay {
+                            if isCurrent {
+                                RoundedRectangle(cornerRadius: 2.5, style: .continuous)
+                                    .stroke(.white.opacity(0.9), lineWidth: 1)
+                            }
+                        }
+                }
+            }
+
+            if shouldShowLegend {
+                HStack(spacing: 14) {
+                    Label("Past", systemImage: "square.fill")
+                        .foregroundStyle(Color(red: 0.15, green: 0.88, blue: 0.86).opacity(0.8))
+                    Label("Now", systemImage: "location.fill")
+                        .foregroundStyle(.white.opacity(0.9))
+                    Label("Future", systemImage: "sparkles")
+                        .foregroundStyle(Color(red: 1.0, green: 0.60, blue: 0.24).opacity(0.85))
+                }
+                .font(.system(size: 10, weight: .medium, design: .rounded))
+            }
+
+            Spacer(minLength: 0)
         }
+        .padding(.horizontal, horizontalPadding)
+        .padding(.vertical, verticalPadding)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .widgetContainerBackground {
             LinearGradient(
                 colors: [
@@ -526,11 +492,12 @@ struct LifeGridWidgetView: View {
 
     #if os(macOS)
         private var macHomeWidgetView: some View {
-            let valueSize: CGFloat = switch family {
-            case .systemSmall: 34
-            case .systemMedium: 54
-            default: 62
-            }
+            let valueSize: CGFloat =
+                switch family {
+                case .systemSmall: 34
+                case .systemMedium: 54
+                default: 62
+                }
 
             return ZStack {
                 LinearGradient(
