@@ -699,9 +699,11 @@ struct ContentView: View {
                     .offset(y: cardsAppeared ? 0 : 18)
 
                 if showLifeGrid {
-                    VStack(spacing: 24) {
+                    VStack(spacing: 16) {
                         lifeGridCard(elapsed: elapsed, remaining: remaining)
                         unitPicker
+                        compactLifeClockCard(
+                            progress: progress, elapsed: elapsed, remaining: remaining)
                     }
                     .transition(.asymmetric(insertion: .flipForward, removal: .flipBackward))
                     .opacity(cardsAppeared ? 1 : 0)
@@ -1116,6 +1118,89 @@ struct ContentView: View {
         case .hours: 0.84
         case .minutes: 0.78
         case .seconds: 0.72
+        }
+    }
+
+    private func compactLifeClockCard(
+        progress: Double, elapsed: TimeInterval, remaining: TimeInterval
+    )
+        -> some View
+    {
+        let remainingValue = selectedUnit.convert(from: remaining)
+        let elapsedValue = selectedUnit.convert(from: elapsed)
+
+        return HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("LIFE CLOCK")
+                    .font(
+                        .system(size: 10, weight: .bold, design: selectedTypography.bodyDesign)
+                    )
+                    .tracking(1.5)
+                    .foregroundStyle(.white.opacity(0.7))
+
+                HStack(alignment: .firstTextBaseline, spacing: 6) {
+                    Text(formattedValue(remainingValue, unit: selectedUnit))
+                        .font(
+                            .system(
+                                size: 32, weight: .black, design: selectedTypography.heroDesign)
+                        )
+                        .monospacedDigit()
+                        .foregroundStyle(.white)
+                        .contentTransition(.numericText())
+                        .minimumScaleFactor(0.35)
+                        .lineLimit(1)
+
+                    Text("\(selectedUnit.title) left")
+                        .font(
+                            .system(
+                                size: 14, weight: .semibold,
+                                design: selectedTypography.bodyDesign)
+                        )
+                        .foregroundStyle(.white.opacity(0.85))
+                }
+
+                HStack(spacing: 4) {
+                    Image(systemName: "calendar")
+                        .font(.system(size: 10))
+                    Text(
+                        "\(formattedValue(elapsedValue, unit: selectedUnit)) \(selectedUnit.title) lived"
+                    )
+                    .font(
+                        .system(
+                            size: 12, weight: .medium, design: selectedTypography.bodyDesign)
+                    )
+                }
+                .foregroundStyle(.white.opacity(0.55))
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            }
+            .layoutPriority(1)
+
+            Spacer()
+
+            LifeProgressRing(
+                progress: progress, colors: selectedTheme.ringColors,
+                glowColor: selectedTheme.topGlow
+            )
+            .scaleEffect(0.68)
+            .frame(width: 66, height: 66)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .stroke(
+                    LinearGradient(
+                        colors: [
+                            selectedTheme.topGlow.opacity(0.2), .white.opacity(0.08),
+                            selectedTheme.bottomGlow.opacity(0.15),
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1
+                )
         }
     }
 
