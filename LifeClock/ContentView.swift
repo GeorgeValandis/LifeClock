@@ -1,9 +1,10 @@
 import StoreKit
 import SwiftUI
-#if canImport(UIKit)
-import UIKit
-#endif
 import WidgetKit
+
+#if canImport(UIKit)
+    import UIKit
+#endif
 
 enum LifeUnit: String, CaseIterable, Identifiable {
     case years
@@ -234,7 +235,7 @@ struct ContentView: View {
     @State private var animateBackground = false
     @State private var iconErrorMessage: String?
     @State private var unitSwapPulse = false
-    @State private var showLifeGrid = false
+    @State private var showLifeGrid = true
     @State private var cardsAppeared = false
     @State private var pendingOnboardingRestart = false
     @State private var showLifetimePaywallManually = false
@@ -1650,27 +1651,29 @@ struct ContentView: View {
             .platformNavigationChrome()
             .environment(\.colorScheme, .dark)
             .toolbar {
-#if os(iOS)
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") {
-                        showSettings = false
+                #if os(iOS)
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Done") {
+                            showSettings = false
+                        }
+                        .font(
+                            .system(
+                                size: 17, weight: .semibold, design: selectedTypography.bodyDesign)
+                        )
+                        .foregroundStyle(.white)
                     }
-                    .font(
-                        .system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign)
-                    )
-                    .foregroundStyle(.white)
-                }
-#else
-                ToolbarItem {
-                    Button("Done") {
-                        showSettings = false
+                #else
+                    ToolbarItem {
+                        Button("Done") {
+                            showSettings = false
+                        }
+                        .font(
+                            .system(
+                                size: 17, weight: .semibold, design: selectedTypography.bodyDesign)
+                        )
+                        .foregroundStyle(.white)
                     }
-                    .font(
-                        .system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign)
-                    )
-                    .foregroundStyle(.white)
-                }
-#endif
+                #endif
             }
         }
     }
@@ -1901,9 +1904,9 @@ struct ContentView: View {
 
     private func performSelectionHaptic() {
         guard hapticsEnabled else { return }
-#if canImport(UIKit)
-        UIImpactFeedbackGenerator(style: .soft).impactOccurred()
-#endif
+        #if canImport(UIKit)
+            UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+        #endif
     }
 
     private func initializeTrialIfNeeded() {
@@ -1985,31 +1988,31 @@ struct ContentView: View {
 
     private func applyAppIcon(from oldValue: String, to newValue: String) {
         guard oldValue != newValue else { return }
-#if canImport(UIKit)
-        guard UIApplication.shared.supportsAlternateIcons else {
-            iconErrorMessage = "This device does not support alternate app icons."
-            appIconChoiceRaw = oldValue
-            return
-        }
+        #if canImport(UIKit)
+            guard UIApplication.shared.supportsAlternateIcons else {
+                iconErrorMessage = "This device does not support alternate app icons."
+                appIconChoiceRaw = oldValue
+                return
+            }
 
-        guard let newChoice = AppIconChoice(rawValue: newValue) else {
-            iconErrorMessage = "Selected icon is invalid."
-            appIconChoiceRaw = oldValue
-            return
-        }
+            guard let newChoice = AppIconChoice(rawValue: newValue) else {
+                iconErrorMessage = "Selected icon is invalid."
+                appIconChoiceRaw = oldValue
+                return
+            }
 
-        UIApplication.shared.setAlternateIconName(newChoice.iconName) { error in
-            DispatchQueue.main.async {
-                if let error {
-                    iconErrorMessage = error.localizedDescription
-                    appIconChoiceRaw = oldValue
+            UIApplication.shared.setAlternateIconName(newChoice.iconName) { error in
+                DispatchQueue.main.async {
+                    if let error {
+                        iconErrorMessage = error.localizedDescription
+                        appIconChoiceRaw = oldValue
+                    }
                 }
             }
-        }
-#else
-        iconErrorMessage = "Alternate app icons are only available on iOS."
-        appIconChoiceRaw = oldValue
-#endif
+        #else
+            iconErrorMessage = "Alternate app icons are only available on iOS."
+            appIconChoiceRaw = oldValue
+        #endif
     }
 }
 
@@ -2114,23 +2117,23 @@ extension View {
         isPresented: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
-#if os(iOS)
-        self.fullScreenCover(isPresented: isPresented, content: content)
-#else
-        self.sheet(isPresented: isPresented, content: content)
-#endif
+        #if os(iOS)
+            self.fullScreenCover(isPresented: isPresented, content: content)
+        #else
+            self.sheet(isPresented: isPresented, content: content)
+        #endif
     }
 
     @ViewBuilder
     fileprivate func platformNavigationChrome() -> some View {
-#if os(iOS)
-        self
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.hidden, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
-#else
-        self
-#endif
+        #if os(iOS)
+            self
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbarBackground(.hidden, for: .navigationBar)
+                .toolbarColorScheme(.dark, for: .navigationBar)
+        #else
+            self
+        #endif
     }
 
     fileprivate func settingsCardStyle() -> some View {
@@ -2146,7 +2149,7 @@ extension View {
 }
 
 #if os(iOS)
-#Preview {
-    ContentView()
-}
+    #Preview {
+        ContentView()
+    }
 #endif
