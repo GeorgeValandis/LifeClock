@@ -1,0 +1,4 @@
+Target dependency graph (2 targets)
+Target 'LifeClockMac' in project 'LifeClock'
+➜ Explicit dependency on target 'LifeClockMacWidgetExtension' in project 'LifeClock'
+Target 'LifeClockMacWidgetExtension' in project 'LifeClock' (no dependencies)

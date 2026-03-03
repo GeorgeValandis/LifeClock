@@ -1,0 +1,400 @@
+{
+  "source": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/ContentView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Icon Update Failed",
+        "location": {
+          "startingColumn": 17,
+          "startingLine": 387
+        }
+      },
+      {
+        "comment": "",
+        "key": "Purchase Notice",
+        "location": {
+          "startingColumn": 17,
+          "startingLine": 402
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 397
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 412
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock LifeClock",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 506
+        }
+      },
+      {
+        "comment": "",
+        "key": "One purchase. Forever yours.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock Lifetime",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 575
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock Lifetime — %@",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 575
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock Lifetime",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 576
+        }
+      },
+      {
+        "comment": "",
+        "key": "One-time purchase • No subscription",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 605
+        }
+      },
+      {
+        "comment": "",
+        "key": "Restore Purchases",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 625
+        }
+      },
+      {
+        "comment": "",
+        "key": "LIFE CLOCK",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 712
+        }
+      },
+      {
+        "comment": "",
+        "key": "Since %@",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 784
+        }
+      },
+      {
+        "comment": "",
+        "key": "Your Time",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 880
+        }
+      },
+      {
+        "comment": "",
+        "key": "Every second counts.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 885
+        }
+      },
+      {
+        "comment": "",
+        "key": "TIME LEFT (EST.)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 927
+        }
+      },
+      {
+        "comment": "",
+        "key": "Remaining life trend",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 1078
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld %@ left",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 1079
+        }
+      },
+      {
+        "comment": "",
+        "key": "Now",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 1057
+        }
+      },
+      {
+        "comment": "",
+        "key": "End",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 1065
+        }
+      },
+      {
+        "comment": "",
+        "key": "Each cell = 1 %@ • rolling window",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 1164
+        }
+      },
+      {
+        "comment": "",
+        "key": "LIFE GRID",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 1133
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@ left",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 1152
+        }
+      },
+      {
+        "comment": "",
+        "key": "Past",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 1197
+        }
+      },
+      {
+        "comment": "",
+        "key": "Current",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 1199
+        }
+      },
+      {
+        "comment": "",
+        "key": "Future",
+        "location": {
+          "startingColumn": 23,
+          "startingLine": 1201
+        }
+      },
+      {
+        "comment": "",
+        "key": "NEXT MILESTONE",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 1271
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 1284
+        }
+      },
+      {
+        "comment": "",
+        "key": "of lifetime",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 1288
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %lldy %lldm left • %@",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 1300
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 1325
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 1331
+        }
+      },
+      {
+        "comment": "",
+        "key": "Go Premium",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 1431
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock Lifetime Access",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 1439
+        }
+      },
+      {
+        "comment": "",
+        "key": "Birth date",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 1481
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 1485
+        }
+      },
+      {
+        "comment": "",
+        "key": "Life expectancy",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 1506
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld years",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 1509
+        }
+      },
+      {
+        "comment": "",
+        "key": "Color theme",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 1523
+        }
+      },
+      {
+        "comment": "",
+        "key": "Haptics",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 1601
+        }
+      },
+      {
+        "comment": "",
+        "key": "Run onboarding again",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 1617
+        }
+      },
+      {
+        "comment": "",
+        "key": "Legal & Policies",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 1633
+        }
+      },
+      {
+        "comment": "",
+        "key": "Done",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 1665
+        }
+      },
+      {
+        "comment": "",
+        "key": "Last updated: February 24, 2026",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 1721
+        }
+      },
+      {
+        "comment": "",
+        "key": "Policy Links",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 1705
+        }
+      },
+      {
+        "comment": "",
+        "key": "Privacy Policy",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 1710
+        }
+      },
+      {
+        "comment": "",
+        "key": "Terms & Conditions",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 1713
+        }
+      },
+      {
+        "comment": "",
+        "key": "Support",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 1715
+        }
+      },
+      {
+        "comment": "",
+        "key": "lived",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 2057
+        }
+      }
+    ]
+  },
+  "version": 1
+}

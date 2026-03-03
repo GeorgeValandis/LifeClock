@@ -1,8 +1,10 @@
+#if !os(macOS)
 import AppIntents
+#endif
 import SwiftUI
 import WidgetKit
 
-enum WidgetLifeUnit: String, CaseIterable, AppEnum {
+enum WidgetLifeUnit: String, CaseIterable {
     case years
     case months
     case weeks
@@ -10,18 +12,6 @@ enum WidgetLifeUnit: String, CaseIterable, AppEnum {
     case hours
     case minutes
     case seconds
-
-    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Unit"
-
-    static var caseDisplayRepresentations: [WidgetLifeUnit: DisplayRepresentation] = [
-        .years: "Years",
-        .months: "Months",
-        .weeks: "Weeks",
-        .days: "Days",
-        .hours: "Hours",
-        .minutes: "Minutes",
-        .seconds: "Seconds",
-    ]
 
     var seconds: Double {
         switch self {
@@ -42,12 +32,48 @@ enum WidgetLifeUnit: String, CaseIterable, AppEnum {
         case .weeks: "W"
         case .days: "D"
         case .hours: "H"
-        case .minutes: "Min"
-        case .seconds: "Sec"
+        case .minutes: "M"
+        case .seconds: "S"
         }
     }
 }
 
+#if !os(macOS)
+extension WidgetLifeUnit: AppEnum {
+    static var typeDisplayRepresentation: TypeDisplayRepresentation = "Unit"
+
+    static var caseDisplayRepresentations: [WidgetLifeUnit: DisplayRepresentation] = [
+        .years: "Years",
+        .months: "Months",
+        .weeks: "Weeks",
+        .days: "Days",
+        .hours: "Hours",
+        .minutes: "Minutes",
+        .seconds: "Seconds",
+    ]
+}
+#endif
+
+private enum LifeGridDefaults {
+    static let unit: WidgetLifeUnit = .years
+    static let birthDate = Date(timeIntervalSince1970: 592_444_800)
+    static let lifeExpectancyYears = 90.0
+}
+
+private extension View {
+    @ViewBuilder
+    func widgetContainerBackground<Background: View>(
+        @ViewBuilder _ background: () -> Background
+    ) -> some View {
+        if #available(iOSApplicationExtension 17.0, macOSApplicationExtension 14.0, *) {
+            containerBackground(for: .widget, content: background)
+        } else {
+            self.background(background())
+        }
+    }
+}
+
+#if !os(macOS)
 struct LifeGridConfigurationIntent: WidgetConfigurationIntent {
     static var title: LocalizedStringResource = "Life Grid"
     static var description = IntentDescription("Show remaining life as a grid in your chosen unit.")
@@ -61,43 +87,36 @@ struct LifeGridConfigurationIntent: WidgetConfigurationIntent {
     @Parameter(title: "Life Expectancy (Years)", default: 90)
     var lifeExpectancyYears: Double
 }
+#endif
 
 struct LifeGridEntry: TimelineEntry {
     let date: Date
-    let configuration: LifeGridConfigurationIntent
     let remainingUnits: Int
     let elapsedUnits: Double
     let totalUnits: Double
     let resolvedUnit: WidgetLifeUnit
 }
 
-struct LifeGridProvider: AppIntentTimelineProvider {
-    private static let sharedDefaults = UserDefaults(suiteName: "group.com.GA.LifeClock")
+private enum LifeGridEntryFactory {
+    private static let sharedDefaults: UserDefaults? = {
+        #if os(macOS)
+            return nil
+        #else
+            return UserDefaults(suiteName: "group.com.GA.LifeClock")
+        #endif
+    }()
 
-    func placeholder(in context: Context) -> LifeGridEntry {
+    static func placeholder() -> LifeGridEntry {
         LifeGridEntry(
             date: .now,
-            configuration: LifeGridConfigurationIntent(),
             remainingUnits: 38,
             elapsedUnits: 37,
             totalUnits: 90,
-            resolvedUnit: resolvedUnit(from: LifeGridConfigurationIntent())
+            resolvedUnit: .years
         )
     }
 
-    func snapshot(for configuration: LifeGridConfigurationIntent, in context: Context) async
-        -> LifeGridEntry
-    {
-        makeEntry(configuration: configuration, now: .now)
-    }
-
-    func timeline(for configuration: LifeGridConfigurationIntent, in context: Context) async
-        -> Timeline<LifeGridEntry>
-    {
-        let now = Date()
-        let entry = makeEntry(configuration: configuration, now: now)
-
-        let unit = resolvedUnit(from: configuration)
+    static func nextRefreshDate(for unit: WidgetLifeUnit, from now: Date) -> Date {
         let refreshMinutes: Int
         switch unit {
         case .seconds: refreshMinutes = 1
@@ -109,54 +128,118 @@ struct LifeGridProvider: AppIntentTimelineProvider {
         let next =
             Calendar.current.date(byAdding: .minute, value: refreshMinutes, to: now)
             ?? now.addingTimeInterval(Double(refreshMinutes) * 60)
-        return Timeline(entries: [entry], policy: .after(next))
+        return next
     }
 
-    private func resolvedUnit(from configuration: LifeGridConfigurationIntent) -> WidgetLifeUnit {
-        if let raw = Self.sharedDefaults?.string(forKey: "selectedUnitRaw"),
-            let unit = WidgetLifeUnit(rawValue: raw)
-        {
-            return unit
-        }
-        return configuration.unit
-    }
-
-    private func makeEntry(configuration: LifeGridConfigurationIntent, now: Date) -> LifeGridEntry {
-        let shared = Self.sharedDefaults
-
-        let birthDate: Date
-        if let ts = shared?.object(forKey: "birthDateTimestamp") as? Double {
-            birthDate = min(Date(timeIntervalSince1970: ts), now)
-        } else {
-            birthDate = min(configuration.birthDate, now)
-        }
-
-        let lifeExpYears: Double
-        if let le = shared?.object(forKey: "lifeExpectancyYears") as? Double, le > 0 {
-            lifeExpYears = le
-        } else {
-            lifeExpYears = configuration.lifeExpectancyYears
-        }
-
+    static func makeEntry(
+        now: Date,
+        configuredUnit: WidgetLifeUnit,
+        configuredBirthDate: Date,
+        configuredLifeExpectancyYears: Double
+    ) -> LifeGridEntry {
+        let unit = resolvedUnit(from: configuredUnit)
+        let birthDate = resolvedBirthDate(fallback: configuredBirthDate, now: now)
+        let lifeExpYears = resolvedLifeExpectancy(fallback: configuredLifeExpectancyYears)
         let lifeSeconds = max(1, lifeExpYears * WidgetLifeUnit.years.seconds)
         let elapsed = max(0, now.timeIntervalSince(birthDate))
         let elapsedClamped = min(elapsed, lifeSeconds)
-
-        let unit = resolvedUnit(from: configuration)
         let totalUnits = max(1, lifeSeconds / unit.seconds)
         let elapsedUnits = min(totalUnits, elapsedClamped / unit.seconds)
         let remainingUnits = max(0, Int((totalUnits - elapsedUnits).rounded()))
 
         return LifeGridEntry(
             date: now,
-            configuration: configuration,
             remainingUnits: remainingUnits,
             elapsedUnits: elapsedUnits,
             totalUnits: totalUnits,
             resolvedUnit: unit
         )
     }
+
+    private static func resolvedUnit(from fallback: WidgetLifeUnit) -> WidgetLifeUnit {
+        if let raw = Self.sharedDefaults?.string(forKey: "selectedUnitRaw"),
+            let unit = WidgetLifeUnit(rawValue: raw)
+        {
+            return unit
+        }
+        return fallback
+    }
+
+    private static func resolvedBirthDate(fallback: Date, now: Date) -> Date {
+        if let ts = sharedDefaults?.object(forKey: "birthDateTimestamp") as? Double {
+            return min(Date(timeIntervalSince1970: ts), now)
+        }
+        return min(fallback, now)
+    }
+
+    private static func resolvedLifeExpectancy(fallback: Double) -> Double {
+        if let le = sharedDefaults?.object(forKey: "lifeExpectancyYears") as? Double, le > 0 {
+            return le
+        }
+        return fallback
+    }
 }
+
+#if os(macOS)
+struct LifeGridProvider: TimelineProvider {
+    func placeholder(in context: Context) -> LifeGridEntry {
+        LifeGridEntryFactory.placeholder()
+    }
+
+    func getSnapshot(in context: Context, completion: @escaping (LifeGridEntry) -> Void) {
+        let entry = LifeGridEntryFactory.makeEntry(
+            now: .now,
+            configuredUnit: LifeGridDefaults.unit,
+            configuredBirthDate: LifeGridDefaults.birthDate,
+            configuredLifeExpectancyYears: LifeGridDefaults.lifeExpectancyYears
+        )
+        completion(entry)
+    }
+
+    func getTimeline(in context: Context, completion: @escaping (Timeline<LifeGridEntry>) -> Void) {
+        let now = Date()
+        let entry = LifeGridEntryFactory.makeEntry(
+            now: now,
+            configuredUnit: LifeGridDefaults.unit,
+            configuredBirthDate: LifeGridDefaults.birthDate,
+            configuredLifeExpectancyYears: LifeGridDefaults.lifeExpectancyYears
+        )
+        let next = LifeGridEntryFactory.nextRefreshDate(for: entry.resolvedUnit, from: now)
+        completion(Timeline(entries: [entry], policy: .after(next)))
+    }
+}
+#else
+struct LifeGridProvider: AppIntentTimelineProvider {
+    func placeholder(in context: Context) -> LifeGridEntry {
+        LifeGridEntryFactory.placeholder()
+    }
+
+    func snapshot(for configuration: LifeGridConfigurationIntent, in context: Context) async
+        -> LifeGridEntry
+    {
+        LifeGridEntryFactory.makeEntry(
+            now: .now,
+            configuredUnit: configuration.unit,
+            configuredBirthDate: configuration.birthDate,
+            configuredLifeExpectancyYears: configuration.lifeExpectancyYears
+        )
+    }
+
+    func timeline(for configuration: LifeGridConfigurationIntent, in context: Context) async
+        -> Timeline<LifeGridEntry>
+    {
+        let now = Date()
+        let entry = LifeGridEntryFactory.makeEntry(
+            now: now,
+            configuredUnit: configuration.unit,
+            configuredBirthDate: configuration.birthDate,
+            configuredLifeExpectancyYears: configuration.lifeExpectancyYears
+        )
+        let next = LifeGridEntryFactory.nextRefreshDate(for: entry.resolvedUnit, from: now)
+        return Timeline(entries: [entry], policy: .after(next))
+    }
+}
+#endif
 
 struct LifeGridWidgetView: View {
     @Environment(\.widgetFamily) private var family
@@ -312,16 +395,20 @@ struct LifeGridWidgetView: View {
     }
 
     var body: some View {
-        switch family {
-        case .accessoryInline:
-            inlineAccessoryView
-        case .accessoryCircular:
-            circularAccessoryView
-        case .accessoryRectangular:
-            rectangularAccessoryView
-        default:
-            homeWidgetView
-        }
+        #if os(macOS)
+            macHomeWidgetView
+        #else
+            switch family {
+            case .accessoryInline:
+                inlineAccessoryView
+            case .accessoryCircular:
+                circularAccessoryView
+            case .accessoryRectangular:
+                rectangularAccessoryView
+            default:
+                homeWidgetView
+            }
+        #endif
     }
 
     private var homeWidgetView: some View {
@@ -424,7 +511,7 @@ struct LifeGridWidgetView: View {
             .padding(.vertical, verticalPadding)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
-        .containerBackground(for: .widget) {
+        .widgetContainerBackground {
             LinearGradient(
                 colors: [
                     Color(red: 0.02, green: 0.06, blue: 0.12),
@@ -436,6 +523,68 @@ struct LifeGridWidgetView: View {
             )
         }
     }
+
+    #if os(macOS)
+        private var macHomeWidgetView: some View {
+            let valueSize: CGFloat = switch family {
+            case .systemSmall: 34
+            case .systemMedium: 54
+            default: 62
+            }
+
+            return ZStack {
+                LinearGradient(
+                    colors: [
+                        Color(red: 0.03, green: 0.12, blue: 0.24),
+                        Color(red: 0.03, green: 0.24, blue: 0.25),
+                        Color(red: 0.14, green: 0.08, blue: 0.05),
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("LIFE CLOCK")
+                        .font(
+                            .system(
+                                size: family == .systemSmall ? 10 : 12, weight: .bold,
+                                design: .rounded)
+                        )
+                        .tracking(1.4)
+                        .foregroundStyle(.white.opacity(0.75))
+                    Text(entry.remainingUnits.formatted(.number.grouping(.never)))
+                        .font(.system(size: valueSize, weight: .black, design: .rounded))
+                        .minimumScaleFactor(0.45)
+                        .lineLimit(1)
+                        .monospacedDigit()
+                        .foregroundStyle(.white)
+                    Text("\(entry.resolvedUnit.rawValue.capitalized) left")
+                        .font(
+                            .system(
+                                size: family == .systemSmall ? 14 : 18, weight: .semibold,
+                                design: .rounded)
+                        )
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .foregroundStyle(.white.opacity(0.92))
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .padding(family == .systemLarge ? 20 : 16)
+            }
+            .unredacted()
+            .widgetContainerBackground {
+                LinearGradient(
+                    colors: [
+                        Color(red: 0.02, green: 0.09, blue: 0.18),
+                        Color(red: 0.02, green: 0.23, blue: 0.24),
+                        Color(red: 0.13, green: 0.08, blue: 0.06),
+                    ],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            }
+        }
+    #endif
 
     private var valueLine: some View {
         ViewThatFits(in: .horizontal) {
@@ -520,25 +669,48 @@ struct LifeGridWidgetView: View {
 }
 
 struct LifeGridWidget: Widget {
-    let kind: String = "LifeGridWidget"
+    private var kind: String {
+        #if os(macOS)
+            "LifeGridWidgetMac"
+        #else
+            "LifeGridWidget"
+        #endif
+    }
+
+    private var supportedFamilies: [WidgetFamily] {
+        #if os(macOS)
+            return [.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge]
+        #else
+            return [
+                .systemSmall,
+                .systemMedium,
+                .systemLarge,
+                .accessoryInline,
+                .accessoryCircular,
+                .accessoryRectangular,
+            ]
+        #endif
+    }
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(
-            kind: kind, intent: LifeGridConfigurationIntent.self, provider: LifeGridProvider()
-        ) { entry in
-            LifeGridWidgetView(entry: entry)
-        }
-        .configurationDisplayName("Life Grid")
-        .description("Track your remaining lifetime as a grid.")
-        .supportedFamilies([
-            .systemSmall,
-            .systemMedium,
-            .systemLarge,
-            .accessoryInline,
-            .accessoryCircular,
-            .accessoryRectangular,
-        ])
-        .contentMarginsDisabled()
+        #if os(macOS)
+            StaticConfiguration(kind: kind, provider: LifeGridProvider()) { entry in
+                LifeGridWidgetView(entry: entry)
+            }
+            .configurationDisplayName("Life Grid")
+            .description("Track your remaining lifetime as a grid.")
+            .supportedFamilies(supportedFamilies)
+            .containerBackgroundRemovable(false)
+        #else
+            AppIntentConfiguration(
+                kind: kind, intent: LifeGridConfigurationIntent.self, provider: LifeGridProvider()
+            ) { entry in
+                LifeGridWidgetView(entry: entry)
+            }
+            .configurationDisplayName("Life Grid")
+            .description("Track your remaining lifetime as a grid.")
+            .supportedFamilies(supportedFamilies)
+        #endif
     }
 }
 

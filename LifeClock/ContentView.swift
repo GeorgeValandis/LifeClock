@@ -1,6 +1,8 @@
 import StoreKit
 import SwiftUI
+#if canImport(UIKit)
 import UIKit
+#endif
 import WidgetKit
 
 enum LifeUnit: String, CaseIterable, Identifiable {
@@ -33,8 +35,8 @@ enum LifeUnit: String, CaseIterable, Identifiable {
         case .weeks: "W"
         case .days: "D"
         case .hours: "H"
-        case .minutes: "Min"
-        case .seconds: "Sec"
+        case .minutes: "M"
+        case .seconds: "S"
         }
     }
 
@@ -252,7 +254,7 @@ struct ContentView: View {
         case 5..<12: return "Good Morning"
         case 12..<17: return "Good Afternoon"
         case 17..<22: return "Good Evening"
-        default: return "Night Owl"
+        default: return "Good Night"
         }
     }
 
@@ -293,11 +295,19 @@ struct ContentView: View {
     }
 
     private var timelineRefreshInterval: TimeInterval {
-        if showLifeGrid {
-            // Grid cursor should advance exactly when one selected unit completes.
-            return max(1, min(selectedUnit.seconds, 3600))
+        if !showLifeGrid {
+            return 1
         }
-        return 1
+
+        // Keep greeting/time-of-day reasonably fresh even in slower grid units.
+        switch selectedUnit {
+        case .seconds, .minutes:
+            return 1
+        case .hours:
+            return 30
+        case .days, .weeks, .months, .years:
+            return 60
+        }
     }
 
     private var unitSwapTransition: AnyTransition {
@@ -333,7 +343,7 @@ struct ContentView: View {
             .sheet(isPresented: $showSettings) {
                 settingsSheet
             }
-            .onChange(of: showSettings) { _, isPresented in
+            .platformOnChange(of: showSettings) { isPresented in
                 if !isPresented && pendingOnboardingRestart {
                     pendingOnboardingRestart = false
                     showOnboarding = true
@@ -344,16 +354,16 @@ struct ContentView: View {
                     showLifetimePaywallManually = true
                 }
             }
-            .onChange(of: selectedUnitRaw) { _, _ in
+            .platformOnChange(of: selectedUnitRaw) { _ in
                 WidgetCenter.shared.reloadAllTimelines()
             }
-            .onChange(of: birthDateTimestamp) { _, _ in
+            .platformOnChange(of: birthDateTimestamp) { _ in
                 WidgetCenter.shared.reloadAllTimelines()
             }
-            .onChange(of: lifeExpectancyYears) { _, _ in
+            .platformOnChange(of: lifeExpectancyYears) { _ in
                 WidgetCenter.shared.reloadAllTimelines()
             }
-            .fullScreenCover(isPresented: $showOnboarding) {
+            .platformModal(isPresented: $showOnboarding) {
                 OnboardingView(
                     birthDateTimestamp: $birthDateTimestamp,
                     selectedUnitRaw: $selectedUnitRaw,
@@ -365,12 +375,12 @@ struct ContentView: View {
                     }
                 )
             }
-            .fullScreenCover(
+            .platformModal(
                 isPresented: Binding(get: { shouldShowLifetimePaywall }, set: { _ in })
             ) {
                 lifetimePaywallView(allowDismiss: false)
             }
-            .fullScreenCover(isPresented: $showLifetimePaywallManually) {
+            .platformModal(isPresented: $showLifetimePaywallManually) {
                 lifetimePaywallView(allowDismiss: true)
             }
             .alert(
@@ -1100,7 +1110,6 @@ struct ContentView: View {
         let rows = dimensions.rows
         let columns = dimensions.columns
         let cellCount = rows * columns
-        let unitsPerCell = 1
         let totalWholeUnits = max(1, Int(totalUnits.rounded(.down)))
         let maxStart = max(0, totalWholeUnits - cellCount)
         let currentIndexInWindow: Int
@@ -1638,11 +1647,10 @@ struct ContentView: View {
                 }
                 .scrollIndicators(.hidden)
             }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbarBackground(.hidden, for: .navigationBar)
-            .toolbarColorScheme(.dark, for: .navigationBar)
+            .platformNavigationChrome()
             .environment(\.colorScheme, .dark)
             .toolbar {
+#if os(iOS)
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") {
                         showSettings = false
@@ -1652,6 +1660,17 @@ struct ContentView: View {
                     )
                     .foregroundStyle(.white)
                 }
+#else
+                ToolbarItem {
+                    Button("Done") {
+                        showSettings = false
+                    }
+                    .font(
+                        .system(size: 17, weight: .semibold, design: selectedTypography.bodyDesign)
+                    )
+                    .foregroundStyle(.white)
+                }
+#endif
             }
         }
     }
@@ -1707,9 +1726,7 @@ struct ContentView: View {
                 .padding(20)
             }
         }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbarBackground(.hidden, for: .navigationBar)
-        .toolbarColorScheme(.dark, for: .navigationBar)
+        .platformNavigationChrome()
         .environment(\.colorScheme, .dark)
     }
 
@@ -1884,7 +1901,9 @@ struct ContentView: View {
 
     private func performSelectionHaptic() {
         guard hapticsEnabled else { return }
+#if canImport(UIKit)
         UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+#endif
     }
 
     private func initializeTrialIfNeeded() {
@@ -1966,6 +1985,7 @@ struct ContentView: View {
 
     private func applyAppIcon(from oldValue: String, to newValue: String) {
         guard oldValue != newValue else { return }
+#if canImport(UIKit)
         guard UIApplication.shared.supportsAlternateIcons else {
             iconErrorMessage = "This device does not support alternate app icons."
             appIconChoiceRaw = oldValue
@@ -1986,6 +2006,10 @@ struct ContentView: View {
                 }
             }
         }
+#else
+        iconErrorMessage = "Alternate app icons are only available on iOS."
+        appIconChoiceRaw = oldValue
+#endif
     }
 }
 
@@ -2069,6 +2093,46 @@ extension AnyTransition {
 }
 
 extension View {
+    @ViewBuilder
+    fileprivate func platformOnChange<Value: Equatable>(
+        of value: Value,
+        perform action: @escaping (Value) -> Void
+    ) -> some View {
+        if #available(iOS 17.0, macOS 14.0, *) {
+            self.onChange(of: value) { _, newValue in
+                action(newValue)
+            }
+        } else {
+            self.onChange(of: value) { newValue in
+                action(newValue)
+            }
+        }
+    }
+
+    @ViewBuilder
+    fileprivate func platformModal<Content: View>(
+        isPresented: Binding<Bool>,
+        @ViewBuilder content: @escaping () -> Content
+    ) -> some View {
+#if os(iOS)
+        self.fullScreenCover(isPresented: isPresented, content: content)
+#else
+        self.sheet(isPresented: isPresented, content: content)
+#endif
+    }
+
+    @ViewBuilder
+    fileprivate func platformNavigationChrome() -> some View {
+#if os(iOS)
+        self
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+#else
+        self
+#endif
+    }
+
     fileprivate func settingsCardStyle() -> some View {
         self
             .background(
@@ -2081,6 +2145,8 @@ extension View {
     }
 }
 
+#if os(iOS)
 #Preview {
     ContentView()
 }
+#endif

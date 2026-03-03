@@ -40,6 +40,25 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "75A9E13F2F4DB4980016AE7B"
+            BuildableName = "LifeClock.app"
+            BlueprintName = "LifeClock"
+            ReferencedContainer = "container:LifeClock.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "75A9E13F2F4DB4980016AE7B"
+            BuildableName = "LifeClock.app"
+            BlueprintName = "LifeClock"
+            ReferencedContainer = "container:LifeClock.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -47,6 +66,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "75A9E13F2F4DB4980016AE7B"
+            BuildableName = "LifeClock.app"
+            BlueprintName = "LifeClock"
+            ReferencedContainer = "container:LifeClock.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

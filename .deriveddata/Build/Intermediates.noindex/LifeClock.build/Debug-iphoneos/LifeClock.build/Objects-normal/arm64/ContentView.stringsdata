@@ -6,8 +6,16 @@
         "comment": "",
         "key": "Icon Update Failed",
         "location": {
-          "startingColumn": 20,
-          "startingLine": 284
+          "startingColumn": 17,
+          "startingLine": 387
+        }
+      },
+      {
+        "comment": "",
+        "key": "Purchase Notice",
+        "location": {
+          "startingColumn": 17,
+          "startingLine": 402
         }
       },
       {
@@ -15,7 +23,71 @@
         "key": "OK",
         "location": {
           "startingColumn": 24,
-          "startingLine": 292
+          "startingLine": 397
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 412
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock LifeClock",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 506
+        }
+      },
+      {
+        "comment": "",
+        "key": "One purchase. Forever yours.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 513
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock Lifetime",
+        "location": {
+          "startingColumn": 33,
+          "startingLine": 575
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock Lifetime — %@",
+        "location": {
+          "startingColumn": 55,
+          "startingLine": 575
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock Lifetime",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 576
+        }
+      },
+      {
+        "comment": "",
+        "key": "One-time purchase • No subscription",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 605
+        }
+      },
+      {
+        "comment": "",
+        "key": "Restore Purchases",
+        "location": {
+          "startingColumn": 34,
+          "startingLine": 625
         }
       },
       {
@@ -23,15 +95,15 @@
         "key": "LIFE CLOCK",
         "location": {
           "startingColumn": 38,
-          "startingLine": 339
+          "startingLine": 712
         }
       },
       {
         "comment": "",
         "key": "Since %@",
         "location": {
-          "startingColumn": 38,
-          "startingLine": 376
+          "startingColumn": 37,
+          "startingLine": 784
         }
       },
       {
@@ -39,7 +111,7 @@
         "key": "Your Time",
         "location": {
           "startingColumn": 22,
-          "startingLine": 427
+          "startingLine": 880
         }
       },
       {
@@ -47,23 +119,15 @@
         "key": "Every second counts.",
         "location": {
           "startingColumn": 22,
-          "startingLine": 431
+          "startingLine": 885
         }
       },
       {
         "comment": "",
         "key": "TIME LEFT (EST.)",
         "location": {
-          "startingColumn": 18,
-          "startingLine": 457
-        }
-      },
-      {
-        "comment": "",
-        "key": "≈ %@ %@ left",
-        "location": {
           "startingColumn": 22,
-          "startingLine": 485
+          "startingLine": 927
         }
       },
       {
@@ -71,7 +135,7 @@
         "key": "Remaining life trend",
         "location": {
           "startingColumn": 29,
-          "startingLine": 582
+          "startingLine": 1078
         }
       },
       {
@@ -79,7 +143,7 @@
         "key": "%lld %@ left",
         "location": {
           "startingColumn": 29,
-          "startingLine": 583
+          "startingLine": 1079
         }
       },
       {
@@ -87,7 +151,7 @@
         "key": "Now",
         "location": {
           "startingColumn": 22,
-          "startingLine": 565
+          "startingLine": 1057
         }
       },
       {
@@ -95,7 +159,7 @@
         "key": "End",
         "location": {
           "startingColumn": 22,
-          "startingLine": 571
+          "startingLine": 1065
         }
       },
       {
@@ -103,7 +167,7 @@
         "key": "Each cell = 1 %@ • rolling window",
         "location": {
           "startingColumn": 18,
-          "startingLine": 640
+          "startingLine": 1164
         }
       },
       {
@@ -111,7 +175,7 @@
         "key": "LIFE GRID",
         "location": {
           "startingColumn": 26,
-          "startingLine": 618
+          "startingLine": 1133
         }
       },
       {
@@ -119,7 +183,7 @@
         "key": "%@ left",
         "location": {
           "startingColumn": 30,
-          "startingLine": 632
+          "startingLine": 1152
         }
       },
       {
@@ -127,7 +191,7 @@
         "key": "Past",
         "location": {
           "startingColumn": 23,
-          "startingLine": 667
+          "startingLine": 1197
         }
       },
       {
@@ -135,7 +199,7 @@
         "key": "Current",
         "location": {
           "startingColumn": 23,
-          "startingLine": 669
+          "startingLine": 1199
         }
       },
       {
@@ -143,31 +207,15 @@
         "key": "Future",
         "location": {
           "startingColumn": 23,
-          "startingLine": 671
+          "startingLine": 1201
         }
       },
       {
         "comment": "",
         "key": "NEXT MILESTONE",
         "location": {
-          "startingColumn": 18,
-          "startingLine": 726
-        }
-      },
-      {
-        "comment": "",
-        "key": "≈ %lldy %lldm left",
-        "location": {
-          "startingColumn": 18,
-          "startingLine": 740
-        }
-      },
-      {
-        "comment": "",
-        "key": "Expected around %@",
-        "location": {
-          "startingColumn": 18,
-          "startingLine": 744
+          "startingColumn": 22,
+          "startingLine": 1271
         }
       },
       {
@@ -175,7 +223,7 @@
         "key": "%lld%%",
         "location": {
           "startingColumn": 22,
-          "startingLine": 732
+          "startingLine": 1284
         }
       },
       {
@@ -183,7 +231,47 @@
         "key": "of lifetime",
         "location": {
           "startingColumn": 22,
-          "startingLine": 735
+          "startingLine": 1288
+        }
+      },
+      {
+        "comment": "",
+        "key": "≈ %lldy %lldm left • %@",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 1300
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 1325
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld%%",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 1331
+        }
+      },
+      {
+        "comment": "",
+        "key": "Go Premium",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 1431
+        }
+      },
+      {
+        "comment": "",
+        "key": "Unlock Lifetime Access",
+        "location": {
+          "startingColumn": 46,
+          "startingLine": 1439
         }
       },
       {
@@ -191,7 +279,7 @@
         "key": "Birth date",
         "location": {
           "startingColumn": 38,
-          "startingLine": 836
+          "startingLine": 1481
         }
       },
       {
@@ -199,7 +287,7 @@
         "key": "",
         "location": {
           "startingColumn": 37,
-          "startingLine": 840
+          "startingLine": 1485
         }
       },
       {
@@ -207,7 +295,7 @@
         "key": "Life expectancy",
         "location": {
           "startingColumn": 42,
-          "startingLine": 858
+          "startingLine": 1506
         }
       },
       {
@@ -215,15 +303,15 @@
         "key": "%lld years",
         "location": {
           "startingColumn": 42,
-          "startingLine": 861
+          "startingLine": 1509
         }
       },
       {
         "comment": "",
-        "key": "Tip: Add alternate icon assets named AppIconPulse and AppIconHorizon to fully enable icon switching.",
+        "key": "Color theme",
         "location": {
-          "startingColumn": 34,
-          "startingLine": 909
+          "startingColumn": 38,
+          "startingLine": 1523
         }
       },
       {
@@ -231,7 +319,7 @@
         "key": "Haptics",
         "location": {
           "startingColumn": 34,
-          "startingLine": 919
+          "startingLine": 1601
         }
       },
       {
@@ -239,7 +327,7 @@
         "key": "Run onboarding again",
         "location": {
           "startingColumn": 42,
-          "startingLine": 934
+          "startingLine": 1617
         }
       },
       {
@@ -247,7 +335,7 @@
         "key": "Legal & Policies",
         "location": {
           "startingColumn": 42,
-          "startingLine": 950
+          "startingLine": 1633
         }
       },
       {
@@ -255,7 +343,7 @@
         "key": "Done",
         "location": {
           "startingColumn": 28,
-          "startingLine": 973
+          "startingLine": 1655
         }
       },
       {
@@ -263,7 +351,7 @@
         "key": "Last updated: February 24, 2026",
         "location": {
           "startingColumn": 26,
-          "startingLine": 1019
+          "startingLine": 1721
         }
       },
       {
@@ -271,23 +359,23 @@
         "key": "Policy Links",
         "location": {
           "startingColumn": 30,
-          "startingLine": 1007
+          "startingLine": 1705
         }
       },
       {
         "comment": "",
         "key": "Privacy Policy",
         "location": {
-          "startingColumn": 30,
-          "startingLine": 1011
+          "startingColumn": 29,
+          "startingLine": 1710
         }
       },
       {
         "comment": "",
         "key": "Terms & Conditions",
         "location": {
-          "startingColumn": 30,
-          "startingLine": 1012
+          "startingColumn": 29,
+          "startingLine": 1713
         }
       },
       {
@@ -295,63 +383,15 @@
         "key": "Support",
         "location": {
           "startingColumn": 30,
-          "startingLine": 1013
+          "startingLine": 1715
         }
       },
       {
         "comment": "",
-        "key": "Welcome to LifeClock",
+        "key": "lived",
         "location": {
-          "startingColumn": 26,
-          "startingLine": 1242
-        }
-      },
-      {
-        "comment": "",
-        "key": "Set up your profile in less than a minute.",
-        "location": {
-          "startingColumn": 26,
-          "startingLine": 1246
-        }
-      },
-      {
-        "comment": "",
-        "key": "Birth date",
-        "location": {
-          "startingColumn": 29,
-          "startingLine": 1252
-        }
-      },
-      {
-        "comment": "",
-        "key": "Expected lifespan",
-        "location": {
-          "startingColumn": 38,
-          "startingLine": 1263
-        }
-      },
-      {
-        "comment": "",
-        "key": "%lld years",
-        "location": {
-          "startingColumn": 38,
-          "startingLine": 1266
-        }
-      },
-      {
-        "comment": "",
-        "key": "Default unit",
-        "location": {
-          "startingColumn": 34,
-          "startingLine": 1276
-        }
-      },
-      {
-        "comment": "",
-        "key": "Start LifeClock",
-        "location": {
-          "startingColumn": 30,
-          "startingLine": 1302
+          "startingColumn": 22,
+          "startingLine": 2057
         }
       }
     ]

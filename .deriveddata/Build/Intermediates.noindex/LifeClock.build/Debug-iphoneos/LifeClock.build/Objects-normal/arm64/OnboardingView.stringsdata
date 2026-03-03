@@ -1,0 +1,96 @@
+{
+  "source": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/OnboardingView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "You are %@",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 364
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 413
+        }
+      },
+      {
+        "comment": "",
+        "key": "years",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 421
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avg. life expectancy (%@): ≈ %lld years",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 455
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 438
+        }
+      },
+      {
+        "comment": "",
+        "key": "Preview",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 565
+        }
+      },
+      {
+        "comment": "",
+        "key": "Start LifeClock",
+        "location": {
+          "startingColumn": 58,
+          "startingLine": 651
+        }
+      },
+      {
+        "comment": "",
+        "key": "Continue",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 651
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 699
+        }
+      },
+      {
+        "comment": "",
+        "key": "Pick your birthday",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 693
+        }
+      },
+      {
+        "comment": "",
+        "key": "Done",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 711
+        }
+      }
+    ]
+  },
+  "version": 1
+}
