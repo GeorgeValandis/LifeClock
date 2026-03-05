@@ -1,0 +1,11 @@
+Target dependency graph (5 targets)
+Target 'LifeClockMac' in project 'LifeClock'
+➜ Explicit dependency on target 'LifeClockMacWidgetExtension' in project 'LifeClock'
+➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+Target 'RevenueCat' in project 'RevenueCat'
+➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+➜ Explicit dependency on target 'RevenueCat_RevenueCat' in project 'RevenueCat'
+Target 'RevenueCat' in project 'RevenueCat'
+➜ Explicit dependency on target 'RevenueCat_RevenueCat' in project 'RevenueCat'
+Target 'RevenueCat_RevenueCat' in project 'RevenueCat' (no dependencies)
+Target 'LifeClockMacWidgetExtension' in project 'LifeClock' (no dependencies)

@@ -1,0 +1,170 @@
+{
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Operations/NetworkOperation.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/NetworkOperation.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/NetworkOperation.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/NetworkOperation.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/NetworkOperation.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/NetworkOperation.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Operations/PostAdServicesTokenOperation.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAdServicesTokenOperation.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAdServicesTokenOperation.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAdServicesTokenOperation.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAdServicesTokenOperation.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAdServicesTokenOperation.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Operations/PostAttributionDataOperation.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAttributionDataOperation.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAttributionDataOperation.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAttributionDataOperation.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAttributionDataOperation.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostAttributionDataOperation.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Operations/PostIsPurchaseAllowedByRestoreBehaviorOperation.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostIsPurchaseAllowedByRestoreBehaviorOperation.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostIsPurchaseAllowedByRestoreBehaviorOperation.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostIsPurchaseAllowedByRestoreBehaviorOperation.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostIsPurchaseAllowedByRestoreBehaviorOperation.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostIsPurchaseAllowedByRestoreBehaviorOperation.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Operations/PostOfferForSigningOperation.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferForSigningOperation.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferForSigningOperation.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferForSigningOperation.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferForSigningOperation.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferForSigningOperation.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Operations/PostReceiptDataOperation.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostReceiptDataOperation.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostReceiptDataOperation.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostReceiptDataOperation.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostReceiptDataOperation.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostReceiptDataOperation.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Operations/PostRedeemWebPurchaseOperation.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostRedeemWebPurchaseOperation.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostRedeemWebPurchaseOperation.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostRedeemWebPurchaseOperation.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostRedeemWebPurchaseOperation.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostRedeemWebPurchaseOperation.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Operations/PostSubscriberAttributesOperation.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostSubscriberAttributesOperation.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostSubscriberAttributesOperation.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostSubscriberAttributesOperation.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostSubscriberAttributesOperation.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostSubscriberAttributesOperation.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/RedeemWebPurchaseAPI.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/RedeemWebPurchaseAPI.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/RedeemWebPurchaseAPI.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/RedeemWebPurchaseAPI.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/RedeemWebPurchaseAPI.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/RedeemWebPurchaseAPI.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/CustomerCenterConfigResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerCenterConfigResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerCenterConfigResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerCenterConfigResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerCenterConfigResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerCenterConfigResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/CustomerInfoResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerInfoResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerInfoResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerInfoResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerInfoResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/CustomerInfoResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/GetIntroEligibilityResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/GetIntroEligibilityResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/GetIntroEligibilityResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/GetIntroEligibilityResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/GetIntroEligibilityResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/GetIntroEligibilityResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/HealthReportAvailabilityResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportAvailabilityResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportAvailabilityResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportAvailabilityResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportAvailabilityResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportAvailabilityResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/HealthReportResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/HealthReportResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/IsPurchaseAllowedByRestoreBehaviorResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/IsPurchaseAllowedByRestoreBehaviorResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/IsPurchaseAllowedByRestoreBehaviorResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/IsPurchaseAllowedByRestoreBehaviorResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/IsPurchaseAllowedByRestoreBehaviorResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/IsPurchaseAllowedByRestoreBehaviorResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/OfferingsResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/OfferingsResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/OfferingsResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/OfferingsResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/OfferingsResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/OfferingsResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/PostOfferResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PostOfferResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/ProductEntitlementMappingResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/ProductEntitlementMappingResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/ProductEntitlementMappingResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/ProductEntitlementMappingResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/ProductEntitlementMappingResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/ProductEntitlementMappingResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/RevenueCatUI/PaywallComponentsData.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PaywallComponentsData.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PaywallComponentsData.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PaywallComponentsData.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PaywallComponentsData.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/PaywallComponentsData.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/RevenueCatUI/UIConfig.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/UIConfig.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/UIConfig.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/UIConfig.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/UIConfig.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/UIConfig.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/VirtualCurrenciesResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/WebBillingProductsResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebBillingProductsResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebBillingProductsResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebBillingProductsResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebBillingProductsResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebBillingProductsResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/Responses/WebOfferingProductsResponse.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebOfferingProductsResponse.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebOfferingProductsResponse.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebOfferingProductsResponse.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebOfferingProductsResponse.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/WebOfferingProductsResponse.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/SourcePackages/checkouts/purchases-ios-spm/Sources/Networking/VirtualCurrenciesAPI.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesAPI.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesAPI.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesAPI.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesAPI.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/RevenueCat.build/Debug/RevenueCat.build/Objects-normal/x86_64/VirtualCurrenciesAPI.swiftdeps"
+  }
+}

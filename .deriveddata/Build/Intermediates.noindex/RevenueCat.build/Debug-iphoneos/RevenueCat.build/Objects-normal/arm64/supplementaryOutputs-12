@@ -1,0 +1,170 @@
+{
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Components/PaywallStickyFooterComponent.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallStickyFooterComponent.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallStickyFooterComponent.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallStickyFooterComponent.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallStickyFooterComponent.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallStickyFooterComponent.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Components/PaywallTabsComponent.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTabsComponent.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTabsComponent.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTabsComponent.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTabsComponent.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTabsComponent.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Components/PaywallTextComponent.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTextComponent.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTextComponent.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTextComponent.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTextComponent.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTextComponent.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Components/PaywallTimelineComponent.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTimelineComponent.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTimelineComponent.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTimelineComponent.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTimelineComponent.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTimelineComponent.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Components/PaywallV2CacheWarming.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallV2CacheWarming.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallV2CacheWarming.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallV2CacheWarming.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallV2CacheWarming.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallV2CacheWarming.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Components/PaywallVideoComponent.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallVideoComponent.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallVideoComponent.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallVideoComponent.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallVideoComponent.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallVideoComponent.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Components/Transitions/PaywallAnimation.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallAnimation.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallAnimation.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallAnimation.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallAnimation.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallAnimation.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Components/Transitions/PaywallTransition.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTransition.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTransition.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTransition.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTransition.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallTransition.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Events/Networking/EventsRequest+Paywall.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EventsRequest+Paywall.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EventsRequest+Paywall.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EventsRequest+Paywall.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EventsRequest+Paywall.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EventsRequest+Paywall.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Events/PaywallEvent.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallEvent.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallEvent.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallEvent.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallEvent.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallEvent.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/ExitOffer.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/ExitOffer.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/ExitOffer.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/ExitOffer.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/ExitOffer.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/ExitOffer.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/Locale+Comparison.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Locale+Comparison.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Locale+Comparison.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Locale+Comparison.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Locale+Comparison.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Locale+Comparison.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/PaywallCacheWarming.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallCacheWarming.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallCacheWarming.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallCacheWarming.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallCacheWarming.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallCacheWarming.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/PaywallColor.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallColor.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallColor.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallColor.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallColor.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallColor.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/PaywallData+Localization.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData+Localization.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData+Localization.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData+Localization.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData+Localization.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData+Localization.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/PaywallData.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallData.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/PaywallFontManagerType.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallFontManagerType.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallFontManagerType.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallFontManagerType.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallFontManagerType.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallFontManagerType.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/PaywallViewMode.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallViewMode.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallViewMode.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallViewMode.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallViewMode.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/PaywallViewMode.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Paywalls/SubscriptionHistoryTracker.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/SubscriptionHistoryTracker.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/SubscriptionHistoryTracker.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/SubscriptionHistoryTracker.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/SubscriptionHistoryTracker.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/SubscriptionHistoryTracker.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Purchasing/CachingProductsManager.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingProductsManager.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingProductsManager.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingProductsManager.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingProductsManager.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingProductsManager.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Purchasing/CachingTrialOrIntroPriceEligibilityChecker.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingTrialOrIntroPriceEligibilityChecker.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingTrialOrIntroPriceEligibilityChecker.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingTrialOrIntroPriceEligibilityChecker.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingTrialOrIntroPriceEligibilityChecker.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/CachingTrialOrIntroPriceEligibilityChecker.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Purchasing/Configuration.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Configuration.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Configuration.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Configuration.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Configuration.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/Configuration.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Purchasing/EntitlementInfo.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfo.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfo.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfo.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfo.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfo.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/SourcePackages/checkouts/purchases-ios-spm/Sources/Purchasing/EntitlementInfos.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfos.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfos.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfos.dia",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfos.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata/Build/Intermediates.noindex/RevenueCat.build/Debug-iphoneos/RevenueCat.build/Objects-normal/arm64/EntitlementInfos.swiftdeps"
+  }
+}

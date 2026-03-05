@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0D942447A54B6267580FE7A9 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA8696BCD4A214E0E466081C /* SwiftUI.framework */; };
+		A1B2C3D4E5F60718293A4B5C /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F60718293A4B5E /* RevenueCat */; };
+		A1B2C3D4E5F60718293A4B5D /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F60718293A4B5F /* RevenueCat */; };
 		25079AA19F717710D8E9AA41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C7C2E73C8A91E853E3AE89D /* Assets.xcassets */; };
 		41AFCF305C29E679B11C148B /* AppIntents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357B0A79BA0B978F20746EA4 /* AppIntents.framework */; };
 		449B145F6A9337A25AED574E /* LifeClockWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 58EFADCA0783FCAEE9694A95 /* LifeClockWidgetExtension.appex */; };
@@ -142,6 +144,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B2C3D4E5F60718293A4B5D /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B2C3D4E5F60718293A4B5C /* RevenueCat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,6 +315,9 @@
 				75A9E1422F4DB4980016AE7B /* LifeClock */,
 			);
 			name = LifeClock;
+			packageProductDependencies = (
+				A1B2C3D4E5F60718293A4B5E /* RevenueCat */,
+			);
 			productName = LifeClock;
 			productReference = 75A9E1402F4DB4980016AE7B /* LifeClock.app */;
 			productType = "com.apple.product-type.application";
@@ -389,6 +396,9 @@
 				B01EE9CC282B59BB813F4748 /* PBXTargetDependency */,
 			);
 			name = LifeClockMac;
+			packageProductDependencies = (
+				A1B2C3D4E5F60718293A4B5F /* RevenueCat */,
+			);
 			productName = LifeClockMac;
 			productReference = 47A366B4B1B556C11BB0149C /* LifeClockMac.app */;
 			productType = "com.apple.product-type.application";
@@ -425,6 +435,9 @@
 			);
 			mainGroup = 75A9E1372F4DB4980016AE7B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A1B2C3D4E5F60718293A4B60 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 75A9E1412F4DB4980016AE7B /* Products */;
 			projectDirPath = "";
@@ -562,6 +575,17 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		A1B2C3D4E5F60718293A4B60 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCBuildConfiguration section */
 		0BDA24E0A9195171B5823D91 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -575,6 +599,10 @@
 				DEVELOPMENT_TEAM = LPPZFWPAN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_REVENUECAT_ENTITLEMENT_ID = premium;
+				INFOPLIST_KEY_REVENUECAT_LIFETIME_PRODUCT_ID = com.GA.LifeClock.lifetime;
+				INFOPLIST_KEY_REVENUECAT_OFFERING_ID = default;
+				INFOPLIST_KEY_REVENUECAT_PUBLIC_SDK_KEY = "";
 				IPHONEOS_DEPLOYMENT_TARGET = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -630,6 +658,10 @@
 				DEVELOPMENT_TEAM = LPPZFWPAN7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_REVENUECAT_ENTITLEMENT_ID = premium;
+				INFOPLIST_KEY_REVENUECAT_LIFETIME_PRODUCT_ID = com.GA.LifeClock.lifetime;
+				INFOPLIST_KEY_REVENUECAT_OFFERING_ID = default;
+				INFOPLIST_KEY_REVENUECAT_PUBLIC_SDK_KEY = "";
 				IPHONEOS_DEPLOYMENT_TARGET = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -786,6 +818,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_REVENUECAT_ENTITLEMENT_ID = premium;
+				INFOPLIST_KEY_REVENUECAT_LIFETIME_PRODUCT_ID = com.GA.LifeClock.lifetime;
+				INFOPLIST_KEY_REVENUECAT_OFFERING_ID = default;
+				INFOPLIST_KEY_REVENUECAT_PUBLIC_SDK_KEY = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -819,6 +855,10 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_REVENUECAT_ENTITLEMENT_ID = premium;
+				INFOPLIST_KEY_REVENUECAT_LIFETIME_PRODUCT_ID = com.GA.LifeClock.lifetime;
+				INFOPLIST_KEY_REVENUECAT_OFFERING_ID = default;
+				INFOPLIST_KEY_REVENUECAT_PUBLIC_SDK_KEY = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -986,6 +1026,19 @@
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1B2C3D4E5F60718293A4B5E /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C3D4E5F60718293A4B60 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+		A1B2C3D4E5F60718293A4B5F /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C3D4E5F60718293A4B60 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCConfigurationList section */
 		34050CDF235043432C7B9973 /* Build configuration list for PBXNativeTarget "LifeClockMac" */ = {

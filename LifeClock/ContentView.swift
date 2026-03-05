@@ -1,4 +1,4 @@
-import StoreKit
+import RevenueCat
 import SwiftUI
 import WidgetKit
 
@@ -240,14 +240,39 @@ struct ContentView: View {
     @State private var pendingOnboardingRestart = false
     @State private var showLifetimePaywallManually = false
     @State private var pendingManualPaywallPresentation = false
-    @State private var lifetimeProduct: Product?
+    @State private var lifetimePackage: Package?
     @State private var isPurchasingLifetime = false
     @State private var isRestoringPurchases = false
     @State private var paywallMessage: String?
     @Namespace private var unitChipSelectionAnimation
 
-    private let lifetimeProductID = "com.GA.LifeClock.lifetime"
     private let trialDuration: TimeInterval = 3 * 24 * 60 * 60
+    private let defaultLifetimeProductID = "com.GA.LifeClock.lifetime"
+    private let defaultRevenueCatEntitlementID = "premium"
+    private let defaultRevenueCatOfferingID = "default"
+
+    private var revenueCatPublicSDKKey: String {
+        bundleStringValue(for: "REVENUECAT_PUBLIC_SDK_KEY", fallback: "")
+    }
+
+    private var hasRevenueCatConfigured: Bool {
+        !revenueCatPublicSDKKey.isEmpty
+    }
+
+    private var revenueCatEntitlementID: String {
+        bundleStringValue(
+            for: "REVENUECAT_ENTITLEMENT_ID",
+            fallback: defaultRevenueCatEntitlementID
+        )
+    }
+
+    private var revenueCatOfferingID: String {
+        bundleStringValue(for: "REVENUECAT_OFFERING_ID", fallback: defaultRevenueCatOfferingID)
+    }
+
+    private var lifetimeProductID: String {
+        bundleStringValue(for: "REVENUECAT_LIFETIME_PRODUCT_ID", fallback: defaultLifetimeProductID)
+    }
 
     private var greeting: String {
         let hour = Calendar.current.component(.hour, from: Date())
@@ -562,7 +587,9 @@ struct ContentView: View {
                                     .tint(.black)
                             }
                             Text(
-                                lifetimeProduct.map { "Unlock Lifetime — \($0.displayPrice)" }
+                                lifetimePackage.map {
+                                    "Unlock Lifetime — \($0.storeProduct.localizedPriceString)"
+                                }
                                     ?? "Unlock Lifetime"
                             )
                             .font(
@@ -2141,32 +2168,69 @@ struct ContentView: View {
         trialStartTimestamp = Date().timeIntervalSince1970
     }
 
+    private func bundleStringValue(for key: String, fallback: String) -> String {
+        guard
+            let raw = Bundle.main.object(forInfoDictionaryKey: key) as? String
+        else {
+            return fallback
+        }
+
+        let trimmed = raw.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? fallback : trimmed
+    }
+
     private func preloadLifetimeProduct() async {
-        guard lifetimeProduct == nil else { return }
+        guard hasRevenueCatConfigured else {
+            paywallMessage = "RevenueCat is not configured yet. Please set REVENUECAT_PUBLIC_SDK_KEY."
+            return
+        }
+        guard lifetimePackage == nil else { return }
+
         do {
-            lifetimeProduct = try await Product.products(for: [lifetimeProductID]).first
+            let offerings = try await Purchases.shared.offerings()
+            let selectedOffering = offerings.all[revenueCatOfferingID] ?? offerings.current
+            guard let selectedOffering else {
+                paywallMessage = "No offering found in RevenueCat."
+                return
+            }
+
+            if let package = selectedOffering.availablePackages.first(where: {
+                $0.storeProduct.productIdentifier == lifetimeProductID
+            }) {
+                lifetimePackage = package
+            } else if let package = selectedOffering.lifetime {
+                lifetimePackage = package
+            } else {
+                paywallMessage = "Lifetime package unavailable in RevenueCat offering."
+            }
         } catch {
             paywallMessage = "Could not load purchase data. Please try again."
         }
     }
 
     private func refreshLifetimeEntitlement() async {
-        for await result in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = result else { continue }
-            if transaction.productID == lifetimeProductID {
+        guard hasRevenueCatConfigured else { return }
+
+        do {
+            let customerInfo = try await Purchases.shared.customerInfo()
+            if customerInfo.entitlements[revenueCatEntitlementID]?.isActive == true {
                 lifetimeUnlocked = true
-                await transaction.finish()
-                return
             }
+        } catch {
+            paywallMessage = "Could not refresh purchase status."
         }
     }
 
     private func purchaseLifetime() async {
+        guard hasRevenueCatConfigured else {
+            paywallMessage = "RevenueCat is not configured yet. Please set REVENUECAT_PUBLIC_SDK_KEY."
+            return
+        }
         guard !isPurchasingLifetime else { return }
-        guard let product = lifetimeProduct else {
+        guard let package = lifetimePackage else {
             await preloadLifetimeProduct()
-            if lifetimeProduct == nil {
-                paywallMessage = "Lifetime product unavailable."
+            if lifetimePackage == nil {
+                paywallMessage = "Lifetime package unavailable."
             }
             return
         }
@@ -2175,37 +2239,38 @@ struct ContentView: View {
         defer { isPurchasingLifetime = false }
 
         do {
-            let result = try await product.purchase()
-            switch result {
-            case .success(let verification):
-                switch verification {
-                case .verified(let transaction):
-                    lifetimeUnlocked = true
-                    await transaction.finish()
-                case .unverified:
-                    paywallMessage = "Purchase could not be verified."
-                }
-            case .userCancelled:
-                break
-            case .pending:
-                paywallMessage = "Purchase is pending approval."
-            @unknown default:
-                paywallMessage = "Unknown purchase result."
+            let result = try await Purchases.shared.purchase(package: package)
+            if result.customerInfo.entitlements[revenueCatEntitlementID]?.isActive == true {
+                lifetimeUnlocked = true
+                paywallMessage = nil
+            } else if !result.userCancelled {
+                paywallMessage = "Purchase completed but entitlement is not active yet."
             }
         } catch {
+            if let revenueCatError = error as? RevenueCat.ErrorCode,
+                revenueCatError == .purchaseCancelledError
+            {
+                return
+            }
             paywallMessage = "Purchase failed. Please try again."
         }
     }
 
     private func restorePurchases() async {
+        guard hasRevenueCatConfigured else {
+            paywallMessage = "RevenueCat is not configured yet. Please set REVENUECAT_PUBLIC_SDK_KEY."
+            return
+        }
         guard !isRestoringPurchases else { return }
         isRestoringPurchases = true
         defer { isRestoringPurchases = false }
 
         do {
-            try await AppStore.sync()
-            await refreshLifetimeEntitlement()
-            if !lifetimeUnlocked {
+            let customerInfo = try await Purchases.shared.restorePurchases()
+            if customerInfo.entitlements[revenueCatEntitlementID]?.isActive == true {
+                lifetimeUnlocked = true
+                paywallMessage = nil
+            } else {
                 paywallMessage = "No lifetime purchase found for this Apple ID."
             }
         } catch {

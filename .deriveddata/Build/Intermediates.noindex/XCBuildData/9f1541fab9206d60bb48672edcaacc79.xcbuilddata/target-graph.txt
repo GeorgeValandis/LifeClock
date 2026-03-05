@@ -1,0 +1,11 @@
+Target dependency graph (5 targets)
+Target 'LifeClock' in project 'LifeClock'
+➜ Explicit dependency on target 'LifeClockWidgetExtension' in project 'LifeClock'
+➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+Target 'RevenueCat' in project 'RevenueCat'
+➜ Explicit dependency on target 'RevenueCat' in project 'RevenueCat'
+➜ Explicit dependency on target 'RevenueCat_RevenueCat' in project 'RevenueCat'
+Target 'RevenueCat' in project 'RevenueCat'
+➜ Explicit dependency on target 'RevenueCat_RevenueCat' in project 'RevenueCat'
+Target 'RevenueCat_RevenueCat' in project 'RevenueCat' (no dependencies)
+Target 'LifeClockWidgetExtension' in project 'LifeClock' (no dependencies)

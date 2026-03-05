@@ -4,7 +4,7 @@
     "mangledTypeName": "24LifeClockWidgetExtension0cA4UnitO",
     "kind": "enum",
     "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-    "line": 7,
+    "line": 8,
     "conformances": [
       "Swift.Equatable",
       "Swift.Hashable",
@@ -123,7 +123,7 @@
         "isStatic": "false",
         "isComputed": "true",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 16,
+        "line": 17,
         "valueKind": "Runtime"
       },
       {
@@ -133,7 +133,7 @@
         "isStatic": "false",
         "isComputed": "true",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 28,
+        "line": 29,
         "valueKind": "Runtime"
       },
       {
@@ -203,7 +203,7 @@
         "isStatic": "true",
         "isComputed": "false",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 43,
+        "line": 44,
         "valueKind": "RawLiteral",
         "value": "Unit"
       },
@@ -214,7 +214,7 @@
         "isStatic": "true",
         "isComputed": "false",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 45,
+        "line": 46,
         "valueKind": "Dictionary",
         "value": [
           {
@@ -340,7 +340,7 @@
     "mangledTypeName": "24LifeClockWidgetExtension0A23GridConfigurationIntentV",
     "kind": "struct",
     "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-    "line": 77,
+    "line": 78,
     "conformances": [
       "AppIntents.WidgetConfigurationIntent",
       "AppIntents.AppIntent",
@@ -404,7 +404,7 @@
         "isStatic": "false",
         "isComputed": "false",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 82,
+        "line": 84,
         "valueKind": "InitCall",
         "value": {
           "type": "AppIntents.IntentParameter<LifeClockWidgetExtension.WidgetLifeUnit>",
@@ -461,7 +461,7 @@
         "isStatic": "false",
         "isComputed": "false",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 85,
+        "line": 87,
         "valueKind": "InitCall",
         "value": {
           "type": "AppIntents.IntentParameter<Foundation.Date>",
@@ -520,7 +520,7 @@
         "isStatic": "false",
         "isComputed": "false",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 88,
+        "line": 90,
         "valueKind": "InitCall",
         "value": {
           "type": "AppIntents.IntentParameter<Swift.Double>",
@@ -575,7 +575,7 @@
         "isStatic": "true",
         "isComputed": "false",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 78,
+        "line": 79,
         "valueKind": "RawLiteral",
         "value": "Life Grid"
       },
@@ -586,7 +586,7 @@
         "isStatic": "true",
         "isComputed": "false",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 79,
+        "line": 80,
         "valueKind": "RawLiteral",
         "value": "Show remaining life as a grid in your chosen unit."
       },
@@ -597,7 +597,7 @@
         "isStatic": "false",
         "isComputed": "true",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 82,
+        "line": 84,
         "valueKind": "InitCall",
         "value": {
           "type": "AppIntents.IntentParameter<LifeClockWidgetExtension.WidgetLifeUnit>",
@@ -650,7 +650,7 @@
           {
             "type": "AppIntents.IntentParameter",
             "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-            "line": 81,
+            "line": 83,
             "arguments": [
               {
                 "label": "title",
@@ -677,7 +677,7 @@
         "isStatic": "false",
         "isComputed": "true",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 82,
+        "line": 84,
         "valueKind": "Runtime"
       },
       {
@@ -687,7 +687,7 @@
         "isStatic": "false",
         "isComputed": "true",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 85,
+        "line": 87,
         "valueKind": "InitCall",
         "value": {
           "type": "AppIntents.IntentParameter<Foundation.Date>",
@@ -742,7 +742,7 @@
           {
             "type": "AppIntents.IntentParameter",
             "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-            "line": 84,
+            "line": 86,
             "arguments": [
               {
                 "label": "title",
@@ -777,7 +777,7 @@
         "isStatic": "false",
         "isComputed": "true",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 85,
+        "line": 87,
         "valueKind": "Runtime"
       },
       {
@@ -787,7 +787,7 @@
         "isStatic": "false",
         "isComputed": "true",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 88,
+        "line": 90,
         "valueKind": "InitCall",
         "value": {
           "type": "AppIntents.IntentParameter<Swift.Double>",
@@ -838,7 +838,7 @@
           {
             "type": "AppIntents.IntentParameter",
             "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-            "line": 87,
+            "line": 89,
             "arguments": [
               {
                 "label": "title",
@@ -863,7 +863,7 @@
         "isStatic": "false",
         "isComputed": "true",
         "file": "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockWidget/LifeClockWidget.swift",
-        "line": 88,
+        "line": 90,
         "valueKind": "Runtime"
       }
     ]

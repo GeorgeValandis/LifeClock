@@ -1,0 +1,64 @@
+{
+  "buildCommand" : {
+    "command" : "build",
+    "skipDependencies" : false,
+    "style" : "buildOnly"
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "e0ca2e4fa297f7d4a7c900e6bcfcbecf97e18ef01536976e04f047a7df86bc9b"
+    }
+  ],
+  "containerPath" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock.xcodeproj",
+  "continueBuildingAfterErrors" : false,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "activeArchitecture" : "undefined_arch",
+    "activeRunDestination" : {
+      "disableOnlyActiveArch" : true,
+      "platform" : "macosx",
+      "sdk" : "macosx26.0",
+      "sdkVariant" : "macos",
+      "supportedArchitectures" : [
+        "arm64",
+        "arm64e",
+        "x86_64",
+        "x86_64h"
+      ],
+      "targetArchitecture" : "undefined_arch"
+    },
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex",
+      "buildProductsPath" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Products",
+      "derivedDataPath" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac",
+      "indexDataStoreFolderPath" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Index.noindex/PrecompiledHeaders",
+      "pchPath" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/PrecompiledHeaders"
+    },
+    "configurationName" : "Debug",
+    "overrides" : {
+      "commandLine" : {
+        "table" : {
+          "CODE_SIGNING_ALLOWED" : "NO"
+        }
+      },
+      "synthesized" : {
+        "table" : {
+          "ACTION" : "build",
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "YES"
+        }
+      }
+    }
+  },
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : false,
+  "useImplicitDependencies" : true,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : true
+}

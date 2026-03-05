@@ -1,0 +1,59 @@
+{
+  "" : {
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMac-primary.dia",
+    "emit-module-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMac-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMac-primary-emit-module.dia",
+    "pch" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMac-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMac-primary.swiftdeps"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/DerivedSources/GeneratedAssetSymbols.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/GeneratedAssetSymbols.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/GeneratedAssetSymbols.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/GeneratedAssetSymbols.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/GeneratedAssetSymbols.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/GeneratedAssetSymbols.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/GeneratedAssetSymbols~partial.swiftmodule"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/ContentView.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/ContentView.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/ContentView.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/ContentView.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/ContentView.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/ContentView.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/ContentView.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/ContentView.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/ContentView~partial.swiftmodule"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/OnboardingView.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/OnboardingView.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/OnboardingView.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/OnboardingView.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/OnboardingView.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/OnboardingView.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/OnboardingView.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/OnboardingView.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/OnboardingView~partial.swiftmodule"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClock/SharedDefaults.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/SharedDefaults.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/SharedDefaults.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/SharedDefaults.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/SharedDefaults.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/SharedDefaults.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/SharedDefaults.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/SharedDefaults.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/SharedDefaults~partial.swiftmodule"
+  },
+  "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/LifeClockMac/LifeClockMacApp.swift" : {
+    "const-values" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMacApp.swiftconstvalues",
+    "dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMacApp.d",
+    "diagnostics" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMacApp.dia",
+    "index-unit-output-path" : "/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMacApp.o",
+    "llvm-bc" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMacApp.bc",
+    "object" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMacApp.o",
+    "swift-dependencies" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMacApp.swiftdeps",
+    "swiftmodule" : "/Users/georgiosavenidis/Documents/XCODE - Projekte/LifeClock/.deriveddata-mac/Build/Intermediates.noindex/LifeClock.build/Debug/LifeClockMac.build/Objects-normal/arm64/LifeClockMacApp~partial.swiftmodule"
+  }
+}
