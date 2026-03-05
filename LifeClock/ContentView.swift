@@ -859,24 +859,9 @@ struct ContentView: View {
                         .opacity(cardsAppeared ? 1 : 0)
                         .offset(y: cardsAppeared ? 0 : 36)
 
-                    HStack(spacing: 14) {
-                        statCard(
-                            title: "Days lived",
-                            value: groupedIntegerString(Int(elapsed / LifeUnit.days.seconds)),
-                            icon: "sun.max",
-                            accentColor: selectedTheme.topGlow
-                        )
-
-                        statCard(
-                            title: "Years left (est.)",
-                            value: groupedIntegerString(
-                                Int((remaining / LifeUnit.years.seconds).rounded())),
-                            icon: "hourglass.bottomhalf.filled",
-                            accentColor: selectedTheme.bottomGlow
-                        )
-                    }
-                    .opacity(cardsAppeared ? 1 : 0)
-                    .offset(y: cardsAppeared ? 0 : 40)
+                    lifePerspectiveStats(elapsed: elapsed, remaining: remaining)
+                        .opacity(cardsAppeared ? 1 : 0)
+                        .offset(y: cardsAppeared ? 0 : 40)
                 }
             }
             .padding(.horizontal, 20)
@@ -1865,6 +1850,142 @@ struct ContentView: View {
                 }
         }
         .buttonStyle(.plain)
+    }
+
+    private func lifePerspectiveStats(elapsed: TimeInterval, remaining: TimeInterval) -> some View {
+        let heartbeatsLived = Int(elapsed * 1.2)  // ~72 BPM = 1.2 per second
+        let sunrisesLeft = Int(remaining / LifeUnit.days.seconds)
+        let summersLeft = Int(remaining / LifeUnit.years.seconds)
+        let fullMoonsLeft = Int(remaining / (29.53 * 24 * 3600))  // ~29.53 days per lunar cycle
+        let weekendsLeft = Int(remaining / (7 * 24 * 3600))
+        let booksLeft = summersLeft * 12  // ~12 books per year average reader
+
+        return VStack(spacing: 14) {
+            HStack {
+                Text("LIFE IN PERSPECTIVE")
+                    .font(
+                        .system(size: 12, weight: .bold, design: selectedTypography.bodyDesign)
+                    )
+                    .tracking(1.5)
+                    .foregroundStyle(.white.opacity(0.76))
+                Spacer()
+                Image(systemName: "sparkles")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(selectedTheme.topGlow.opacity(0.8))
+                    .frame(width: 26, height: 26)
+                    .background(selectedTheme.topGlow.opacity(0.15), in: Circle())
+            }
+
+            LazyVGrid(
+                columns: [
+                    GridItem(.flexible(), spacing: 12),
+                    GridItem(.flexible(), spacing: 12),
+                ],
+                spacing: 12
+            ) {
+                perspectiveStat(
+                    icon: "sunrise.fill",
+                    label: "Sunrises left",
+                    value: groupedIntegerString(sunrisesLeft),
+                    color: selectedTheme.topGlow
+                )
+
+                perspectiveStat(
+                    icon: "heart.fill",
+                    label: "Heartbeats lived",
+                    value: abbreviatedNumber(heartbeatsLived),
+                    color: Color(red: 1.0, green: 0.36, blue: 0.36)
+                )
+
+                perspectiveStat(
+                    icon: "sun.max.fill",
+                    label: "Summers left",
+                    value: "\(summersLeft)",
+                    color: Color(red: 1.0, green: 0.78, blue: 0.28)
+                )
+
+                perspectiveStat(
+                    icon: "moon.fill",
+                    label: "Full moons left",
+                    value: groupedIntegerString(fullMoonsLeft),
+                    color: Color(red: 0.75, green: 0.82, blue: 1.0)
+                )
+
+                perspectiveStat(
+                    icon: "party.popper.fill",
+                    label: "Weekends left",
+                    value: groupedIntegerString(weekendsLeft),
+                    color: Color(red: 0.55, green: 0.88, blue: 0.48)
+                )
+
+                perspectiveStat(
+                    icon: "book.fill",
+                    label: "Books you could read",
+                    value: groupedIntegerString(booksLeft),
+                    color: Color(red: 0.65, green: 0.55, blue: 0.95)
+                )
+            }
+        }
+        .padding(18)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .stroke(
+                    LinearGradient(
+                        colors: [
+                            selectedTheme.topGlow.opacity(0.2), .white.opacity(0.08),
+                            selectedTheme.bottomGlow.opacity(0.15),
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: 1
+                )
+        }
+    }
+
+    private func perspectiveStat(icon: String, label: String, value: String, color: Color)
+        -> some View
+    {
+        VStack(alignment: .leading, spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(color)
+
+            Text(value)
+                .font(.system(size: 22, weight: .black, design: selectedTypography.heroDesign))
+                .foregroundStyle(.white)
+                .monospacedDigit()
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+
+            Text(label)
+                .font(.system(size: 11, weight: .medium, design: selectedTypography.bodyDesign))
+                .foregroundStyle(.white.opacity(0.6))
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(12)
+        .background(color.opacity(0.08), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(color.opacity(0.15), lineWidth: 1)
+        }
+    }
+
+    private func abbreviatedNumber(_ n: Int) -> String {
+        if n >= 1_000_000_000 {
+            let value = Double(n) / 1_000_000_000
+            return String(format: "%.1fB", value)
+        } else if n >= 1_000_000 {
+            let value = Double(n) / 1_000_000
+            return String(format: "%.1fM", value)
+        } else if n >= 1_000 {
+            let value = Double(n) / 1_000
+            return String(format: "%.1fK", value)
+        }
+        return "\(n)"
     }
 
     private func statCard(title: String, value: String, icon: String, accentColor: Color = .white)
