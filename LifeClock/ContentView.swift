@@ -296,19 +296,8 @@ struct ContentView: View {
     }
 
     private var timelineRefreshInterval: TimeInterval {
-        if !showLifeGrid {
-            return 1
-        }
-
-        // Keep greeting/time-of-day reasonably fresh even in slower grid units.
-        switch selectedUnit {
-        case .seconds, .minutes:
-            return 1
-        case .hours:
-            return 30
-        case .days, .weeks, .months, .years:
-            return 60
-        }
+        // Always refresh every second for the live countdown timer.
+        return 1
     }
 
     private var unitSwapTransition: AnyTransition {
@@ -1126,53 +1115,41 @@ struct ContentView: View {
     )
         -> some View
     {
-        let remainingValue = selectedUnit.convert(from: remaining)
-        let elapsedValue = selectedUnit.convert(from: elapsed)
+        let totalSeconds = Int(remaining)
+        let years = totalSeconds / (365 * 24 * 3600)
+        let afterYears = totalSeconds % (365 * 24 * 3600)
+        let months = afterYears / (30 * 24 * 3600)
+        let afterMonths = afterYears % (30 * 24 * 3600)
+        let weeks = afterMonths / (7 * 24 * 3600)
+        let afterWeeks = afterMonths % (7 * 24 * 3600)
+        let days = afterWeeks / (24 * 3600)
+        let afterDays = afterWeeks % (24 * 3600)
+        let hours = afterDays / 3600
+        let afterHours = afterDays % 3600
+        let minutes = afterHours / 60
+        let seconds = afterHours % 60
 
         return HStack(spacing: 12) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("LIFE CLOCK")
+            VStack(alignment: .leading, spacing: 6) {
+                Text("COUNTDOWN")
                     .font(
                         .system(size: 10, weight: .bold, design: selectedTypography.bodyDesign)
                     )
                     .tracking(1.5)
                     .foregroundStyle(.white.opacity(0.7))
 
-                HStack(alignment: .firstTextBaseline, spacing: 6) {
-                    Text(formattedValue(remainingValue, unit: selectedUnit))
-                        .font(
-                            .system(
-                                size: 32, weight: .black, design: selectedTypography.heroDesign)
-                        )
-                        .monospacedDigit()
-                        .foregroundStyle(.white)
-                        .contentTransition(.numericText())
-                        .minimumScaleFactor(0.35)
-                        .lineLimit(1)
-
-                    Text("\(selectedUnit.title) left")
-                        .font(
-                            .system(
-                                size: 14, weight: .semibold,
-                                design: selectedTypography.bodyDesign)
-                        )
-                        .foregroundStyle(.white.opacity(0.85))
+                HStack(spacing: 4) {
+                    countdownSegment(value: years, label: "y")
+                    countdownSegment(value: months, label: "m")
+                    countdownSegment(value: weeks, label: "w")
+                    countdownSegment(value: days, label: "d")
                 }
 
                 HStack(spacing: 4) {
-                    Image(systemName: "calendar")
-                        .font(.system(size: 10))
-                    Text(
-                        "\(formattedValue(elapsedValue, unit: selectedUnit)) \(selectedUnit.title) lived"
-                    )
-                    .font(
-                        .system(
-                            size: 12, weight: .medium, design: selectedTypography.bodyDesign)
-                    )
+                    countdownSegment(value: hours, label: "h")
+                    countdownSegment(value: minutes, label: "min")
+                    countdownSegment(value: seconds, label: "s")
                 }
-                .foregroundStyle(.white.opacity(0.55))
-                .lineLimit(1)
-                .minimumScaleFactor(0.7)
             }
             .layoutPriority(1)
 
@@ -1201,6 +1178,23 @@ struct ContentView: View {
                     ),
                     lineWidth: 1
                 )
+        }
+    }
+
+    private func countdownSegment(value: Int, label: String) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 2) {
+            Text("\(value)")
+                .font(
+                    .system(size: 22, weight: .black, design: selectedTypography.heroDesign)
+                )
+                .monospacedDigit()
+                .foregroundStyle(.white)
+                .contentTransition(.numericText())
+            Text(label)
+                .font(
+                    .system(size: 11, weight: .semibold, design: selectedTypography.bodyDesign)
+                )
+                .foregroundStyle(.white.opacity(0.55))
         }
     }
 
