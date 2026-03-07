@@ -1156,44 +1156,71 @@ struct ContentView: View {
         let minutes = afterHours / 60
         let seconds = afterHours % 60
 
-        return HStack(spacing: 12) {
-            VStack(alignment: .leading, spacing: 6) {
+        return VStack(alignment: .leading, spacing: 12) {
+            HStack {
                 Text("COUNTDOWN")
                     .font(
-                        .system(size: 10, weight: .bold, design: selectedTypography.bodyDesign)
+                        .system(size: 11, weight: .bold, design: selectedTypography.bodyDesign)
                     )
-                    .tracking(1.5)
+                    .tracking(1.6)
                     .foregroundStyle(.white.opacity(0.7))
-
-                HStack(spacing: 4) {
-                    countdownSegment(value: years, label: "y")
-                    countdownSegment(value: months, label: "m")
-                    countdownSegment(value: weeks, label: "w")
-                    countdownSegment(value: days, label: "d")
-                }
-
-                HStack(spacing: 4) {
-                    countdownSegment(value: hours, label: "h")
-                    countdownSegment(value: minutes, label: "min")
-                    countdownSegment(value: seconds, label: "s")
-                }
+                Spacer()
+                Image(systemName: "timer")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(selectedTheme.bottomGlow.opacity(0.8))
+                    .frame(width: 26, height: 26)
+                    .background(selectedTheme.bottomGlow.opacity(0.12), in: Circle())
             }
-            .layoutPriority(1)
 
-            Spacer()
+            HStack(alignment: .center, spacing: 14) {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(spacing: 6) {
+                        countdownSegment(value: years, label: "y")
+                        countdownSegment(value: months, label: "m")
+                        countdownSegment(value: weeks, label: "w")
+                        countdownSegment(value: days, label: "d")
+                    }
 
-            LifeProgressRing(
-                progress: progress, colors: selectedTheme.ringColors,
-                glowColor: selectedTheme.topGlow
+                    HStack(spacing: 6) {
+                        countdownSegment(value: hours, label: "h")
+                        countdownSegment(value: minutes, label: "min")
+                        countdownSegment(value: seconds, label: "s")
+                    }
+                }
+                .layoutPriority(1)
+
+                Spacer()
+
+                LifeProgressRing(
+                    progress: progress, colors: selectedTheme.ringColors,
+                    glowColor: selectedTheme.topGlow
+                )
+                .scaleEffect(0.78)
+                .frame(width: 76, height: 76)
+            }
+
+            LinearGradient(
+                colors: [
+                    selectedTheme.topGlow.opacity(0.3),
+                    selectedTheme.bottomGlow.opacity(0.3),
+                ],
+                startPoint: .leading,
+                endPoint: .trailing
             )
-            .scaleEffect(0.68)
-            .frame(width: 66, height: 66)
+            .frame(height: 1)
+            .padding(.horizontal, 2)
+
+            Text("Every second counts.")
+                .font(
+                    .system(size: 12, weight: .medium, design: selectedTypography.bodyDesign)
+                )
+                .italic()
+                .foregroundStyle(.white.opacity(0.45))
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 14)
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .padding(18)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
         .overlay {
-            RoundedRectangle(cornerRadius: 24, style: .continuous)
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
                 .stroke(
                     LinearGradient(
                         colors: [
@@ -1212,16 +1239,16 @@ struct ContentView: View {
         HStack(alignment: .firstTextBaseline, spacing: 2) {
             Text("\(value)")
                 .font(
-                    .system(size: 22, weight: .black, design: selectedTypography.heroDesign)
+                    .system(size: 28, weight: .black, design: selectedTypography.heroDesign)
                 )
                 .monospacedDigit()
                 .foregroundStyle(.white)
                 .contentTransition(.numericText())
             Text(label)
                 .font(
-                    .system(size: 11, weight: .semibold, design: selectedTypography.bodyDesign)
+                    .system(size: 13, weight: .semibold, design: selectedTypography.bodyDesign)
                 )
-                .foregroundStyle(.white.opacity(0.55))
+                .foregroundStyle(.white.opacity(0.5))
         }
     }
 
@@ -2196,7 +2223,8 @@ struct ContentView: View {
 
     private func preloadLifetimeProduct() async {
         guard hasRevenueCatConfigured else {
-            paywallMessage = "RevenueCat is not configured yet. Please set REVENUECAT_PUBLIC_SDK_KEY."
+            paywallMessage =
+                "RevenueCat is not configured yet. Please set REVENUECAT_PUBLIC_SDK_KEY."
             return
         }
         guard lifetimePackage == nil else { return }
@@ -2238,7 +2266,8 @@ struct ContentView: View {
 
     private func purchaseLifetime() async {
         guard hasRevenueCatConfigured else {
-            paywallMessage = "RevenueCat is not configured yet. Please set REVENUECAT_PUBLIC_SDK_KEY."
+            paywallMessage =
+                "RevenueCat is not configured yet. Please set REVENUECAT_PUBLIC_SDK_KEY."
             return
         }
         guard !isPurchasingLifetime else { return }
@@ -2273,7 +2302,8 @@ struct ContentView: View {
 
     private func restorePurchases() async {
         guard hasRevenueCatConfigured else {
-            paywallMessage = "RevenueCat is not configured yet. Please set REVENUECAT_PUBLIC_SDK_KEY."
+            paywallMessage =
+                "RevenueCat is not configured yet. Please set REVENUECAT_PUBLIC_SDK_KEY."
             return
         }
         guard !isRestoringPurchases else { return }
