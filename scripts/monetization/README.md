@@ -26,6 +26,7 @@ scripts/monetization/asc_iap_upsert.sh --env .env.hybrid
 scripts/monetization/revenuecat_sync.sh --env .env.hybrid
 scripts/monetization/xcode_set_revenuecat_key.sh --env .env.hybrid
 scripts/monetization/asc_iap_upload_review_screenshot.sh --env .env.hybrid --file /absolute/path/review.png
+scripts/monetization/asc_upload_app_screenshots.sh --env .env.hybrid --display-type APP_IPHONE_65 --file /absolute/path/shot1.png
 ```
 
 ## What this setup does (idempotent)

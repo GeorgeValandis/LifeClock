@@ -313,7 +313,20 @@ struct ContentView: View {
     }
 
     private var isTrialExpired: Bool {
-        trialStartTimestamp > 0 && trialRemaining <= 0
+        #if DEBUG
+            // Keep monetization disabled while building/testing in Debug.
+            false
+        #else
+            trialStartTimestamp > 0 && trialRemaining <= 0
+        #endif
+    }
+
+    private var isMonetizationDisabledForDebug: Bool {
+        #if DEBUG
+            true
+        #else
+            false
+        #endif
     }
 
     private var shouldShowLifetimePaywall: Bool {
@@ -352,6 +365,7 @@ struct ContentView: View {
                 }
             }
             .task {
+                guard !isMonetizationDisabledForDebug else { return }
                 await preloadLifetimeProduct()
                 await refreshLifetimeEntitlement()
             }
@@ -659,6 +673,7 @@ struct ContentView: View {
         }
         .interactiveDismissDisabled(!allowDismiss)
         .task {
+            guard !isMonetizationDisabledForDebug else { return }
             await preloadLifetimeProduct()
             await refreshLifetimeEntitlement()
         }
