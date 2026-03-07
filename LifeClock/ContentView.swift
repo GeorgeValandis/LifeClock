@@ -1178,7 +1178,9 @@ struct ContentView: View {
                         countdownSegment(value: years, label: "y")
                         countdownSegment(value: months, label: "m")
                         countdownSegment(value: weeks, label: "w")
-                        countdownSegment(value: days, label: "d")
+                        if days > 0 {
+                            countdownSegment(value: days, label: "d")
+                        }
                     }
 
                     HStack(spacing: 6) {
