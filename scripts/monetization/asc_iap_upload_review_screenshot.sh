@@ -51,7 +51,7 @@ while [[ $# -gt 0 ]]; do
 done
 
 load_env_file "$ENV_FILE"
-require_cmd curl jq ruby stat dd
+require_cmd asc curl jq ruby stat dd
 require_env APPLE_ISSUER_ID APPLE_KEY_ID APPLE_PRIVATE_KEY_PATH APPLE_APP_ID ASC_PRODUCT_ID
 
 [[ -f "$APPLE_PRIVATE_KEY_PATH" ]] || die "APPLE_PRIVATE_KEY_PATH not found: $APPLE_PRIVATE_KEY_PATH"
@@ -170,6 +170,27 @@ log "Resolving IAP ID for product_id=$ASC_PRODUCT_ID"
 existing_resp="$(asc_request GET "/v1/apps/${APPLE_APP_ID}/inAppPurchasesV2?filter%5BproductId%5D=$(urlencode "$ASC_PRODUCT_ID")&limit=50")"
 iap_id="$(jq -r --arg product_id "$ASC_PRODUCT_ID" '.data[]? | select(.attributes.productId == $product_id) | .id' <<<"$existing_resp" | head -n 1)"
 [[ -n "$iap_id" ]] || die "IAP not found for product_id=$ASC_PRODUCT_ID"
+
+existing_review_id="$(
+    if [[ -n "${ASC_PROFILE_NAME:-}" ]]; then
+        asc --profile "$ASC_PROFILE_NAME" iap review-screenshots get --iap-id "$iap_id" --output json 2>/dev/null
+    else
+        asc iap review-screenshots get --iap-id "$iap_id" --output json 2>/dev/null
+    fi | jq -r '.data.id // empty'
+)"
+
+if [[ -n "$existing_review_id" ]]; then
+    log "Replacing existing review screenshot $existing_review_id"
+    if [[ -n "${ASC_PROFILE_NAME:-}" ]]; then
+        asc --profile "$ASC_PROFILE_NAME" iap review-screenshots delete \
+            --screenshot-id "$existing_review_id" \
+            --confirm >/dev/null
+    else
+        asc iap review-screenshots delete \
+            --screenshot-id "$existing_review_id" \
+            --confirm >/dev/null
+    fi
+fi
 
 log "Creating review screenshot container for IAP $iap_id"
 create_payload="$(jq -cn \

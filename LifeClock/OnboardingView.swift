@@ -6,6 +6,7 @@ struct OnboardingView: View {
     @Binding var lifeExpectancyYears: Double
     @Binding var clockThemeRaw: String
 
+    let initialStep: Int
     let completeAction: () -> Void
 
     enum Gender: String, CaseIterable {
@@ -109,8 +110,10 @@ struct OnboardingView: View {
             backgroundLayer
             contentLayer
         }
+        .accessibilityIdentifier("onboarding-screen")
         .interactiveDismissDisabled()
         .onAppear {
+            currentStep = min(max(initialStep, 0), totalSteps - 1)
             withAnimation(.easeInOut(duration: 10).repeatForever(autoreverses: true)) {
                 glowAnimate = true
             }

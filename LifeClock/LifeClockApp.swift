@@ -4,6 +4,7 @@ import RevenueCat
 @main
 struct LifeClockApp: App {
     init() {
+        AppLaunchConfiguration.shared.applyIfNeeded()
         configureRevenueCat()
     }
 
@@ -15,6 +16,10 @@ struct LifeClockApp: App {
 
     private func configureRevenueCat() {
         if ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1" {
+            return
+        }
+
+        if AppLaunchConfiguration.shared.disablesMonetization {
             return
         }
 

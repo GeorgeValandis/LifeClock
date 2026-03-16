@@ -184,30 +184,6 @@ private enum TypographyPreset: String, CaseIterable, Identifiable {
     }
 }
 
-private enum AppIconChoice: String, CaseIterable, Identifiable {
-    case primary
-    case pulse
-    case horizon
-
-    var id: String { rawValue }
-
-    var title: String {
-        switch self {
-        case .primary: "Default"
-        case .pulse: "Pulse"
-        case .horizon: "Horizon"
-        }
-    }
-
-    var iconName: String? {
-        switch self {
-        case .primary: nil
-        case .pulse: "AppIconPulse"
-        case .horizon: "AppIconHorizon"
-        }
-    }
-}
-
 struct ContentView: View {
     @AppStorage(SharedDefaults.keyBirthDate, store: SharedDefaults.store) private
         var birthDateTimestamp: Double = Date(
@@ -222,8 +198,6 @@ struct ContentView: View {
     @AppStorage("typographyPresetRaw") private var typographyPresetRaw: String = TypographyPreset
         .modern.rawValue
     @AppStorage("hapticsEnabled") private var hapticsEnabled: Bool = true
-    @AppStorage("appIconChoiceRaw") private var appIconChoiceRaw: String = AppIconChoice.primary
-        .rawValue
     @AppStorage("hasCompletedOnboarding") private var hasCompletedOnboarding: Bool = false
     @AppStorage(SharedDefaults.keyTrialStartTimestamp, store: SharedDefaults.store) private
         var trialStartTimestamp: Double = 0
@@ -233,7 +207,6 @@ struct ContentView: View {
     @State private var showSettings = false
     @State private var showOnboarding = false
     @State private var animateBackground = false
-    @State private var iconErrorMessage: String?
     @State private var unitSwapPulse = false
     @State private var showLifeGrid = true
     @State private var cardsAppeared = false
@@ -244,6 +217,7 @@ struct ContentView: View {
     @State private var isPurchasingLifetime = false
     @State private var isRestoringPurchases = false
     @State private var paywallMessage: String?
+    @State private var didApplyLaunchPreview = false
     @Namespace private var unitChipSelectionAnimation
 
     private let trialDuration: TimeInterval = 3 * 24 * 60 * 60
@@ -322,10 +296,14 @@ struct ContentView: View {
     }
 
     private var isMonetizationDisabledForDebug: Bool {
+        if AppLaunchConfiguration.shared.disablesMonetization {
+            return true
+        }
+
         #if DEBUG
-            true
+            return true
         #else
-            false
+            return false
         #endif
     }
 
@@ -354,12 +332,14 @@ struct ContentView: View {
                     mainContent(now: context.date)
                 }
             }
+            .accessibilityIdentifier("home-screen")
             .onAppear {
                 withAnimation(.easeInOut(duration: 10).repeatForever(autoreverses: true)) {
                     animateBackground.toggle()
                 }
                 initializeTrialIfNeeded()
                 showOnboarding = !hasCompletedOnboarding
+                applyLaunchPreviewIfNeeded()
                 withAnimation(.spring(response: 0.7, dampingFraction: 0.82).delay(0.15)) {
                     cardsAppeared = true
                 }
@@ -398,6 +378,7 @@ struct ContentView: View {
                     selectedUnitRaw: $selectedUnitRaw,
                     lifeExpectancyYears: $lifeExpectancyYears,
                     clockThemeRaw: $clockThemeRaw,
+                    initialStep: AppLaunchConfiguration.shared.onboardingStep ?? 0,
                     completeAction: {
                         hasCompletedOnboarding = true
                         showOnboarding = false
@@ -411,21 +392,6 @@ struct ContentView: View {
             }
             .platformModal(isPresented: $showLifetimePaywallManually) {
                 lifetimePaywallView(allowDismiss: true)
-            }
-            .alert(
-                "Icon Update Failed",
-                isPresented: Binding(
-                    get: { iconErrorMessage != nil },
-                    set: { isPresented in
-                        if !isPresented {
-                            iconErrorMessage = nil
-                        }
-                    }
-                )
-            ) {
-                Button("OK", role: .cancel) { iconErrorMessage = nil }
-            } message: {
-                Text(iconErrorMessage ?? "Unknown error")
             }
             .alert(
                 "Purchase Notice",
@@ -671,6 +637,7 @@ struct ContentView: View {
             }
             .scrollIndicators(.hidden)
         }
+        .accessibilityIdentifier("paywall-screen")
         .interactiveDismissDisabled(!allowDismiss)
         .task {
             guard !isMonetizationDisabledForDebug else { return }
@@ -938,14 +905,18 @@ struct ContentView: View {
             HStack(spacing: 10) {
                 circleButton(
                     systemName: showLifeGrid
-                        ? "chart.bar.doc.horizontal.fill" : "square.grid.3x3.fill"
+                        ? "chart.bar.doc.horizontal.fill" : "square.grid.3x3.fill",
+                    accessibilityIdentifier: "toggle-visualization-button"
                 ) {
                     withAnimation(.spring(response: 0.6, dampingFraction: 0.8)) {
                         showLifeGrid.toggle()
                     }
                 }
 
-                circleButton(systemName: "slider.horizontal.3") {
+                circleButton(
+                    systemName: "slider.horizontal.3",
+                    accessibilityIdentifier: "open-settings-button"
+                ) {
                     showSettings = true
                 }
             }
@@ -1175,18 +1146,30 @@ struct ContentView: View {
             HStack(alignment: .center, spacing: 14) {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 6) {
-                        countdownSegment(value: years, label: "y")
-                        countdownSegment(value: months, label: "m")
-                        countdownSegment(value: weeks, label: "w")
+                        if years > 0 {
+                            countdownSegment(value: years, label: "y")
+                        }
+                        if months > 0 {
+                            countdownSegment(value: months, label: "m")
+                        }
+                        if weeks > 0 {
+                            countdownSegment(value: weeks, label: "w")
+                        }
                         if days > 0 {
                             countdownSegment(value: days, label: "d")
                         }
                     }
 
                     HStack(spacing: 6) {
-                        countdownSegment(value: hours, label: "h")
-                        countdownSegment(value: minutes, label: "min")
-                        countdownSegment(value: seconds, label: "s")
+                        if hours > 0 {
+                            countdownSegment(value: hours, label: "h")
+                        }
+                        if minutes > 0 {
+                            countdownSegment(value: minutes, label: "min")
+                        }
+                        if seconds > 0 {
+                            countdownSegment(value: seconds, label: "s")
+                        }
                     }
                 }
                 .layoutPriority(1)
@@ -1570,8 +1553,8 @@ struct ContentView: View {
                 background
                 settingsReadabilityLayer
 
-                ScrollView {
-                    VStack(alignment: .leading, spacing: 22) {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 22) {
                         settingsHeader(title: "Settings")
 
                         if !lifetimeUnlocked {
@@ -1741,21 +1724,6 @@ struct ContentView: View {
                             }
 
                             Divider().overlay(.white.opacity(0.18))
-
-                            settingsMenuRow(
-                                title: "App icon",
-                                value: AppIconChoice(rawValue: appIconChoiceRaw)?.title
-                                    ?? AppIconChoice.primary.title
-                            ) {
-                                ForEach(AppIconChoice.allCases) { iconChoice in
-                                    Button(iconChoice.title) {
-                                        let oldValue = appIconChoiceRaw
-                                        appIconChoiceRaw = iconChoice.rawValue
-                                        applyAppIcon(from: oldValue, to: iconChoice.rawValue)
-                                        performSelectionHaptic()
-                                    }
-                                }
-                            }
                         }
                         .settingsCardStyle()
 
@@ -1805,13 +1773,14 @@ struct ContentView: View {
                         }
                         .settingsCardStyle()
                     }
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 24)
-                }
-                .scrollIndicators(.hidden)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 24)
             }
-            .platformNavigationChrome()
-            .environment(\.colorScheme, .dark)
+            .scrollIndicators(.hidden)
+            .accessibilityIdentifier("settings-screen")
+        }
+        .platformNavigationChrome()
+        .environment(\.colorScheme, .dark)
             .toolbar {
                 #if os(iOS)
                     ToolbarItem(placement: .topBarTrailing) {
@@ -1850,20 +1819,17 @@ struct ContentView: View {
                     settingsHeader(title: "Legal")
                     legalBlock(
                         title: "Legal Notice",
-                        text:
-                            "Operator details, contact address, and responsible person information should be listed here."
+                        text: LifeClockLegalContent.legalNotice
                     )
 
                     legalBlock(
-                        title: "Privacy",
-                        text:
-                            "LifeClock stores your birth date, display settings, and preferences locally on your device. No cloud sync is enabled by default."
+                        title: "Privacy Policy",
+                        text: LifeClockLegalContent.privacyPolicy
                     )
 
                     legalBlock(
                         title: "Terms of Use",
-                        text:
-                            "All displayed values are estimations based on your inputs. LifeClock does not provide medical, legal, or financial advice."
+                        text: LifeClockLegalContent.termsOfUse
                     )
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -1872,18 +1838,18 @@ struct ContentView: View {
                             .foregroundStyle(.white)
 
                         Link(
-                            "Privacy Policy",
-                            destination: URL(string: "https://example.com/privacy")!)
+                            "Website Privacy Statement",
+                            destination: LifeClockLegalContent.websitePrivacyURL)
                         Link(
-                            "Terms & Conditions",
-                            destination: URL(string: "https://example.com/terms")!)
-                        Link("Support", destination: URL(string: "mailto:support@example.com")!)
+                            "Apple Standard EULA",
+                            destination: LifeClockLegalContent.appleEULAURL)
+                        Link("Support", destination: LifeClockLegalContent.supportEmailURL)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(16)
                     .settingsCardStyle()
 
-                    Text("Last updated: February 24, 2026")
+                    Text("Last updated: \(LifeClockLegalContent.lastUpdated)")
                         .font(.footnote)
                         .foregroundStyle(.white.opacity(0.7))
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -1895,7 +1861,11 @@ struct ContentView: View {
         .environment(\.colorScheme, .dark)
     }
 
-    private func circleButton(systemName: String, action: @escaping () -> Void) -> some View {
+    private func circleButton(
+        systemName: String,
+        accessibilityIdentifier: String,
+        action: @escaping () -> Void
+    ) -> some View {
         Button(action: {
             performSelectionHaptic()
             action()
@@ -1921,6 +1891,29 @@ struct ContentView: View {
                 }
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier(accessibilityIdentifier)
+    }
+
+    private func applyLaunchPreviewIfNeeded() {
+        guard AppLaunchConfiguration.shared.isStorePreview else { return }
+        guard !didApplyLaunchPreview else { return }
+
+        didApplyLaunchPreview = true
+        showLifeGrid = AppLaunchConfiguration.shared.scenario == .grid
+        showOnboarding = AppLaunchConfiguration.shared.scenario == .onboarding
+
+        switch AppLaunchConfiguration.shared.scenario {
+        case .home, .grid, .onboarding:
+            break
+        case .settings:
+            DispatchQueue.main.async {
+                showSettings = true
+            }
+        case .paywall:
+            DispatchQueue.main.async {
+                showLifetimePaywallManually = true
+            }
+        }
     }
 
     private func lifePerspectiveStats(elapsed: TimeInterval, remaining: TimeInterval) -> some View {
@@ -2108,6 +2101,7 @@ struct ContentView: View {
                 .foregroundStyle(.white)
             Text(text)
                 .foregroundStyle(.white.opacity(0.9))
+                .textSelection(.enabled)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(16)
@@ -2325,34 +2319,162 @@ struct ContentView: View {
         }
     }
 
-    private func applyAppIcon(from oldValue: String, to newValue: String) {
-        guard oldValue != newValue else { return }
-        #if canImport(UIKit)
-            guard UIApplication.shared.supportsAlternateIcons else {
-                iconErrorMessage = "This device does not support alternate app icons."
-                appIconChoiceRaw = oldValue
-                return
-            }
+}
 
-            guard let newChoice = AppIconChoice(rawValue: newValue) else {
-                iconErrorMessage = "Selected icon is invalid."
-                appIconChoiceRaw = oldValue
-                return
-            }
+private enum LifeClockLegalContent {
+    static let lastUpdated = "March 12, 2026"
+    static let websitePrivacyURL = URL(string: "https://georgevalandis.com/privacy-datenschutzerklaerung/")!
+    static let appleEULAURL = URL(
+        string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+    static let supportEmailURL = URL(string: "mailto:support@georgevalandis.com")!
 
-            UIApplication.shared.setAlternateIconName(newChoice.iconName) { error in
-                DispatchQueue.main.async {
-                    if let error {
-                        iconErrorMessage = error.localizedDescription
-                        appIconChoiceRaw = oldValue
-                    }
-                }
-            }
-        #else
-            iconErrorMessage = "Alternate app icons are only available on iOS."
-            appIconChoiceRaw = oldValue
-        #endif
-    }
+    static let legalNotice = """
+        Imprint
+
+        Georgios Andi Avenidis
+        Berliner Straße 235
+        65205 Wiesbaden
+        Germany
+
+        Contact
+        Phone: +49 (0) 173 4625411
+        Email: info@georgevalandis.com
+
+        Responsible for content according to § 55 Abs. 2 RStV
+        Georgios Andi Avenidis
+        Address as above
+
+        EU dispute resolution
+        The European Commission provides a platform for online dispute resolution (OS):
+        https://ec.europa.eu/consumers/odr/
+
+        Consumer dispute resolution / universal arbitration board
+        We are not willing or obliged to participate in dispute resolution proceedings before a
+        consumer arbitration board.
+        """
+
+    static let privacyPolicy = """
+        Privacy Policy for LifeClock
+
+        1. Introduction
+        This Privacy Policy applies to the LifeClock app developed by Georgios Andi Avenidis. If
+        you have any questions about privacy, you can contact us at info@georgevalandis.com.
+
+        2. Data Stored on Your Device
+        LifeClock stores the information you enter and the settings you choose primarily on your
+        device. This can include your birth date, selected countdown unit, life expectancy,
+        onboarding status, visual preferences, haptics preference, trial status, and premium
+        unlock status.
+
+        3. Widget Data
+        If you use the LifeClock widget, selected values are shared only between the app and its
+        widget through Apple's app group storage so the widget can display your current life
+        progress.
+
+        4. Purchases
+        If you purchase or restore premium access, Apple and RevenueCat may process
+        purchase-related data such as product identifiers, receipts, entitlement status, and
+        technical identifiers required to validate transactions and restore access. LifeClock does
+        not use this information for advertising.
+
+        5. Purpose of Processing
+        The stored information is used solely to provide countdowns, widgets, onboarding,
+        settings, and premium access functionality.
+
+        6. Data Transfer
+        Outside of payment and entitlement verification through Apple and RevenueCat, LifeClock
+        does not transmit your personal life profile data to our servers. No cloud sync is enabled
+        by default.
+
+        7. Analytics and Tracking
+        LifeClock does not use third-party advertising SDKs and does not track you for advertising
+        purposes.
+
+        8. Data Deletion
+        Because the core app data is stored locally, removing the app from your device deletes the
+        locally stored profile and settings. Purchase records and billing data are managed by Apple
+        and the services used to validate purchases according to their own policies.
+
+        9. Security
+        Because most app data is stored locally, you are encouraged to secure your device with a
+        passcode, biometric authentication, and regular backups.
+
+        10. Children
+        The app is not specifically designed for children under 13.
+
+        11. Changes
+        We may update this Privacy Policy from time to time. Significant changes will be reflected
+        in the app or in our published legal information.
+
+        12. Contact
+        If you have questions about privacy, please contact info@georgevalandis.com.
+        """
+
+    static let termsOfUse = """
+        Terms of Use for LifeClock
+
+        These Terms of Use ("Terms") govern your access to and use of LifeClock and related
+        services provided by George Valandis Einzelunternehmen ("we," "us," or "our"). By using
+        LifeClock, you agree to these Terms. If you do not agree, please do not use the Service.
+
+        1. Acceptance of Terms
+        By accessing or using LifeClock, you confirm that you have read, understood, and agree to
+        be bound by these Terms. We may update these Terms from time to time. Continued use of the
+        app after an update constitutes acceptance of the revised Terms.
+
+        2. Company Information
+        George Valandis Einzelunternehmen
+        Berliner Straße 235
+        65205 Wiesbaden
+        Germany
+
+        3. Service Description
+        LifeClock visualizes estimated time and life-progress metrics based on information you
+        provide. All displayed values are illustrative estimates and do not constitute medical,
+        legal, financial, or professional advice.
+
+        4. Privacy
+        Your privacy is important to us. Please review the Privacy Policy available in the app and
+        on our website. The Privacy Policy forms an integral part of these Terms.
+
+        5. Age Restrictions
+        The Service is intended for users aged 16 or older. If you are below the age required in
+        your jurisdiction, you must have permission from a parent or legal guardian.
+
+        6. Purchases and Premium Access
+        If LifeClock offers paid features or a lifetime unlock, payments are processed through the
+        Apple App Store. Refunds, cancellations, and billing questions are subject to Apple's
+        policies and can typically be handled through https://reportaproblem.apple.com.
+
+        7. Data Rights and Deletion
+        LifeClock stores its core profile data on your device. You can delete local app data by
+        removing the app from your device. Purchase and billing records are handled by Apple and,
+        where applicable, RevenueCat for entitlement validation.
+
+        8. Availability
+        We strive to keep the Service available, but we do not guarantee uninterrupted operation.
+        Temporary interruptions may occur due to maintenance, updates, or factors outside our
+        control.
+
+        9. Third-Party Services
+        The app may rely on third-party services such as Apple App Store services and RevenueCat
+        for purchases and entitlement management. Their use is subject to their own terms and
+        privacy policies.
+
+        10. Limitation of Liability
+        The Service is provided "as is" and "as available." To the extent permitted by law, we are
+        not liable for indirect, incidental, or consequential damages. Nothing in these Terms
+        limits liability for intent, gross negligence, or personal injury where such limitation is
+        not legally permitted.
+
+        11. Governing Law
+        These Terms are governed by the laws of the Federal Republic of Germany, excluding conflict
+        of law provisions. Mandatory consumer protection laws of your country of residence remain
+        unaffected where applicable.
+
+        12. Contact
+        If you have questions about these Terms, please contact support@georgevalandis.com.
+        """
 }
 
 private struct LifeProgressRing: View {

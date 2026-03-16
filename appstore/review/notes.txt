@@ -1,0 +1,14 @@
+LifeClock does not require a user account or login.
+
+The app's core flow is:
+1. Complete onboarding by entering a birth date, life expectancy, display unit, and theme.
+2. Review the live time counter and optional life grid visualization.
+3. Open Settings to adjust appearance and life profile details.
+4. Open the Lifetime paywall from Settings to test the one-time unlock flow.
+
+RevenueCat is used for the lifetime non-consumable product:
+- Product ID: com.GA.LifeClock.lifetime
+- Entitlement ID: premium
+- Offering ID: default
+
+If the review build runs without StoreKit connectivity, the paywall should still render and the app remains fully navigable. No demo account is required.

@@ -10,8 +10,16 @@ import Testing
 
 struct LifeClockTests {
 
-    @Test func example() async throws {
-        // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+    @Test func lifeUnitsUseExpectedBaseSeconds() async throws {
+        #expect(LifeUnit.days.seconds == 86_400)
+        #expect(LifeUnit.hours.seconds == 3_600)
+        #expect(LifeUnit.minutes.seconds == 60)
+    }
+
+    @Test func unitConversionUsesConfiguredSecondValues() async throws {
+        #expect(LifeUnit.hours.convert(from: 7_200) == 2)
+        #expect(LifeUnit.days.convert(from: 172_800) == 2)
+        #expect(LifeUnit.minutes.convert(from: 180) == 3)
     }
 
 }
